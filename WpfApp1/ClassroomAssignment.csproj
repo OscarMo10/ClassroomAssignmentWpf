@@ -89,6 +89,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Model\Room.cs" />
+    <Compile Include="Model\RoomSearch.cs" />
+    <Compile Include="Repo\HardCodedRoomRepo.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\SheetParser.cs" />
     <Compile Include="Repo\HardCodedCourseRepo.cs" />

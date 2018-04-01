@@ -1,4 +1,5 @@
 ﻿using ClassroomAssignment.Model;
+using ClassroomAssignment.Model.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace UnitTestProject.TestModels
 {
-    class NonConflictingCourseRepo
+    class NonConflictingCourseRepo : ICourseRepository 
     {
         private List<Course> _courses = new List<Course>();
 
         public List<Course> Courses => _courses;
 
-        public ConflictingCourseRepo()
+        public NonConflictingCourseRepo()
         {
             AddCourse1();
             AddCourse2();

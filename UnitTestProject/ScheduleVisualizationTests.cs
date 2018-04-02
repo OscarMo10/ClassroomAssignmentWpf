@@ -36,9 +36,7 @@ namespace UnitTestProject
             testCourse.Session = "Regular Academic Session";
             testCourse.Campus = "UNO";
             testCourse.InstructionMethod = "In Person";
-            testCourse.Comments = "PKI 153";
             testCourse.Notes = "PKI 157";
-            testCourse.AlreadyAssignedRoom = true;
 
             // This is the "normalized" name for the room
             testCourse.RoomAssignment = "PKI 157";

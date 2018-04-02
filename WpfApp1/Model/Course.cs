@@ -432,12 +432,21 @@ namespace ClassroomAssignment.Model
         }
 
         // Derived information
+        private bool _ambiguousState;
         public bool AmbiguousState {
             get
             {
-                if (!NeedsRoom || AlreadyAssignedRoom) return false;
+                bool nowAmbiguous = false;
+                if (!NeedsRoom || AlreadyAssignedRoom) nowAmbiguous =  false;
+                else nowAmbiguous = HasMultipleRoomAssignments();
 
-                return HasMultipleRoomAssignments();
+                if (nowAmbiguous != _ambiguousState)
+                {
+                    _ambiguousState = nowAmbiguous;
+                    OnPropertyChanged();
+                }
+
+                return _ambiguousState;
             }
 
             private set { }
@@ -500,8 +509,12 @@ namespace ClassroomAssignment.Model
 
             set
             {
-                _roomAssignment = value;
-                OnPropertyChanged();
+                if (_roomAssignment != value)
+                {
+                    _roomAssignment = value;
+                    OnPropertyChanged();
+                }
+               
             }
         }
         public List<DayOfWeek> MeetingDays { get; set; }

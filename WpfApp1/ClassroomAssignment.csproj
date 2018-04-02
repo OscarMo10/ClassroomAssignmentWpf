@@ -92,9 +92,8 @@
     <Compile Include="Model\Rules.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\SheetParser.cs" />
-    <Compile Include="Repo\HardCodedCourseRepo.cs" />
     <Compile Include="Repo\ICourseRepository.cs" />
-    <Compile Include="Repo\InMemoryCourseRepository.cs" />
+    <Compile Include="Repo\CourseRepository.cs" />
     <Compile Include="Repo\InMemoryRoomRepository.cs" />
     <Compile Include="Repo\IRoomRepository.cs" />
     <Compile Include="Utils\DateUtil.cs" />
@@ -117,7 +116,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\ClassScheduleTemplate.cs" />
+    <Compile Include="Visual\ClassScheduleTemplate.cs" />
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\CourseClassMap.cs" />
     <Compile Include="Model\DataConstants.cs" />

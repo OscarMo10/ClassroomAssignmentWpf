@@ -9,6 +9,6 @@ namespace ClassroomAssignment.Model.Repo
 {
     public interface ICourseRepository
     {
-        ICollection<Course> Courses { get; }
+        IList<Course> Courses { get; }
     }
 }

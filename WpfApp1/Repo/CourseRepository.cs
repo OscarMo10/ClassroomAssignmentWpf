@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Model.Repo
 {
-    class InMemoryCourseRepository : ICourseRepository
+    class CourseRepository : ICourseRepository
     {
-        private static InMemoryCourseRepository _instance;
+        private static CourseRepository _instance;
         private ObservableCollection<Course> _courses;
 
         public event EventHandler<CourseCollectionEventArgs> CourseModified;
@@ -20,20 +20,20 @@ namespace ClassroomAssignment.Model.Repo
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ICollection<Course> Courses {
+        public IList<Course> Courses {
             get => _courses;
         }
 
-        public static InMemoryCourseRepository GetInstance()
+        public static CourseRepository GetInstance()
         {
             return _instance;
         }
         public static void initInstance(ICollection<Course> courses)
         {
-            _instance = new InMemoryCourseRepository(courses);
+            _instance = new CourseRepository(courses);
         }
 
-        private InMemoryCourseRepository(ICollection<Course> courses)
+        private CourseRepository(ICollection<Course> courses)
         {
             _courses = new ObservableCollection<Course>(courses);
             _courses.CollectionChanged += _courses_CollectionChanged;
@@ -41,16 +41,17 @@ namespace ClassroomAssignment.Model.Repo
 
         private void _courses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            CourseCollectionEventArgs eventArgs = new CourseCollectionEventArgs(CourseCollectionEventArgs.EventType.Added, e.NewItems);
+            var courses = e.NewItems.OfType<Course>().ToList();
+            CourseCollectionEventArgs eventArgs = new CourseCollectionEventArgs(CourseCollectionEventArgs.EventType.Added, courses);
         }
 
         public class CourseCollectionEventArgs : EventArgs
         {
             public enum EventType { Modified, Added, Deleted };
             public readonly EventType Type;
-            public readonly ICollection<Course> CoursesInvolved;
+            public readonly IList<Course> CoursesInvolved;
 
-            public CourseCollectionEventArgs(EventType eventType, ICollection courses)
+            public CourseCollectionEventArgs(EventType eventType, IList<Course> courses)
             {
                 Type = eventType;
                 CoursesInvolved = new List<Course>(courses);

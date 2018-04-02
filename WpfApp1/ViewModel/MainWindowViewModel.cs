@@ -24,7 +24,7 @@ namespace ClassroomAssignment.ViewModel
 
         public MainWindowViewModel()
         {
-            List<Course> courses = InMemoryCourseRepository.GetInstance().Courses;
+            List<Course> courses = CourseRepository.GetInstance().Courses;
             courses.Sort(CompareCourses);
             Courses = new ObservableCollection<Course>(courses);
             

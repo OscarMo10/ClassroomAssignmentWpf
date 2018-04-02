@@ -53,7 +53,7 @@ namespace ClassroomAssignment
             }
 
             List<Course> courses = SheetParser.Parse(docLocations, new InMemoryRoomRepository());
-            InMemoryCourseRepository.initInstance(courses);
+            CourseRepository.initInstance(courses);
 
 
             if (courses.FindAll(m =>m.AmbiguousState).Count > 0)

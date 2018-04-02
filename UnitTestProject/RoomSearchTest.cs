@@ -4,6 +4,10 @@ using ClassroomAssignment.Repo;
 using System.Diagnostics;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ClassroomAssignment.Model.Repo;
+using System;
+using UnitTestProject.TestModels;
+using ClassroomAssignmentWpf.Model;
 
 namespace UnitTestProject
 {
@@ -12,9 +16,8 @@ namespace UnitTestProject
     {
         //hardcoded repos
         private HardCodedCourseRepo myhardCodedCourseRepo = new HardCodedCourseRepo();
-        private static HardCodedRoomRepo hardCodedRoomRepo = new HardCodedRoomRepo();
+        public static HardCodedRoomRepo hardCodedRoomRepo = new HardCodedRoomRepo();
 
-        public string term = "Spring 2018";
 
         //list with all the courses
         public List<Course> courseListing;
@@ -22,21 +25,21 @@ namespace UnitTestProject
         //list with all the hardcoded rooms
         private List<Room> roomListing = hardCodedRoomRepo.Rooms;
 
+        //Room search results
         public List<Room> roomSearchResults;
 
-
         [TestMethod]
-        public void TestMethod1()
+        [ExpectedException(typeof(ArgumentNullException))]       
+        public void RoomRepoNull_ThrowsException()
         {
-            Debug.WriteLine("\nPrinting List\n");
-            if (roomListing.Count > 0)
-            {
+            IRoomRepository roomRepo = null;
+            ICourseRepository courseRepo = new NonConflictingCourseRepo();
+            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
 
-                foreach (var x in roomListing)
-                {
-                    Debug.WriteLine("{0} : {1}", x.roomName, x.maxCapcity);
-                }
-            }
+           
+          
         }
+
+        //course repo in new method
     }
 }

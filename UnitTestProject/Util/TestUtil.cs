@@ -32,6 +32,7 @@ namespace UnitTestProject.Util
             testCourse.Notes = "PKI 157";
             testCourse.AlreadyAssignedRoom = true;
 
+            return testCourse;
         }
     }
 }

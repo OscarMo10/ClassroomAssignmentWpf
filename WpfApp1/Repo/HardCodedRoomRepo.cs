@@ -12,6 +12,9 @@ namespace ClassroomAssignment.Repo
     {
        
         public List<Room> Rooms { get; }
+        public string term = "Spring 2018";
+        
+
 
         public HardCodedRoomRepo()
         {
@@ -104,7 +107,9 @@ namespace ClassroomAssignment.Repo
             throw new NotImplementedException();
         }
 
-      
-
+        public string GetNormalizedRoomName(string roomName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace ClassroomAssignmentWpf.Model
         public List<Room> roomSearchResults;
 
         public IRoomRepository myNewRoomRepo = new InMemoryRoomRepository(roomListing);
-        public ICourseRepository myCoursesRepo = new InMemoryCourseRepository(courseListing);
+        public ICourseRepository myCoursesRepo = new CourseRepository(courseListing);
 
         public RoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo )
         {

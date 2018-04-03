@@ -24,11 +24,16 @@ namespace ClassroomAssignment.ViewModel
 
         public MainWindowViewModel()
         {
-
-            Courses = new ObservableCollection<Course>();
+            List<Course> courses = CourseRepository.GetInstance().Courses;
+            courses.Sort(CompareCourses);
+            Courses = new ObservableCollection<Course>(courses);
+            
             Courses.CollectionChanged += Courses_CollectionChanged;
+
+            
         }
 
+       
 
         private void Courses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

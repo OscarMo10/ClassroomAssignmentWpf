@@ -30,7 +30,7 @@ namespace ClassroomAssignment
         {
             InitializeComponent();
 
-            var allCourses = InMemoryCourseRepository.getInstance().Courses;
+            var allCourses = CourseRepository.GetInstance().Courses;
 
             _ambiguousCourses = allCourses.FindAll(m => m.AmbiguousState);
             

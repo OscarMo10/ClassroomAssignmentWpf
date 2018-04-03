@@ -101,11 +101,14 @@ namespace ClassroomAssignment.Repo
             Rooms.Add(myRooms);
         }
 
-      
+        public string getNormalizedRoomName(string roomName)
+        {
+            //TODO: Implement method
+            throw new NotImplementedException();
+        }
 
         public string GetNormalizedRoomName(string roomName)
         {
-            
             throw new NotImplementedException();
         }
     }

@@ -26,13 +26,11 @@ namespace UnitTestProject
         [TestMethod]
         public void HasConflict_False()
         {
-            /*
             ICourseRepository courseRepository = new NonConflictingCourseRepo();
             ConflictDetectorTests detector = new ConflictDetector(courseRepository);
             ConflictResult result = detector.FindConflicts();
 
             Assert.IsFalse(result.HasConflicts);
-            */
         }
 
     }

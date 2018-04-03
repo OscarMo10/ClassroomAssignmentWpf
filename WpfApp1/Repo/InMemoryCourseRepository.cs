@@ -30,7 +30,7 @@ namespace ClassroomAssignment.Model.Repo
             _instance = new InMemoryCourseRepository(courses);
         }
 
-        public InMemoryCourseRepository(List<Course> courses)
+        private InMemoryCourseRepository(List<Course> courses)
         {
             _courses = courses;
         }

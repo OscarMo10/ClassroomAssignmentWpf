@@ -18,5 +18,10 @@ namespace ClassroomAssignmentWpf.Notification
         {
             return new List<Conflict>();
         }
+
+        public List<Conflict> ConflictsAmongCourses(List<Course> courses)
+        {
+            return new List<Conflict>();
+        }
     }
 }

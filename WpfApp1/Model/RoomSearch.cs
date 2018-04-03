@@ -12,9 +12,9 @@ namespace ClassroomAssignmentWpf.Model
     public class RoomSearch
     {
 
-        //hardcoded repos
-        public  HardCodedCourseRepo myhardCodedCourseRepo = new HardCodedCourseRepo();
-        public static HardCodedRoomRepo hardCodedRoomRepo = new HardCodedRoomRepo();
+        ////hardcoded repos
+        //public  HardCodedCourseRepo myhardCodedCourseRepo = new HardCodedCourseRepo();
+        //public static HardCodedRoomRepo hardCodedRoomRepo = new HardCodedRoomRepo();
 
         //list with all the courses
         public static List<Course> courseListing;
@@ -25,31 +25,19 @@ namespace ClassroomAssignmentWpf.Model
         //Room search results
         public List<Room> roomSearchResults;
 
-        public IRoomRepository myNewRoomRepo = new InMemoryRoomRepository(roomListing);
-        public ICourseRepository myCoursesRepo = new CourseRepository(courseListing);
+        private IRoomRepository roomRepository;
+        private ICourseRepository courseRepository;
+        private RoomSearch roomSearch; 
+        
 
-        public RoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo )
+        public RoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo, RoomSearch roomSearch)
         {
-            if (roomRepo != null )
-            {
-                myNewRoomRepo = roomRepo;
-                
+            if (roomRepo == null) throw new ArgumentNullException();
+            if (courseRepo == null) throw new ArgumentNullException();
 
-            }
-            else
-            {
-                throw new ArgumentNullException();
-            }
+            this.roomSearch = roomSearch;
 
-            if(courseRepo != null)
-            {
-                myCoursesRepo = courseRepo;
-            }
-            else
-            {
-                throw new ArgumentNullException();
-            }
-
+            
         }
 
         /* Takes List<>rmSearch 
@@ -67,19 +55,36 @@ namespace ClassroomAssignmentWpf.Model
          *         
          *
           */ 
-        public void searchRooms()
+        public List<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
         {
-            foreach (var x in myNewRoomRepo.Rooms)
+            var possibleRooms = roomRepository.Rooms.FindAll(m => m.maxCapacity >= minCapacity);
+
+            var possibleConflictingCourses =
+               courseRepository.Courses.FindAll(m => m.AlreadyAssignedRoom && possibleRooms.Any(x => x.roomName == m.RoomAssignment));
+
+            var coursesForRoom = from course in possibleConflictingCourses
+                                 group course by course.RoomAssignment;
+
+
+            Course assignmentCourse = new Course();
+            assignmentCourse.StartTime = startTime;
+            assignmentCourse.EndTime = endTime;
+            assignmentCourse.MeetingDays = meetingDays;
+
+
+            List<string> availableRoomNames = new List<string>();
+            foreach (var roomGroup in coursesForRoom)
             {
-               foreach(var y in myCoursesRepo.Courses)
-                {
-                    if(y.AlreadyAssignedRoom == false)
-                    {
-                        
-                    }
-                }
+                assignmentCourse.RoomAssignment = roomGroup.Key;
+                List<Conflict> conflicts = roomConflictFinder.ConflictAmongCourses(roomGroup.ToList().Add(assignmentCourse));
+                if (conflicts.Count == 0) availableRoomNames.Add(roomGroup.Key);
             }
-            
+
+            var availableRooms = from room in roomRepository.Rooms
+                                 where availableRoomNames.Contains(room.roomName)
+                                 select room;
+
+            return availableRooms.ToList();
         }
 
     }

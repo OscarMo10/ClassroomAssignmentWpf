@@ -90,6 +90,10 @@
     </ApplicationDefinition>
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Model\Rules.cs" />
+    <Compile Include="Notification\Conflict.cs" />
+    <Compile Include="Notification\CourseConflictEventArgs.cs" />
+    <Compile Include="Notification\NotficationManager.cs" />
+    <Compile Include="Notification\RoomConflictFinder.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\SheetParser.cs" />
     <Compile Include="Repo\ICourseRepository.cs" />
@@ -175,8 +179,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Notification\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

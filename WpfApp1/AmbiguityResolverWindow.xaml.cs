@@ -32,7 +32,7 @@ namespace ClassroomAssignment
 
             var allCourses = CourseRepository.GetInstance().Courses;
 
-            _ambiguousCourses = allCourses.FindAll(m => m.AmbiguousState);
+            _ambiguousCourses = allCourses.ToList().FindAll(m => m.AmbiguousState);
             
             CoursesDataGrid.ItemsSource = _ambiguousCourses;
 

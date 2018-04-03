@@ -15,13 +15,13 @@ namespace ClassroomAssignment.Model.Repo
         private static CourseRepository _instance;
         private ObservableCollection<Course> _courses;
 
-        public event EventHandler<CourseCollectionEventArgs> CourseModified;
-        public event EventHandler<CourseCollectionEventArgs> CourseAdded;
+        public event PropertyChangedEventHandler CourseModified;
+        public event NotifyCollectionChangedEventHandler CourseCollectionModified;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public IList<Course> Courses {
-            get => _courses;
+        public List<Course> Courses {
+            get => _courses.ToList();
         }
 
         public static CourseRepository GetInstance()
@@ -30,6 +30,8 @@ namespace ClassroomAssignment.Model.Repo
         }
         public static void initInstance(ICollection<Course> courses)
         {
+            if (courses == null) throw new ArgumentNullException();
+
             _instance = new CourseRepository(courses);
         }
 
@@ -37,28 +39,25 @@ namespace ClassroomAssignment.Model.Repo
         {
             _courses = new ObservableCollection<Course>(courses);
             _courses.CollectionChanged += _courses_CollectionChanged;
+            RegisterPropertyListeners();
+        }
+
+        private void RegisterPropertyListeners()
+        {
+            foreach (var course in _courses)
+            {
+                course.PropertyChanged += Course_PropertyChanged;
+            }
+        }
+
+        private void Course_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            CourseModified?.Invoke(sender, e);
         }
 
         private void _courses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var courses = e.NewItems.OfType<Course>().ToList();
-            CourseCollectionEventArgs eventArgs = new CourseCollectionEventArgs(CourseCollectionEventArgs.EventType.Added, courses);
+            CourseCollectionModified?.Invoke(sender, e);
         }
-
-        public class CourseCollectionEventArgs : EventArgs
-        {
-            public enum EventType { Modified, Added, Deleted };
-            public readonly EventType Type;
-            public readonly IList<Course> CoursesInvolved;
-
-            public CourseCollectionEventArgs(EventType eventType, IList<Course> courses)
-            {
-                Type = eventType;
-                CoursesInvolved = new List<Course>(courses);
-            }
-        }
-
-
-
     }
 }

@@ -80,6 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CourseRepositoryTest.cs" />
     <Compile Include="CVSHelperTests.cs" />
     <Compile Include="InMemoryRoomRepositoryTest.cs" />
     <Compile Include="NpoiTests.cs" />

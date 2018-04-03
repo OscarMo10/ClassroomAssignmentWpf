@@ -80,11 +80,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConflictDectectorTests.cs" />
     <Compile Include="Repo\CourseRepositoryTest.cs" />
     <Compile Include="CVSHelperTests.cs" />
     <Compile Include="Repo\InMemoryRoomRepositoryTest.cs" />
     <Compile Include="NpoiTests.cs" />
     <Compile Include="ParsingPatternsTests.cs" />
+    <Compile Include="RoomSearchTest.cs" />
     <Compile Include="ScheduleVisualizationTests.cs" />
     <Compile Include="SheetParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

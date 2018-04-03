@@ -14,20 +14,7 @@ namespace UnitTestProject
     [TestClass]
     public class RoomSearchTest
     {
-        //hardcoded repos
-        private HardCodedCourseRepo myhardCodedCourseRepo = new HardCodedCourseRepo();
-        public static HardCodedRoomRepo hardCodedRoomRepo = new HardCodedRoomRepo();
-
-
-        //list with all the courses
-        public List<Course> courseListing;
-
-        //list with all the hardcoded rooms
-        private List<Room> roomListing = hardCodedRoomRepo.Rooms;
-
-        //Room search results
-        public List<Room> roomSearchResults;
-
+        
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]       
         public void RoomRepoNull_ThrowsException()
@@ -35,11 +22,29 @@ namespace UnitTestProject
             IRoomRepository roomRepo = null;
             ICourseRepository courseRepo = new NonConflictingCourseRepo();
             RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+        }
 
-           
-          
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ClassRepoNull_ThrowsException()
+        {
+            IRoomRepository roomRepo = new RoomRepo();
+            ICourseRepository courseRepo = null;
+            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NoRoomFound_ThrowsException()
+        {
+            IRoomRepository roomRepo = new RoomRepo();
+            ICourseRepository courseRepo = new NonConflictingCourseRepo();
+            
+            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
         }
 
         //course repo in new method
+        //create new room repo where 
+        //
     }
 }

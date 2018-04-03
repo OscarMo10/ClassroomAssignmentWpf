@@ -89,29 +89,38 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\BaseCommand.cs" />
-    <Compile Include="Model\Room.cs" />
-    <Compile Include="Model\RoomSearch.cs" />
-    <Compile Include="Repo\HardCodedRoomRepo.cs" />
+    <Compile Include="Model\Rules.cs" />
+    <Compile Include="Notification\Conflict.cs" />
+    <Compile Include="Notification\CourseConflictEventArgs.cs" />
+    <Compile Include="Notification\NotficationManager.cs" />
+    <Compile Include="Notification\RoomConflictFinder.cs" />
+    <Compile Include="ViewModel\CourseDetailViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\SheetParser.cs" />
-    <Compile Include="Repo\HardCodedCourseRepo.cs" />
     <Compile Include="Repo\ICourseRepository.cs" />
-    <Compile Include="Repo\InMemoryCourseRepository.cs" />
+    <Compile Include="Repo\CourseRepository.cs" />
     <Compile Include="Repo\InMemoryRoomRepository.cs" />
     <Compile Include="Repo\IRoomRepository.cs" />
     <Compile Include="Utils\DateUtil.cs" />
     <Compile Include="Utils\NpoiUtil.cs" />
     <Compile Include="Utils\TimeUtil.cs" />
+    <Compile Include="Views\CourseDetailWindow.xaml.cs">
+      <DependentUpon>CourseDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Visual\ExcelSchedulePrinter.cs" />
     <Compile Include="Visual\ISchedulePrinter.cs" />
     <Compile Include="Visual\ScheduleVisualization.cs" />
-    <Compile Include="AmbiguityResolverWindow.xaml.cs">
+    <Compile Include="Views\AmbiguityResolverWindow.xaml.cs">
       <DependentUpon>AmbiguityResolverWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="CreateProjectWindow.xaml">
+    <Page Include="Views\CourseDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateProjectWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -119,19 +128,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\ClassScheduleTemplate.cs" />
+    <Compile Include="Visual\ClassScheduleTemplate.cs" />
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\CourseClassMap.cs" />
     <Compile Include="Model\DataConstants.cs" />
-    <Compile Include="CreateProjectWindow.xaml.cs">
+    <Compile Include="Views\CreateProjectWindow.xaml.cs">
       <DependentUpon>CreateProjectWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="AmbiguityResolverWindow.xaml">
+    <Page Include="Views\AmbiguityResolverWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

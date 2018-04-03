@@ -142,7 +142,11 @@ namespace ClassroomAssignment.Model
         }
 
         private string _topic;
-        public string Topic     // "Title/Topic"
+
+        /// <summary>
+        /// Property maps to the "Title/Topic" column of the department spreadsheet.
+        /// </summary>
+        public string Topic  
         {
             get => _topic;
             set
@@ -428,12 +432,21 @@ namespace ClassroomAssignment.Model
         }
 
         // Derived information
+        private bool _ambiguousState;
         public bool AmbiguousState {
             get
             {
-                if (!NeedsRoom || AlreadyAssignedRoom) return false;
+                bool nowAmbiguous = false;
+                if (!NeedsRoom || AlreadyAssignedRoom) nowAmbiguous =  false;
+                else nowAmbiguous = HasMultipleRoomAssignments();
 
-                return HasMultipleRoomAssignments();
+                if (nowAmbiguous != _ambiguousState)
+                {
+                    _ambiguousState = nowAmbiguous;
+                    OnPropertyChanged();
+                }
+
+                return _ambiguousState;
             }
 
             private set { }
@@ -481,8 +494,13 @@ namespace ClassroomAssignment.Model
         }
 
 
-
-        public bool AlreadyAssignedRoom { get; set; }
+        /// <summary>
+        /// Calculated property. Returns true if RoomAssignment has been assigned. Does not guarantee valid assignment.
+        /// </summary>
+        public bool AlreadyAssignedRoom
+        {
+            get => string.IsNullOrEmpty(RoomAssignment) ? false : true;
+        }
 
         private string _roomAssignment;
         public string RoomAssignment
@@ -491,18 +509,12 @@ namespace ClassroomAssignment.Model
 
             set
             {
-                if(string.IsNullOrEmpty(value))
-                {
-                    _roomAssignment = null;
-                    AlreadyAssignedRoom = false;
-                }
-                else
+                if (_roomAssignment != value)
                 {
                     _roomAssignment = value;
-                    AlreadyAssignedRoom = true;
+                    OnPropertyChanged();
                 }
-
-                OnPropertyChanged();
+               
             }
         }
         public List<DayOfWeek> MeetingDays { get; set; }
@@ -514,9 +526,11 @@ namespace ClassroomAssignment.Model
         private void OnPropertyChanged([CallerMemberName] string propertyName="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmbiguousState)));
         }
 
+        /// <summary>
+        /// Convienence method. Sets the MeetingDays, StartTime, EndTime, NeedsRoom, and RoomAssignment, using the other properties of Course.
+        /// </summary>
         public void SetDerivedProperties()
         {
             SetMeetingProperties();
@@ -524,7 +538,10 @@ namespace ClassroomAssignment.Model
             SetRoomAssignment();
         }
 
-        private void SetMeetingProperties()
+        /// <summary>
+        /// Sets the MeetingDays, StartTime, EndTime properties using the state of the Course object.
+        /// </summary>
+        public void SetMeetingProperties()
         {
             Regex regex = new Regex(DataConstants.MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(MeetingPattern);
@@ -544,9 +561,12 @@ namespace ClassroomAssignment.Model
                 var endTimeStr = match.Groups[3].Value;
                 EndTime = TimeUtil.StringToTimeSpan(endTimeStr);
             }
-        } 
+        }
 
-        private void SetNeedsRoom()
+        /// <summary>
+        /// Sets the NeedsRoom property using the state of the Course object.
+        /// </summary>
+        public void SetNeedsRoom()
         {
             if (InstructionMethod?.Equals(InstructionMethods.OFF_CAMPUS) ?? false)
             {
@@ -563,7 +583,7 @@ namespace ClassroomAssignment.Model
             
         }
 
-        private void SetRoomAssignment()
+        public void SetRoomAssignment()
         {
             if (AmbiguousState) return;
 

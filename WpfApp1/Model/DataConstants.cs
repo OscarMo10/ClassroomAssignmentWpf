@@ -61,6 +61,22 @@ namespace ClassroomAssignment.Model
         public class InstructionMethods
         {
             public const string OFF_CAMPUS = "Off Campus";
+            public const string IN_PERSON = "In Person";
+        }
+
+        public class StatusOptions
+        {
+            public const string ACTIVE = "Active";
+        }
+
+        public class SessionOptions
+        {
+            public const string REGULAR_ACADEMIC_SESSION = "Regular Academic Session";
+        }
+
+        public class CampusOptions
+        {
+            public const string UNO = "UNO";
         }
     }
 }

@@ -46,7 +46,7 @@ namespace ClassroomAssignment
 
                     workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
                     ExcelSchedulePrinter printer = new ExcelSchedulePrinter(fileName, workbook);
-                    ICourseRepository courseRepository = InMemoryCourseRepository.getInstance();
+                    ICourseRepository courseRepository = CourseRepository.GetInstance();
                     //IRoomRepository roomRepository = InMemoryRoomRepository.getInstance();
 
                     new ScheduleVisualization(courseRepository, null, printer).PrintSchedule();

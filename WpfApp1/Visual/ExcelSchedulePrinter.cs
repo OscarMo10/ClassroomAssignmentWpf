@@ -66,7 +66,7 @@ namespace ClassroomAssignment.Model.Visual
 
         public void Print(ICourseRepository courseRepo, IRoomRepository roomRepo)
         {
-            List<Course> courses = courseRepo.Courses;
+            List<Course> courses = courseRepo.Courses.ToList();
             var test = courses.FindAll(x => x.RoomAssignment?.Equals("PKI 157") == true);
             List<Course> roomedCourses = courses.FindAll(x => x.AlreadyAssignedRoom && x.MeetingDays != null);
             Dictionary<string, List<Course>> roomCourseMap = getRoomNameToCoursesMap(roomedCourses);

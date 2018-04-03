@@ -15,19 +15,12 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="504" CanUserSortColumns="False">
+        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Courses}" AutoGenerateColumns="False" Height="504" CanUserSortColumns="False">
             <DataGrid.RowHeaderStyle>
                 <Style TargetType="{x:Type DataGridRowHeader}">
                     <Setter Property="Width" Value="25" />
                     <Style.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding NeedsRoom}" Value="True"/>
-                                <Condition Binding="{Binding AlreadyAssignedRoom}" Value="False"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Background" Value="Red"/>
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
+                        <MultiDataTrigger> 
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding NeedsRoom}" Value="True"/>
                                 <Condition Binding="{Binding AlreadyAssignedRoom}" Value="True"/>

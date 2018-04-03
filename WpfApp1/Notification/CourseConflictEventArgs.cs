@@ -8,8 +8,8 @@ namespace ClassroomAssignmentWpf.Notification
 {
     class CourseConflictEventArgs : EventArgs
     {
-        public IList<Conflict> Conflicts { get; }
-        public CourseConflictEventArgs(IList<Conflict> conflicts)
+        public List<Conflict> Conflicts { get; }
+        public CourseConflictEventArgs(List<Conflict> conflicts)
         {
             Conflicts = conflicts;
         }

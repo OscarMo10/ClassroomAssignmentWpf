@@ -19,6 +19,8 @@ namespace ClassroomAssignment.ViewModel
     {
         public bool ContinueButtonEnabled { get; } = false;
         ObservableCollection<Course> Courses { get; set; }
+        ObservableCollection<Conflict> Conflicts { get; }
+    
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,8 +31,6 @@ namespace ClassroomAssignment.ViewModel
             Courses = new ObservableCollection<Course>(courses);
             
             Courses.CollectionChanged += Courses_CollectionChanged;
-
-            
         }
 
        

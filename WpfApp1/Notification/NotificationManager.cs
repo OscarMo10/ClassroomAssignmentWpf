@@ -13,11 +13,11 @@ namespace ClassroomAssignmentWpf.Notification
     {
         private static NotificationManager _instance;
         private static CourseRepository _courseRepository;
-        public static RoomConflictFinder _roomConflictFinder { get; set; }
+        public static CourseConflictDetector _roomConflictFinder { get; set; }
 
         public static event EventHandler<CourseConflictEventArgs> OnCourseConflict;
 
-        private NotificationManager(CourseRepository courseRepository, RoomConflictFinder roomConflictFinder)
+        private NotificationManager(CourseRepository courseRepository, CourseConflictDetector roomConflictFinder)
         {
             _courseRepository = courseRepository;
             _roomConflictFinder = roomConflictFinder;

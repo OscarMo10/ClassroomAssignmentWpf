@@ -1,6 +1,5 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
-using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,10 +56,10 @@ namespace ClassroomAssignmentWpf.Model
           */ 
         public List<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
         {
-            var possibleRooms = roomRepository.Rooms.FindAll(m => m.maxCapacity >= minCapacity);
+            var possibleRooms = roomRepository.Rooms.FindAll(m => m.MaxCapacity >= minCapacity);
 
             var possibleConflictingCourses =
-               courseRepository.Courses.FindAll(m => m.AlreadyAssignedRoom && possibleRooms.Any(x => x.roomName == m.RoomAssignment));
+               courseRepository.Courses.FindAll(m => m.AlreadyAssignedRoom && possibleRooms.Any(x => x.RoomName == m.RoomAssignment));
 
             var coursesForRoom = from course in possibleConflictingCourses
                                  group course by course.RoomAssignment;
@@ -81,7 +80,7 @@ namespace ClassroomAssignmentWpf.Model
             }
 
             var availableRooms = from room in roomRepository.Rooms
-                                 where availableRoomNames.Contains(room.roomName)
+                                 where availableRoomNames.Contains(room.RoomName)
                                  select room;
 
             return availableRooms.ToList();

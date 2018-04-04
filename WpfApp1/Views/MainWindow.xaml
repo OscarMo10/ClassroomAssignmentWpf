@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Window1" WindowStartupLocation="CenterScreen">
 
-    <StackPanel Orientation="Vertical">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
@@ -15,7 +19,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Courses}" AutoGenerateColumns="False" Height="504" CanUserSortColumns="False">
+        <DataGrid x:Name="CoursesDataGrid" Grid.Row="0" ItemsSource="{Binding Courses}" AutoGenerateColumns="False" Height="513" CanUserSortColumns="False">
             <DataGrid.RowHeaderStyle>
                 <Style TargetType="{x:Type DataGridRowHeader}">
                     <Setter Property="Width" Value="25" />
@@ -49,6 +53,16 @@
             </DataGrid.Columns>
         </DataGrid>
 
-    </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <ListView ItemsSource="Conflicts">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:Name="ConflictTemplate">
+                        <TextBlock Text="Content"></TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+    </Grid>
 
 </Window>

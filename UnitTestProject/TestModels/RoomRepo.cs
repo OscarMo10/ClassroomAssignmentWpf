@@ -19,12 +19,12 @@ namespace UnitTestProject.TestModels
 
             Room myRoomList = new Room();
 
-            myRoomList.roomName = "PKI 153";
-            myRoomList.maxCapcity = 40;
+            myRoomList.RoomName = "PKI 153";
+            myRoomList.MaxCapacity = 40;
             Rooms.Add(myRoomList);
 
-            myRoomList.roomName = "PKI 261";
-            myRoomList.maxCapcity = 56;
+            myRoomList.RoomName = "PKI 261";
+            myRoomList.MaxCapacity = 56;
             Rooms.Add(myRoomList);
         }
 

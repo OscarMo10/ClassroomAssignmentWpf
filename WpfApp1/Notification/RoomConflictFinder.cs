@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignmentWpf.Notification
 {
-    public class RoomConflictFinder
+    public class CourseConflictDetector
     {
 
         /// <summary>

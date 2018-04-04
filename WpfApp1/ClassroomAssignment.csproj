@@ -94,7 +94,7 @@
     <Compile Include="Model\Rules.cs" />
     <Compile Include="Notification\Conflict.cs" />
     <Compile Include="Notification\CourseConflictEventArgs.cs" />
-    <Compile Include="Notification\NotficationManager.cs" />
+    <Compile Include="Notification\NotificationManager.cs" />
     <Compile Include="Notification\RoomConflictFinder.cs" />
     <Compile Include="ViewModel\CourseDetailViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

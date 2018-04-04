@@ -1,5 +1,6 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
+using ClassroomAssignmentWpf.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,15 @@ namespace ClassroomAssignmentWpf.Model
         public static List<Course> courseListing;
 
         //list with all the hardcoded rooms
-        public static List<Room> roomListing = hardCodedRoomRepo.Rooms;
+        //public static List<Room> roomListing = hardCodedRoomRepo.Rooms;
 
         //Room search results
         public List<Room> roomSearchResults;
 
         private IRoomRepository roomRepository;
         private ICourseRepository courseRepository;
-        private RoomSearch roomSearch; 
-        
+        private RoomSearch roomSearch;
+
 
         public RoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo, RoomSearch roomSearch)
         {
@@ -36,7 +37,7 @@ namespace ClassroomAssignmentWpf.Model
 
             this.roomSearch = roomSearch;
 
-            
+
         }
 
         /* Takes List<>rmSearch 
@@ -53,7 +54,7 @@ namespace ClassroomAssignmentWpf.Model
          *              
          *         
          *
-          */ 
+          */
         public List<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
         {
             var possibleRooms = roomRepository.Rooms.FindAll(m => m.MaxCapacity >= minCapacity);
@@ -71,20 +72,8 @@ namespace ClassroomAssignmentWpf.Model
             assignmentCourse.MeetingDays = meetingDays;
 
 
-            List<string> availableRoomNames = new List<string>();
-            foreach (var roomGroup in coursesForRoom)
-            {
-                assignmentCourse.RoomAssignment = roomGroup.Key;
-                List<Conflict> conflicts = roomConflictFinder.ConflictAmongCourses(roomGroup.ToList().Add(assignmentCourse));
-                if (conflicts.Count == 0) availableRoomNames.Add(roomGroup.Key);
-            }
+            return null;
 
-            var availableRooms = from room in roomRepository.Rooms
-                                 where availableRoomNames.Contains(room.RoomName)
-                                 select room;
-
-            return availableRooms.ToList();
         }
-
     }
 }

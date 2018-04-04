@@ -8,7 +8,11 @@
         Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
-            <Button Content="Create New Project" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
+            <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                <Button Content="Create New Project" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" Margin="0,0,0,10"/>
+                <Button Content="Existing Project" HorizontalAlignment="Center" Height="Auto" VerticalAlignment="Center" Width="106"/>
+
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

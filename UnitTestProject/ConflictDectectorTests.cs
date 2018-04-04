@@ -1,5 +1,4 @@
 ﻿using ClassroomAssignment.Model.Repo;
-using ClassroomAssignment.Repo;
 using ClassroomAssignmentWpf.Notification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -18,8 +17,8 @@ namespace UnitTestProject
         public void HasConflict_True()
         {
             ICourseRepository coureRepository = new ConflictingCourseRepo();
-            CourseConflictDetector detector = new CourseConflictDetector(courseRepository);
-            List<Conflict> conflicts = detector.ConflictsInvolvingCourse(course);
+            //CourseConflictDetector detector = new CourseConflictDetector(courseRepository);
+            //List<Conflict> conflicts = detector.ConflictsInvolvingCourse(course);
 
             //Assert.IsTrue(result.HasConflicts);
         }

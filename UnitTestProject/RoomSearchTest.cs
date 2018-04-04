@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ClassroomAssignment.Model;
-using ClassroomAssignment.Repo;
 using System.Diagnostics;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,7 +20,7 @@ namespace UnitTestProject
         {
             IRoomRepository roomRepo = null;
             ICourseRepository courseRepo = new NonConflictingCourseRepo();
-            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+            //RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
         }
 
         [TestMethod]
@@ -30,7 +29,7 @@ namespace UnitTestProject
         {
             IRoomRepository roomRepo = new RoomRepo();
             ICourseRepository courseRepo = null;
-            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+            //RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
         }
 
         [TestMethod]
@@ -40,7 +39,7 @@ namespace UnitTestProject
             IRoomRepository roomRepo = new RoomRepo();
             ICourseRepository courseRepo = new NonConflictingCourseRepo();
             
-            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+            //RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
         }
 
         //course repo in new method

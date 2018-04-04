@@ -9,22 +9,28 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="Export Room Schedules" Click="Menu_Export"/>
-                </MenuItem>
-            </Menu>
-        </DockPanel>
-        <DataGrid x:Name="CoursesDataGrid" Grid.Row="0" ItemsSource="{Binding Courses}" AutoGenerateColumns="False" Height="513" CanUserSortColumns="False">
+        <Menu Height="Auto" Width="Auto" Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="Export Room Schedules" Click="Menu_Export"/>
+            </MenuItem>
+        </Menu>
+        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Courses}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False">
             <DataGrid.RowHeaderStyle>
                 <Style TargetType="{x:Type DataGridRowHeader}">
                     <Setter Property="Width" Value="25" />
                     <Style.Triggers>
-                        <MultiDataTrigger> 
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedsRoom}" Value="True"/>
+                                <Condition Binding="{Binding AlreadyAssignedRoom}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="Red"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding NeedsRoom}" Value="True"/>
                                 <Condition Binding="{Binding AlreadyAssignedRoom}" Value="True"/>
@@ -44,7 +50,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True" Width="Auto"/>
                 <DataGridTextColumn Header="SIS ID" Binding="{Binding SIS_ID}" IsReadOnly="True" Width="Auto" />
-                <DataGridTextColumn Header="Course Title" Binding="{Binding Course_Title}" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn Header="Course Title" Binding="{Binding CourseTitle}" IsReadOnly="True" Width="Auto"/>
                 <DataGridTextColumn Header="Instruction Method" Binding="{Binding InstructionMethod}" IsReadOnly="True" Width="Auto" />
                 <DataGridTextColumn Header="Meeting Pattern" Binding="{Binding MeetingPattern}" IsReadOnly="True" Width="Auto" />
                 <DataGridTextColumn Header="Room" Binding="{Binding Room}" IsReadOnly="True" Width="Auto"/>
@@ -53,11 +59,11 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <ScrollViewer Grid.Row="1">
-            <ListView ItemsSource="Conflicts">
+        <ScrollViewer Grid.Row="2">
+            <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="ConflictTemplate">
-                        <TextBlock Text="Content"></TextBlock>
+                        <Label Content="{Binding Description}"></Label>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

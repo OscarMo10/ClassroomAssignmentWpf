@@ -21,7 +21,6 @@ namespace UnitTestProject
             CourseConflictDetector detector = new CourseConflictDetector(courseRepository);
             List<Conflict> conflicts = detector.ConflictsInvolvingCourse(course);
 
-#endif
             //Assert.IsTrue(result.HasConflicts);
         }
 

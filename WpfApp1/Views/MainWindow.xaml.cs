@@ -25,9 +25,6 @@ namespace ClassroomAssignment
         {
             InitializeComponent();
             DataContext = ViewModel;
-            //_sortedCourses = InMemoryCourseRepository.getInstance().Courses;
-            //_sortedCourses.Sort(CompareCourses);
-            //CoursesDataGrid.ItemsSource = _sortedCourses;
         }
 
 

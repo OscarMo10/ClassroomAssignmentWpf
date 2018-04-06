@@ -53,7 +53,7 @@ namespace ClassroomAssignment
             }
             List<Room> rooms = new List<Room>();
             List<Course> courses = SheetParser.Parse(docLocations, new InMemoryRoomRepository(rooms));
-            InMemoryCourseRepository.initInstance(courses);
+            CourseRepository.initInstance(courses);
 
 
             if (courses.FindAll(m =>m.AmbiguousState).Count > 0)
@@ -69,6 +69,11 @@ namespace ClassroomAssignment
 
             this.Close();
            
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

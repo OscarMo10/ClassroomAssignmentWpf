@@ -1,5 +1,5 @@
 ﻿using ClassroomAssignment.Model.Repo;
-using ClassroomAssignmentWpf.Notification;
+using ClassroomAssignment.Notification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -11,31 +11,44 @@ using UnitTestProject.TestModels;
 namespace UnitTestProject
 {
     [TestClass]
-    class ConflictDetectorTests
+    public class ConflictDetectorTests
     {
-        [TestMethod]
-        public void HasConflict_True()
+        private static ICourseRepository conflictingCourseRepo;
+        private static ICourseRepository nonConflictingCourseRepo;
+        
+        [ClassInitialize]
+        static public void Initialize(TestContext testContext)
         {
-            ICourseRepository coureRepository = new ConflictingCourseRepo();
-            //CourseConflictDetector detector = new CourseConflictDetector(courseRepository);
-            //List<Conflict> conflicts = detector.ConflictsInvolvingCourse(course);
-
-            //Assert.IsTrue(result.HasConflicts);
+            conflictingCourseRepo = new ConflictingCourseRepo();
+            nonConflictingCourseRepo = new NonConflictingCourseRepo();
         }
 
         [TestMethod]
-        public void HasConflict_False()
+        public void OnConflict_AllConflicts_ReturnsCorrectConflict()
         {
-            /*
-            ICourseRepository courseRepository = new NonConflictingCourseRepo();
-            ConflictDetectorTests detector = new ConflictDetector(courseRepository);
-            ConflictResult result = detector.FindConflicts();
+            CourseConflictDetector detector = new CourseConflictDetector(conflictingCourseRepo);
+            List<Conflict> conflicts = detector.AllConflicts();
 
-            Assert.IsFalse(result.HasConflicts);
-            */
+            Assert.IsTrue(conflicts.Count == 1);
+            var conflictingCourses = conflicts.First().ConflictingCourses;
+
+            Assert.AreEqual<int>(2, conflictingCourses.Count);
+            Assert.IsTrue(conflictingCourses.Exists(x => x.ClassID == "240"));
+            Assert.IsTrue(conflictingCourses.Exists(x => x.ClassID == "241"));
         }
 
-       
+        [TestMethod]
+        public void OnNoConflict_DetectorReturnEmptyList()
+        {
+            CourseConflictDetector detector = new CourseConflictDetector(nonConflictingCourseRepo);
+            List<Conflict> conflicts = detector.AllConflicts();
+
+            Assert.IsTrue(conflicts.Count == 0);
+        }
+
+
+
+
 
     }
 }

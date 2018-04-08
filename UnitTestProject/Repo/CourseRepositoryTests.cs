@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 namespace UnitTestProject
 {
     [TestClass]
-    class CourseRepositoryTest
+    class CourseRepositoryTests
     {
         public void CourseRepoCallsSubscribers_OnCourseModifiedEvent()
         {
-            Moq 
         }
     }
 }

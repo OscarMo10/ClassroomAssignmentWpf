@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClassroomAssignment.Notification;
+using ClassroomAssignment.Repo;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -10,54 +12,31 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Model.Repo
 {
-    class CourseRepository : ICourseRepository
+    class CourseRepository : ObservableCourseRepository
     {
         private static CourseRepository _instance;
-        private ObservableCollection<Course> _courses;
 
-        public event PropertyChangedEventHandler CourseModified;
-        public event NotifyCollectionChangedEventHandler CourseCollectionModified;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public List<Course> Courses {
-            get => _courses.ToList();
-        }
+        private CourseConflictDetector roomConflictDetector;
 
         public static CourseRepository GetInstance()
         {
             return _instance;
         }
+
         public static void initInstance(ICollection<Course> courses)
         {
             if (courses == null) throw new ArgumentNullException();
 
             _instance = new CourseRepository(courses);
+            _instance.roomConflictDetector = new CourseConflictDetector(_instance);
         }
 
-        private CourseRepository(ICollection<Course> courses)
+        private CourseRepository(ICollection<Course> courses) : base(courses)
         {
-            _courses = new ObservableCollection<Course>(courses);
-            _courses.CollectionChanged += _courses_CollectionChanged;
-            RegisterPropertyListeners();
         }
 
-        private void RegisterPropertyListeners()
-        {
-            foreach (var course in _courses)
-            {
-                course.PropertyChanged += Course_PropertyChanged;
-            }
-        }
+        public List<Conflict> GetConflicts() => roomConflictDetector.AllConflicts();
 
-        private void Course_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            CourseModified?.Invoke(sender, e);
-        }
-
-        private void _courses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            CourseCollectionModified?.Invoke(sender, e);
-        }
+        
     }
 }

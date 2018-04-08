@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClassroomAssignment.Model.Repo;
 using System;
 using UnitTestProject.TestModels;
-using ClassroomAssignmentWpf.Model;
+using ClassroomAssignment.Model;
 
 namespace UnitTestProject
 {
@@ -42,8 +42,6 @@ namespace UnitTestProject
             //RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
         }
 
-        //course repo in new method
-        //create new room repo where 
-        //
+      
     }
 }

@@ -33,7 +33,6 @@ namespace UnitTestProject.Util
             testCourse.IntegerPartner = string.Empty;
             testCourse.Comments = "PKI 153";
             testCourse.Notes = "PKI 157";
-            testCourse.AlreadyAssignedRoom = true;
 
             return testCourse;
         }

@@ -1,13 +1,13 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
-using ClassroomAssignmentWpf.Notification;
+using ClassroomAssignment.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassroomAssignmentWpf.Model
+namespace ClassroomAssignment.Model
 {
     public class RoomSearch
     {
@@ -60,7 +60,7 @@ namespace ClassroomAssignmentWpf.Model
             var possibleRooms = roomRepository.Rooms.FindAll(m => m.MaxCapacity >= minCapacity);
 
             var possibleConflictingCourses =
-               courseRepository.Courses.FindAll(m => m.AlreadyAssignedRoom && possibleRooms.Any(x => x.RoomName == m.RoomAssignment));
+               courseRepository.Courses.ToList().FindAll(m => m.AlreadyAssignedRoom && possibleRooms.Any(x => x.RoomName == m.RoomAssignment));
 
             var coursesForRoom = from course in possibleConflictingCourses
                                  group course by course.RoomAssignment;

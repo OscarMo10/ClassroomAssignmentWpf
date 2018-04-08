@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{29F2B28E-B471-49BA-8FE5-70C0A865C95E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ClassroomAssignmentWpf</RootNamespace>
+    <RootNamespace>ClassroomAssignment</RootNamespace>
     <AssemblyName>ClassroomAssignmentWpf</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -91,15 +91,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Extension\EnumExtensions.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomSearch.cs" />
-    <Compile Include="Model\Rules.cs" />
-    <Compile Include="Notification\Conflict.cs" />
+    <Compile Include="Repo\Conflict.cs" />
     <Compile Include="Notification\CourseConflictEventArgs.cs" />
     <Compile Include="Notification\NotificationManager.cs" />
-    <Compile Include="Notification\RoomConflictDetector.cs" />
+    <Compile Include="Repo\CourseConflictDetector.cs" />
+    <Compile Include="Repo\ObservableCourseRepository.cs" />
     <Compile Include="ViewModel\CourseDetailViewModel.cs" />
+    <Compile Include="ViewModel\GroupNameConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\SheetParser.cs" />
     <Compile Include="Repo\ICourseRepository.cs" />

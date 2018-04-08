@@ -51,5 +51,9 @@ namespace ClassroomAssignment
             }
 
         }
+
+        private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e)
+        {
+        }
     }
 }

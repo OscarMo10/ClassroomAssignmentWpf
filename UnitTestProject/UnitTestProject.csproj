@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConflictDectectorTests.cs" />
-    <Compile Include="Repo\CourseRepositoryTest.cs" />
+    <Compile Include="Repo\CourseRepositoryTests.cs" />
     <Compile Include="CVSHelperTests.cs" />
     <Compile Include="Repo\InMemoryRoomRepositoryTest.cs" />
     <Compile Include="NpoiTests.cs" />
@@ -94,7 +94,6 @@
     <Compile Include="TestModels\ConflictingCourseRepo.cs" />
     <Compile Include="TestModels\NonConflictingCourseRepo.cs" />
     <Compile Include="TestModels\RoomRepo.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Util\TestUtil.cs" />
     <Compile Include="UnitTest2.cs" />
   </ItemGroup>

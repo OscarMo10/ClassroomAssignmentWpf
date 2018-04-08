@@ -1,7 +1,7 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.Model.Visual;
-using ClassroomAssignmentWpf.Notification;
+using ClassroomAssignment.Notification;
 using Microsoft.Win32;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -19,28 +19,23 @@ namespace ClassroomAssignment.ViewModel
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         public bool ContinueButtonEnabled { get; } = false;
-        public ObservableCollection<Course> Courses { get; set; }
-        public List<Conflict> Conflicts { get; set; }
-        CourseConflictDetector detector;
+        public IList<Course> Courses { get; set; }
+        public IList<Conflict> Conflicts { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindowViewModel()
         {
             CourseRepository courseRepo = CourseRepository.GetInstance();
-            List<Course> courses = courseRepo.Courses;
-            courses.Sort(CompareCourses);
-            Courses = new ObservableCollection<Course>(courses);
-
-            detector = new CourseConflictDetector(courseRepo);
-            Conflicts = detector.AllConflicts();
-
+            Courses = courseRepo.Courses;
+            
+            Conflicts = courseRepo.GetConflicts();
             courseRepo.CourseModified += CourseRepo_CourseModified;
         }
 
         private void CourseRepo_CourseModified(object sender, PropertyChangedEventArgs e)
         {
-            Conflicts = detector.AllConflicts();
+            Conflicts = CourseRepository.GetInstance().GetConflicts();
             
         }
 

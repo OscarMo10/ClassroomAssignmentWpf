@@ -4,8 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassroomAssignment"
+        xmlns:vm="clr-namespace:ClassroomAssignment.ViewModel"
         mc:Ignorable="d"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         Title="Window1" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <CollectionViewSource x:Key="cvsCourses" Source="{Binding Courses}"
+                              Filter="CollectionViewSource_Filter" >
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Type"/>
+            </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Type" Direction="Ascending" />
+                <scm:SortDescription PropertyName="ClassID_AsInt" Direction="Ascending" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <vm:GroupNameConverter x:Key="converter"/>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,7 +34,42 @@
                 <MenuItem Header="Export Room Schedules" Click="Menu_Export"/>
             </MenuItem>
         </Menu>
-        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Courses}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False">
+        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <DockPanel>
+                                                    <TextBlock FontWeight="DemiBold" Text="{Binding Path=Name, Converter={StaticResource converter}}" Margin="0,0,10,0" >
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Name}" Value="NoRoomNeeded">
+                                                                        <Setter Property="Background" Value="Aqua"></Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding Path=ItemCount}" />
+                                                </DockPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter/>
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
             <DataGrid.RowHeaderStyle>
                 <Style TargetType="{x:Type DataGridRowHeader}">
                     <Setter Property="Width" Value="25" />
@@ -47,7 +98,7 @@
                 </Style>
             </DataGrid.RowHeaderStyle>
 
-            <DataGrid.Columns>
+            <DataGrid.Columns> 
                 <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True" Width="Auto"/>
                 <DataGridTextColumn Header="SIS ID" Binding="{Binding SIS_ID}" IsReadOnly="True" Width="Auto" />
                 <DataGridTextColumn Header="Course Title" Binding="{Binding CourseTitle}" IsReadOnly="True" Width="Auto"/>

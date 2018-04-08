@@ -12,7 +12,7 @@ namespace UnitTestProject.TestModels
     {
         private List<Course> _courses = new List<Course>();
 
-        public List<Course> Courses => _courses;
+        public IList<Course> Courses => _courses;
 
         public NonConflictingCourseRepo()
         {
@@ -40,7 +40,6 @@ namespace UnitTestProject.TestModels
             testCourse.InstructionMethod = "In Person";
             testCourse.Comments = "PKI 153";
             testCourse.Notes = "PKI 157";
-            testCourse.AlreadyAssignedRoom = true;
             testCourse.StartTime = new TimeSpan(13, 30, 0);
             testCourse.EndTime = new TimeSpan(14, 45, 0);
 
@@ -71,7 +70,6 @@ namespace UnitTestProject.TestModels
             testCourse.InstructionMethod = "In Person";
             testCourse.Comments = "";
             testCourse.Notes = "PKI 158";
-            testCourse.AlreadyAssignedRoom = true;
             testCourse.SetDerivedProperties();
 
             Courses.Add(testCourse);

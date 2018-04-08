@@ -15,7 +15,23 @@ namespace ClassroomAssignment.Model
 {
     public class Course : INotifyPropertyChanged
     {
-        // Original Attributes of Supplied Spreadsheets
+        public enum CourseState
+        {
+            [Description("Ambigious Assignment Courses")]
+            Ambiguous,
+            [Description("Unassigned Courses")]
+            Unassigned,
+            [Description("Assigned Courses")]
+            Assigned,
+            [Description("No Room Required")]
+            NoRoomRequired
+        };
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        #region Parsed Properties
+
         private string _classID;
         public string ClassID
         {
@@ -431,7 +447,11 @@ namespace ClassroomAssignment.Model
             }
         }
 
-        // Derived information
+        #endregion
+
+
+
+        #region Derived Properties
         private bool _ambiguousState;
         public bool AmbiguousState {
             get
@@ -451,35 +471,6 @@ namespace ClassroomAssignment.Model
 
             private set { }
         }
-
-        private bool HasMultipleRoomAssignments()
-        {
-            bool multipleAssignments = false;
-
-            Regex longPKI = new Regex(RoomOptions.PETER_KIEWIT_INSTITUTE_REGEX);
-            Regex shortPKI = new Regex(RoomOptions.PKI_REGEX);
-
-            Match roomColMatch = longPKI.Match(Room);
-            Match commentColMatch = shortPKI.Match(Comments);
-            Match notesColMatch = shortPKI.Match(Notes);
-
-            if (roomColMatch.Success || commentColMatch.Success || notesColMatch.Success)
-            {
-                if (roomColMatch.Success ^ commentColMatch.Success ^ notesColMatch.Success)
-                {
-                    multipleAssignments = false; ;
-                }
-                else
-                {
-                    multipleAssignments = true;
-                }
-            }
-
-            return multipleAssignments;
-
-        }
-
-
 
         private bool _needsRoom;
         public bool NeedsRoom
@@ -520,14 +511,63 @@ namespace ClassroomAssignment.Model
         public List<DayOfWeek> MeetingDays { get; set; }
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
+        public CourseState Type
+        {
+            get
+            {
+                if (AmbiguousState) return CourseState.Ambiguous;
+                if (AlreadyAssignedRoom) return CourseState.Assigned;
+                else if (NeedsRoom) return CourseState.Unassigned;
+                else return CourseState.NoRoomRequired;
+            }
+        }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public int ClassID_AsInt
+        {
+            get => int.Parse(ClassID);
+        }
+
+
+        #endregion
+
+
+        #region Private Methods
+        private bool HasMultipleRoomAssignments()
+        {
+            bool multipleAssignments = false;
+
+            Regex longPKI = new Regex(RoomOptions.PETER_KIEWIT_INSTITUTE_REGEX);
+            Regex shortPKI = new Regex(RoomOptions.PKI_REGEX);
+
+            Match roomColMatch = longPKI.Match(Room);
+            Match commentColMatch = shortPKI.Match(Comments);
+            Match notesColMatch = shortPKI.Match(Notes);
+
+            if (roomColMatch.Success || commentColMatch.Success || notesColMatch.Success)
+            {
+                if (roomColMatch.Success ^ commentColMatch.Success ^ notesColMatch.Success)
+                {
+                    multipleAssignments = false; ;
+                }
+                else
+                {
+                    multipleAssignments = true;
+                }
+            }
+
+            return multipleAssignments;
+
+        }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        #endregion
+
+
+        #region Public Methods
         /// <summary>
         /// Convienence method. Sets the MeetingDays, StartTime, EndTime, NeedsRoom, and RoomAssignment, using the other properties of Course.
         /// </summary>
@@ -537,6 +577,7 @@ namespace ClassroomAssignment.Model
             SetNeedsRoom();
             SetRoomAssignment();
         }
+
 
         /// <summary>
         /// Sets the MeetingDays, StartTime, EndTime properties using the state of the Course object.
@@ -610,9 +651,10 @@ namespace ClassroomAssignment.Model
             {
                 RoomAssignment = Notes;
             }
-
         }
+
+        #endregion
     }
 
-    
+
 }

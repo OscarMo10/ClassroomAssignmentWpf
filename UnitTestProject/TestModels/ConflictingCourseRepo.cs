@@ -12,7 +12,7 @@ namespace UnitTestProject.TestModels
     {
         private List<Course> _courses = new List<Course>();
 
-        public List<Course> Courses => _courses;
+        public IList<Course> Courses => _courses;
 
         public ConflictingCourseRepo()
         {
@@ -23,7 +23,7 @@ namespace UnitTestProject.TestModels
         public void AddCourse1()
         {
             Course testCourse = new Course();
-            testCourse.ClassID = "239";
+            testCourse.ClassID = "240";
             testCourse.SIS_ID = "12615";
             testCourse.TermCode = "1188";
             testCourse.DepartmentCode = "UNO-BIOI";
@@ -53,7 +53,7 @@ namespace UnitTestProject.TestModels
         public void AddCourse2()
         {
             Course testCourse = new Course();
-            testCourse.ClassID = "139";
+            testCourse.ClassID = "241";
             testCourse.SIS_ID = "12134";
             testCourse.TermCode = "1188";
             testCourse.DepartmentCode = "UNO-BIOI";
@@ -62,6 +62,31 @@ namespace UnitTestProject.TestModels
             testCourse.CourseTitle = "BIOI 1001";
             testCourse.SectionNumber = "1";
             testCourse.MeetingPattern = "MW 1:45pm-3:00pm";
+            testCourse.Instructor = "Dandy, Maley";
+            testCourse.Room = "General Assignment Room";
+            testCourse.Status = "Active";
+            testCourse.Session = "Regular Academic Session";
+            testCourse.Campus = "UNO";
+            testCourse.InstructionMethod = "In Person";
+            testCourse.Comments = "";
+            testCourse.Notes = "PKI 157";
+            testCourse.SetDerivedProperties();
+
+            Courses.Add(testCourse);
+        }
+
+        public void AddCourse3()
+        {
+            Course testCourse = new Course();
+            testCourse.ClassID = "242";
+            testCourse.SIS_ID = "12134";
+            testCourse.TermCode = "1188";
+            testCourse.DepartmentCode = "UNO-BIOI";
+            testCourse.SubjectCode = "BIOI";
+            testCourse.CatalogNumber = "1001";
+            testCourse.CourseTitle = "BIOI 1001";
+            testCourse.SectionNumber = "1";
+            testCourse.MeetingPattern = "W 4:45pm-6:00pm";
             testCourse.Instructor = "Dandy, Maley";
             testCourse.Room = "General Assignment Room";
             testCourse.Status = "Active";

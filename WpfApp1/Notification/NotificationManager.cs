@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 
-namespace ClassroomAssignmentWpf.Notification
+namespace ClassroomAssignment.Notification
 {
     class NotificationManager
     {

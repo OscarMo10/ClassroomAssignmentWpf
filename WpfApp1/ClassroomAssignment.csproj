@@ -99,6 +99,7 @@
     <Compile Include="Notification\NotificationManager.cs" />
     <Compile Include="Repo\CourseConflictDetector.cs" />
     <Compile Include="Repo\ObservableCourseRepository.cs" />
+    <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\CourseDetailViewModel.cs" />
     <Compile Include="ViewModel\GroupNameConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -110,6 +111,9 @@
     <Compile Include="Utils\DateUtil.cs" />
     <Compile Include="Utils\NpoiUtil.cs" />
     <Compile Include="Utils\TimeUtil.cs" />
+    <Compile Include="Views\AssignmentWindow.xaml.cs">
+      <DependentUpon>AssignmentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CourseDetailWindow.xaml.cs">
       <DependentUpon>CourseDetailWindow.xaml</DependentUpon>
     </Compile>
@@ -122,6 +126,10 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AssignmentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CourseDetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

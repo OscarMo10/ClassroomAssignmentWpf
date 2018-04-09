@@ -23,7 +23,7 @@ namespace UnitTestProject.TestModels
         public void AddCourse1()
         {
             Course testCourse = new Course();
-            testCourse.ClassID = "239";
+            testCourse.ClassID = "1";
             testCourse.SIS_ID = "12615";
             testCourse.TermCode = "1188";
             testCourse.DepartmentCode = "UNO-BIOI";
@@ -38,7 +38,7 @@ namespace UnitTestProject.TestModels
             testCourse.Session = "Regular Academic Session";
             testCourse.Campus = "UNO";
             testCourse.InstructionMethod = "In Person";
-            testCourse.Comments = "PKI 153";
+            testCourse.Comments = "";
             testCourse.Notes = "PKI 157";
             testCourse.StartTime = new TimeSpan(13, 30, 0);
             testCourse.EndTime = new TimeSpan(14, 45, 0);
@@ -53,7 +53,7 @@ namespace UnitTestProject.TestModels
         public void AddCourse2()
         {
             Course testCourse = new Course();
-            testCourse.ClassID = "139";
+            testCourse.ClassID = "2";
             testCourse.SIS_ID = "12134";
             testCourse.TermCode = "1188";
             testCourse.DepartmentCode = "UNO-BIOI";

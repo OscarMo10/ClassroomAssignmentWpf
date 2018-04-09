@@ -14,18 +14,19 @@ namespace UnitTestProject.TestModels
 
         public RoomRepo()
         {
-            this.Rooms = new List<Room>();
+            Rooms = new List<Room>();
 
 
-            Room myRoomList = new Room();
+            Room room1 = new Room();
 
-            myRoomList.RoomName = "PKI 153";
-            myRoomList.MaxCapacity = 40;
-            Rooms.Add(myRoomList);
+            room1.RoomName = "PKI 157";
+            room1.MaxCapacity = 40;
+            Rooms.Add(room1);
 
-            myRoomList.RoomName = "PKI 261";
-            myRoomList.MaxCapacity = 56;
-            Rooms.Add(myRoomList);
+            Room room2 = new Room();
+            room2.RoomName = "PKI 158";
+            room2.MaxCapacity = 56;
+            Rooms.Add(room2);
         }
 
         public string GetNormalizedRoomName(string roomName)

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ClassroomAssignment.Model.Visual;
 using ClassroomAssignment.ViewModel;
+using System.Diagnostics;
 
 namespace ClassroomAssignment
 {
@@ -54,6 +55,19 @@ namespace ClassroomAssignment
 
         private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e)
         {
+        }
+
+      
+       
+
+        private void AssignMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var course = CoursesDataGrid.CurrentItem as Course;
+         }
+
+        private void ReassignMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

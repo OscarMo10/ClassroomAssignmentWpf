@@ -12,68 +12,59 @@ namespace ClassroomAssignment.Model
     public class RoomSearch
     {
 
-        ////hardcoded repos
-        //public  HardCodedCourseRepo myhardCodedCourseRepo = new HardCodedCourseRepo();
-        //public static HardCodedRoomRepo hardCodedRoomRepo = new HardCodedRoomRepo();
-
-        //list with all the courses
-        public static List<Course> courseListing;
-
-        //list with all the hardcoded rooms
-        //public static List<Room> roomListing = hardCodedRoomRepo.Rooms;
-
-        //Room search results
-        public List<Room> roomSearchResults;
-
         private IRoomRepository roomRepository;
         private ICourseRepository courseRepository;
-        private RoomSearch roomSearch;
 
 
-        public RoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo, RoomSearch roomSearch)
+        public RoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo)
         {
-            if (roomRepo == null) throw new ArgumentNullException();
-            if (courseRepo == null) throw new ArgumentNullException();
+            roomRepository = roomRepo ?? throw new ArgumentNullException();
+            courseRepository = courseRepo ?? throw new ArgumentNullException();
+        }
 
-            this.roomSearch = roomSearch;
+        
+        public List<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
+        {
+            var possibleRooms = from room in roomRepository.Rooms
+                                where room.MaxCapacity >= minCapacity
+                                select room;
 
+           
+            var coursesForRoom = from course in courseRepository.Courses
+                                 where course.AlreadyAssignedRoom
+                                 join room in possibleRooms on course.RoomAssignment equals room.RoomName
+                                 group course by course.RoomAssignment;
+
+            List<Room> availableRooms = new List<Room>();
+            foreach(var courseGroup in coursesForRoom)
+            {
+                if (!CoursesConflictWithTime(courseGroup, startTime, endTime))
+                {
+                    availableRooms.Add(roomRepository.Rooms.Find(x => x.RoomName == courseGroup.Key));
+                }
+            }
+
+            return availableRooms;
 
         }
 
-        /* Takes List<>rmSearch 
-         * searchRooms takes a room list and courseListing 
-         * 
-         * go down list of rooms, check max seating for each room not more than max of room
-         * if mySelectedCourse doesn't have a room assigned
-         *  then go through list of currentCourses with assigned room, time and days
-         *      for current room
-         *          if ( (currentCourse.startTime <= mySelectedCourse.startTime <= currentCourse.endTime) || (currentCourse.StartTime <= mySelectedCourse.EndTime <= currentCourse.EndTime) )
-         *              check next room in room List
-         *          else
-         *              check next course in currentCourses
-         *              
-         *         
-         *
-          */
-        public List<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
+        private bool CoursesConflictWithTime(IGrouping<string, Course> courseGroup, TimeSpan startTime, TimeSpan endTime)
         {
-            var possibleRooms = roomRepository.Rooms.FindAll(m => m.MaxCapacity >= minCapacity);
+            bool hasConflict = true;
 
-            var possibleConflictingCourses =
-               courseRepository.Courses.ToList().FindAll(m => m.AlreadyAssignedRoom && possibleRooms.Any(x => x.RoomName == m.RoomAssignment));
+            foreach (var course in courseGroup)
+            {
+                if (course.EndTime < startTime)
+                {
+                    hasConflict = false;
+                }
+                else if (course.StartTime > endTime)
+                {
+                    hasConflict = false;
+                }
+            }
 
-            var coursesForRoom = from course in possibleConflictingCourses
-                                 group course by course.RoomAssignment;
-
-
-            Course assignmentCourse = new Course();
-            assignmentCourse.StartTime = startTime;
-            assignmentCourse.EndTime = endTime;
-            assignmentCourse.MeetingDays = meetingDays;
-
-
-            return null;
-
+            return hasConflict;
         }
     }
 }

@@ -35,6 +35,21 @@
             </MenuItem>
         </Menu>
         <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
+            <DataGrid.ContextMenu>
+                <ContextMenu >
+                    <MenuItem x:Name="AssignMenuItem" Header="Assign this" Click="AssignMenuItem_Click">
+                        <MenuItem.Style>
+                            <Style TargetType="{x:Type MenuItem}">
+                                <Style.Triggers>
+                                    <DataTrigger>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem x:Name="ReassignMenuItem" Header="Reassign" Click="ReassignMenuItem_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>

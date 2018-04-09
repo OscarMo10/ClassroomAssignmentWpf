@@ -24,6 +24,8 @@ namespace ClassroomAssignment.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public Course.CourseState Assigned { get; } = Course.CourseState.Assigned;
+
         public MainWindowViewModel()
         {
             CourseRepository courseRepo = CourseRepository.GetInstance();

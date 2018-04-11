@@ -9,7 +9,10 @@
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         Title="Window1" WindowStartupLocation="CenterScreen">
 
-    <Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="vm:CustomCommands.Assign" CanExecute="AssignClassCommand_CanExecute" Executed="AssignClassCommand_Executed"/>
+    </Window.CommandBindings>
+        <Window.Resources>
         <CollectionViewSource x:Key="cvsCourses" Source="{Binding Courses}"
                               Filter="CollectionViewSource_Filter" >
             <CollectionViewSource.GroupDescriptions>
@@ -36,10 +39,10 @@
         </Menu>
         <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
             <DataGrid.ContextMenu>
-                <ContextMenu >
-                    <MenuItem x:Name="AssignMenuItem" Header="Assign this" Click="AssignMenuItem_Click">
+                <ContextMenu>
+                    <MenuItem x:Name="AssignMenuItem" Header="Assign this" Command="vm:CustomCommands.Assign">
                         <MenuItem.Style>
-                            <Style TargetType="{x:Type MenuItem}">
+                                <Style TargetType="{x:Type MenuItem}">
                                 <Style.Triggers>
                                     <DataTrigger>
                                     </DataTrigger>

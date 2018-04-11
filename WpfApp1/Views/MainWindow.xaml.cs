@@ -13,6 +13,8 @@ using System.Windows;
 using ClassroomAssignment.Model.Visual;
 using ClassroomAssignment.ViewModel;
 using System.Diagnostics;
+using System.Windows.Input;
+using ClassroomAssignment.Views;
 
 namespace ClassroomAssignment
 {
@@ -68,6 +70,26 @@ namespace ClassroomAssignment
         private void ReassignMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void AssignClassCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Course selectedCourse = CoursesDataGrid.CurrentItem as Course;
+
+            if (selectedCourse == null) e.CanExecute = false;
+            else e.CanExecute = true;
+        }
+
+        private void AssignClassCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Course selectedCourse = CoursesDataGrid.CurrentItem as Course;
+
+            List<Course> courses = new List<Course>();
+            courses.Add(selectedCourse);
+            var assignmentWindow = new AssignmentWindow(courses);
+            assignmentWindow.Show();
+
+            Close();
         }
     }
 }

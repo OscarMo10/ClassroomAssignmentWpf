@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ClassroomAssignment.Model;
+using ClassroomAssignment.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +22,27 @@ namespace ClassroomAssignment.Views
     /// </summary>
     public partial class AssignmentWindow : Window
     {
-        public AssignmentWindow()
+        private AssignmentViewModel viewModel;
+        public AssignmentWindow(List<Course> courses)
         {
             InitializeComponent();
+            viewModel = new AssignmentViewModel(courses);
+            DataContext = viewModel;
+
+            AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
+        }
+
+      
+
+        private void AssignCoursesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Course course = AssignCoursesListView.SelectedItem as Course;
+            viewModel.SelectCourse(course);
+        }
+
+        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Debug.Write("Hello");
         }
     }
 }

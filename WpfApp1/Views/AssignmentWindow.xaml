@@ -5,17 +5,178 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassroomAssignment.Views"
         mc:Ignorable="d"
-        Title="AssignmentWindow" Height="450" Width="800">
+        Title="AssignmentWindow" Height="Auto" Width="800">
     <Grid>
-        <ListView ItemsSource="{Binding CoursesBeingAssigned}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" Grid.Column="0" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding ClassTitle}"/>
-                        <Label Content="{Binding SectionID}" />
+                        <Label Content="{Binding CourseTitle}" FontSize="10" Margin="0,0,5,0"/>
+                        <Label Content="{Binding SectionNumber}" FontSize="10" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1" DataContext="{Binding SelectedCourse}">
+            <Label Content="Section Information"/>
+            <Separator/>
+
+            <Grid Height="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Title/Topic"/>
+                        <Label Content="{Binding CourseTitle}" BorderBrush="Black"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Section #"/>
+                        <Label Content="{Binding SectionNumber}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Credit Hrs"/>
+                        <Label Content="{Binding CreditHrs}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Status"/>
+                        <Label Content="{Binding Status}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Grade Mode"/>
+                        <Label Content="{Binding GradeMode}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Session"/>
+                        <Label Content="{Binding Session}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Campus"/>
+                        <Label Content="{Binding Campus}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Instr. Method"/>
+                        <Label Content="{Binding InstructionMethod}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Section Type"/>
+                        <Label Content="{Binding SectionType}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Grade Mode"/>
+                        <Label Content="{Binding GradeMode}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Label Content="Instructor" FontWeight="Bold"/>
+                    <Label Content="{Binding Instructor}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <Label Content="Room" FontWeight="Bold"/>
+                    <Label Content="{Binding Room}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <Label Content="Schedule" FontWeight="Bold"/>
+                    <Label Content="{Binding MeetingPattern}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Label Content="Enrollment" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Maximum"/>
+                            <Label Content="{Binding MaximumEnrollment}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Wait Cap"/>
+                            <Label Content="{Binding WaitCap}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Rm Cap Request"/>
+                            <Label Content="{Binding RoomCapRequest}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <Label Content="Notes" FontWeight="Bold"/>
+                    <Label Content="{Binding Notes}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Label Content="Available Rooms" HorizontalAlignment="Center"/>
+                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding RoomName}" MinWidth="10" FontWeight="DemiBold"/>
+                                    <Label Content="Capacity: " />
+                                    <Label Content="{Binding Capacity}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
+                    <TextBlock x:Name="RoomAssignmentTextBlock" />
+                    <Label x:Name="AssignmentStatusLabel"/>
+                </StackPanel>
+            </Grid>
+            <Button Content="Save" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,21,0,0" />
+
+
+
+
+
+        </StackPanel>
     </Grid>
 </Window>

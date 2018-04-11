@@ -26,11 +26,11 @@ namespace ClassroomAssignment.Model
         public List<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
         {
             var possibleRooms = from room in roomRepository.Rooms
-                                where room.MaxCapacity >= minCapacity
+                                where room.Capacity >= minCapacity
                                 select room;
 
            
-            var coursesForRoom = from course in courseRepository.Courses
+             var coursesForRoom = from course in courseRepository.Courses
                                  where course.AlreadyAssignedRoom
                                  join room in possibleRooms on course.RoomAssignment equals room.RoomName
                                  group course by course.RoomAssignment;

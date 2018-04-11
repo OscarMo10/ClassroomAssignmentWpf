@@ -51,8 +51,9 @@ namespace ClassroomAssignment
             {
                 return;
             }
-            List<Room> rooms = new List<Room>();
-            List<Course> courses = SheetParser.Parse(docLocations, new InMemoryRoomRepository(rooms));
+
+            RoomRepository.InitInstance();
+            List<Course> courses = SheetParser.Parse(docLocations, RoomRepository.GetInstance());
             CourseRepository.initInstance(courses);
 
 

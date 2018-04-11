@@ -13,6 +13,6 @@ namespace ClassroomAssignment.Model
     public class Room
     {
         public string RoomName { get; set; }
-        public int MaxCapacity { get; set; }
+        public int Capacity { get; set; }
     }
 }

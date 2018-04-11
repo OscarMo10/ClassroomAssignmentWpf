@@ -28,8 +28,8 @@ namespace UnitTestProject
             var testFolder = Path.Combine(debugFolder, "testData");
             var files = Directory.GetFiles(testFolder);
 
-            InMemoryRoomRepository.initInstance(roomList);
-            courseList = SheetParser.Parse(files, InMemoryRoomRepository.getInstance());
+            RoomRepository.InitInstance(roomList);
+            courseList = SheetParser.Parse(files, RoomRepository.GetInstance());
             firstCourseRecord = courseList.First();
         }
 

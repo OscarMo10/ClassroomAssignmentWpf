@@ -101,12 +101,13 @@
     <Compile Include="Repo\ObservableCourseRepository.cs" />
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\CourseDetailViewModel.cs" />
+    <Compile Include="ViewModel\CustomCommands.cs" />
     <Compile Include="ViewModel\GroupNameConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\SheetParser.cs" />
     <Compile Include="Repo\ICourseRepository.cs" />
     <Compile Include="Repo\CourseRepository.cs" />
-    <Compile Include="Repo\InMemoryRoomRepository.cs" />
+    <Compile Include="Repo\RoomRepository.cs" />
     <Compile Include="Repo\IRoomRepository.cs" />
     <Compile Include="Utils\DateUtil.cs" />
     <Compile Include="Utils\NpoiUtil.cs" />

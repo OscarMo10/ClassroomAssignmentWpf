@@ -20,12 +20,12 @@ namespace UnitTestProject.TestModels
             Room room1 = new Room();
 
             room1.RoomName = "PKI 157";
-            room1.MaxCapacity = 40;
+            room1.Capacity = 40;
             Rooms.Add(room1);
 
             Room room2 = new Room();
             room2.RoomName = "PKI 158";
-            room2.MaxCapacity = 56;
+            room2.Capacity = 56;
             Rooms.Add(room2);
         }
 

@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassroomAssignment.Notification
+namespace ClassroomAssignment.Repo
 {
-    public class CourseConflictDetector
+    public class RoomConflictDetector
     {
         private ICourseRepository courseRepository;
 
-        public CourseConflictDetector(ICourseRepository courseRepo)
+        public RoomConflictDetector(ICourseRepository courseRepo)
         {
             courseRepository = courseRepo;
         }
@@ -65,15 +65,6 @@ namespace ClassroomAssignment.Notification
             return hasConflict;
         }
 
-        /// <summary>
-        /// Return list of conflicts involving <paramref name="course"/> and the rest of the courses in the repo.
-        /// </summary>
-        /// <param name="course"></param>
-        /// <returns></returns>
-        public List<Conflict> ConflictsInvolvingCourse(Course course)
-        {
-            return new List<Conflict>();
-        }
 
         /// <summary>
         /// Finds conflicts involving the <paramref name="courses"/> and the rest of the courses in the CourseRepo

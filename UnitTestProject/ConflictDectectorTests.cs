@@ -26,7 +26,7 @@ namespace UnitTestProject
         [TestMethod]
         public void OnConflict_AllConflicts_ReturnsCorrectConflict()
         {
-            CourseConflictDetector detector = new CourseConflictDetector(conflictingCourseRepo);
+            RoomConflictDetector detector = new RoomConflictDetector(conflictingCourseRepo);
             List<Conflict> conflicts = detector.AllConflicts();
 
             Assert.IsTrue(conflicts.Count == 1);
@@ -40,7 +40,7 @@ namespace UnitTestProject
         [TestMethod]
         public void OnNoConflict_DetectorReturnEmptyList()
         {
-            CourseConflictDetector detector = new CourseConflictDetector(nonConflictingCourseRepo);
+            RoomConflictDetector detector = new RoomConflictDetector(nonConflictingCourseRepo);
             List<Conflict> conflicts = detector.AllConflicts();
 
             Assert.IsTrue(conflicts.Count == 0);

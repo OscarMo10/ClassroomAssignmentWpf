@@ -97,7 +97,7 @@
     <Compile Include="Repo\Conflict.cs" />
     <Compile Include="Notification\CourseConflictEventArgs.cs" />
     <Compile Include="Notification\NotificationManager.cs" />
-    <Compile Include="Repo\CourseConflictDetector.cs" />
+    <Compile Include="Repo\RoomConflictDetector.cs" />
     <Compile Include="Repo\ObservableCourseRepository.cs" />
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\CourseDetailViewModel.cs" />

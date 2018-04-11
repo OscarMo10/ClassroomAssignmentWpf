@@ -16,7 +16,7 @@ namespace ClassroomAssignment.Model.Repo
     {
         private static CourseRepository _instance;
 
-        private CourseConflictDetector roomConflictDetector;
+        private RoomConflictDetector roomConflictDetector;
 
         public static CourseRepository GetInstance()
         {
@@ -28,7 +28,7 @@ namespace ClassroomAssignment.Model.Repo
             if (courses == null) throw new ArgumentNullException();
 
             _instance = new CourseRepository(courses);
-            _instance.roomConflictDetector = new CourseConflictDetector(_instance);
+            _instance.roomConflictDetector = new RoomConflictDetector(_instance);
         }
 
         private CourseRepository(ICollection<Course> courses) : base(courses)

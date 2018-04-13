@@ -20,7 +20,7 @@ namespace UnitTestProject
         {
             IRoomRepository roomRepo = null;
             ICourseRepository courseRepo = new NonConflictingCourseRepo();
-            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+            AvailableRoomSearch roomSearch = new AvailableRoomSearch(roomRepo, courseRepo);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace UnitTestProject
         {
             IRoomRepository roomRepo = new RoomRepo();
             ICourseRepository courseRepo = null;
-            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+            AvailableRoomSearch roomSearch = new AvailableRoomSearch(roomRepo, courseRepo);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace UnitTestProject
             IRoomRepository roomRepo = new RoomRepo();
             ICourseRepository courseRepo = new NonConflictingCourseRepo();
 
-            RoomSearch roomSearch = new RoomSearch(roomRepo, courseRepo);
+            AvailableRoomSearch roomSearch = new AvailableRoomSearch(roomRepo, courseRepo);
             var meetingDays = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Wednesday };
             var startingTime = new TimeSpan(12, 0, 0);
             var endingTime = new TimeSpan(13, 35, 0);

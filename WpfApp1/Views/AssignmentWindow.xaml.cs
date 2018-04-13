@@ -30,13 +30,15 @@ namespace ClassroomAssignment.Views
             DataContext = viewModel;
 
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
+
+            InitScheduleView();
         }
 
       
 
         private void AssignCoursesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Course course = AssignCoursesListView.SelectedItem as Course;
+             Course course = AssignCoursesListView.SelectedItem as Course;
             viewModel.SelectCourse(course);
         }
 
@@ -44,5 +46,22 @@ namespace ClassroomAssignment.Views
         {
             Debug.Write("Hello");
         }
+
+        private void InitScheduleView()
+        {
+            ScheduleVisualGrid.RowDefinitions.Add(new RowDefinition());
+            ScheduleVisualGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            var roomScheduleView = new RoomScheduleView();
+            roomScheduleView.SetRoomName("PKI 155");
+            roomScheduleView.SetRoomCapacity("10");
+            ScheduleVisualGrid.Children.Add(roomScheduleView);
+
+
+            Grid.SetRow(roomScheduleView, 0);
+            Grid.SetColumn(roomScheduleView, 0);
+            
+        }
+
+        
     }
 }

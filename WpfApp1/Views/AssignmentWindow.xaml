@@ -10,6 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" Grid.Column="0" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick">
@@ -178,5 +179,10 @@
 
 
         </StackPanel>
+
+        <Grid x:Name="ScheduleVisualGrid" Grid.Column="2" ShowGridLines="True" Width="300" Height="300">
+            
+            
+        </Grid>
     </Grid>
 </Window>

@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassroomAssignment.Model
+namespace ClassroomAssignment.Operations
 {
-    public class RoomSearch
+    public class AvailableRoomSearch
     {
 
         private IRoomRepository roomRepository;
         private ICourseRepository courseRepository;
 
 
-        public RoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo)
+        public AvailableRoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo)
         {
             roomRepository = roomRepo ?? throw new ArgumentNullException();
             courseRepository = courseRepo ?? throw new ArgumentNullException();
@@ -66,5 +66,6 @@ namespace ClassroomAssignment.Model
 
             return hasConflict;
         }
+
     }
 }

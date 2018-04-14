@@ -73,6 +73,13 @@ namespace ClassroomAssignment.Repo
         /// <returns></returns>
         public List<Conflict> ConflictsInvolvingCourses(List<Course> courses)
         {
+
+            var roomGroups = from courseA in courseRepository.Courses
+                             join courseB in courses on courseA.RoomAssignment equals courseB.RoomAssignment
+                             group courseB by courseB.RoomAssignment;
+
+
+
             return new List<Conflict>();
         }
 

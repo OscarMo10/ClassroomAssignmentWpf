@@ -28,7 +28,7 @@ namespace UnitTestProject
             var testFolder = Path.Combine(debugFolder, "testData");
             var files = Directory.GetFiles(testFolder);
 
-            RoomRepository.InitInstance(roomList);
+            RoomRepository.InitInstance();
             courseList = SheetParser.Parse(files, RoomRepository.GetInstance());
             firstCourseRecord = courseList.First();
         }

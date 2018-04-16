@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClassroomAssignment.Model.Repo;
 using System;
 using UnitTestProject.TestModels;
-
+using ClassroomAssignment.Operations;
 
 namespace UnitTestProject
 {

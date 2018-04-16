@@ -1,5 +1,6 @@
 ﻿using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.Notification;
+using ClassroomAssignment.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace UnitTestProject
         [TestMethod]
         public void OnConflict_AllConflicts_ReturnsCorrectConflict()
         {
-            RoomConflictDetector detector = new RoomConflictDetector(conflictingCourseRepo);
+            AssignmentConflictDetector detector = new AssignmentConflictDetector(conflictingCourseRepo);
             List<Conflict> conflicts = detector.AllConflicts();
 
             Assert.IsTrue(conflicts.Count == 1);
@@ -40,7 +41,7 @@ namespace UnitTestProject
         [TestMethod]
         public void OnNoConflict_DetectorReturnEmptyList()
         {
-            RoomConflictDetector detector = new RoomConflictDetector(nonConflictingCourseRepo);
+            AssignmentConflictDetector detector = new AssignmentConflictDetector(nonConflictingCourseRepo);
             List<Conflict> conflicts = detector.AllConflicts();
 
             Assert.IsTrue(conflicts.Count == 0);

@@ -15,15 +15,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace ClassroomAssignment.ViewModel
 {
+    [Serializable]
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         public bool ContinueButtonEnabled { get; } = false;
         public IList<Course> Courses { get; set; }
         public IList<Conflict> Conflicts { get; set; }
 
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Course.CourseState Assigned { get; } = Course.CourseState.Assigned;

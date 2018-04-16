@@ -10,9 +10,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static ClassroomAssignment.Model.DataConstants;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace ClassroomAssignment.Model
 {
+    [Serializable]
     public class Course : INotifyPropertyChanged
     {
         public enum CourseState
@@ -27,6 +32,7 @@ namespace ClassroomAssignment.Model
             NoRoomRequired
         };
 
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
 

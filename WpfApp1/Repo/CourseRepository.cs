@@ -10,9 +10,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace ClassroomAssignment.Model.Repo
 {
+    [Serializable]
     class CourseRepository : ObservableCourseRepository
     {
         private static CourseRepository _instance;

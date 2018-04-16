@@ -35,6 +35,8 @@
         <Menu Height="Auto" Width="Auto" Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="Export Room Schedules" Click="Menu_Export"/>
+                <MenuItem Header="_Save" Click="Menu_Save"/>
+
             </MenuItem>
         </Menu>
         <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">

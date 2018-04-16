@@ -21,16 +21,17 @@ namespace ClassroomAssignment.Operations
             get
             {
                 StringBuilder builder = new StringBuilder();
-
+                var conflictRoomNumber = "";
                 foreach (var course in ConflictingCourses)
                 {
                     builder.Append(course.ClassID);
                     builder.Append(", ");
+                    conflictRoomNumber = course.RoomAssignment;
                 }
 
                 builder.Remove(builder.Length - 2, 2);
-                builder.Append(" Are In Conflict.");
-
+                builder.Append(" Are In Conflict in ");
+                builder.Append(conflictRoomNumber);
                 return builder.ToString();
             }
         }

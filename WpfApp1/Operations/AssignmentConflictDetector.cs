@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassroomAssignment.Repo
+namespace ClassroomAssignment.Operations
 {
-    public class RoomConflictDetector
+    public class AssignmentConflictDetector
     {
         private ICourseRepository courseRepository;
 
-        public RoomConflictDetector(ICourseRepository courseRepo)
+        public AssignmentConflictDetector(ICourseRepository courseRepo)
         {
             courseRepository = courseRepo;
         }
@@ -73,14 +73,8 @@ namespace ClassroomAssignment.Repo
         /// <returns></returns>
         public List<Conflict> ConflictsInvolvingCourses(List<Course> courses)
         {
-
-            var roomGroups = from courseA in courseRepository.Courses
-                             join courseB in courses on courseA.RoomAssignment equals courseB.RoomAssignment
-                             group courseB by courseB.RoomAssignment;
-
-
-
-            return new List<Conflict>();
+            List<Conflict> allConflicts = AllConflicts();
+            return allConflicts.FindAll(x => x.ConflictingCourses.Intersect(courses).FirstOrDefault() != null ? true : false);
         }
 
 

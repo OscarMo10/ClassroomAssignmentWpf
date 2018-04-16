@@ -93,12 +93,15 @@
     </ApplicationDefinition>
     <Compile Include="Extension\EnumExtensions.cs" />
     <Compile Include="Model\Room.cs" />
-    <Compile Include="Model\RoomSearch.cs" />
-    <Compile Include="Repo\Conflict.cs" />
+    <Compile Include="Operations\AvailableRoomSearch.cs" />
+    <Compile Include="Operations\Conflict.cs" />
     <Compile Include="Notification\CourseConflictEventArgs.cs" />
     <Compile Include="Notification\NotificationManager.cs" />
-    <Compile Include="Repo\RoomConflictDetector.cs" />
+    <Compile Include="Operations\AssignmentConflictDetector.cs" />
     <Compile Include="Repo\ObservableCourseRepository.cs" />
+    <Compile Include="Views\RoomScheduleControl.xaml.cs">
+      <DependentUpon>RoomScheduleControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
     <Compile Include="ViewModel\CourseDetailViewModel.cs" />
     <Compile Include="ViewModel\CustomCommands.cs" />
@@ -127,6 +130,10 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\RoomScheduleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AssignmentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

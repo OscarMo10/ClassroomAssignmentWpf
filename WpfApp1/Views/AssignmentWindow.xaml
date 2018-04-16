@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassroomAssignment.Views"
         mc:Ignorable="d"
-        Title="AssignmentWindow" Height="Auto" Width="800">
+        Title="AssignmentWindow" Height="500" Width="800" WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" Grid.Column="0" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick">
@@ -178,5 +179,7 @@
 
 
         </StackPanel>
+
+        <local:RoomScheduleControl Grid.Column="3" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}"/>
     </Grid>
 </Window>

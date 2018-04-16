@@ -1,4 +1,5 @@
 ﻿using ClassroomAssignment.Notification;
+using ClassroomAssignment.Operations;
 using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace ClassroomAssignment.Model.Repo
     {
         private static CourseRepository _instance;
 
-        private RoomConflictDetector roomConflictDetector;
+        private AssignmentConflictDetector roomConflictDetector;
 
         public static CourseRepository GetInstance()
         {
@@ -28,14 +29,22 @@ namespace ClassroomAssignment.Model.Repo
             if (courses == null) throw new ArgumentNullException();
 
             _instance = new CourseRepository(courses);
-            _instance.roomConflictDetector = new RoomConflictDetector(_instance);
+            _instance.roomConflictDetector = new AssignmentConflictDetector(_instance);
         }
 
         private CourseRepository(ICollection<Course> courses) : base(courses)
         {
         }
 
-        public List<Conflict> GetConflicts() => roomConflictDetector.AllConflicts();
+        public List<Conflict> GetConflicts()
+        {
+            return new AssignmentConflictDetector(this).AllConflicts();
+        }
+
+        public List<Conflict> GetConflictsInvolvingCourses(List<Course> courses)
+        {
+            return new AssignmentConflictDetector(this).ConflictsInvolvingCourses(courses);
+        }
 
         
     }

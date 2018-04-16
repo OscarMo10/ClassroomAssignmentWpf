@@ -1,5 +1,7 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
+using ClassroomAssignment.Operations;
+using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,14 +12,17 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.ViewModel
 {
-    public class AssignmentViewModel
+    public class AssignmentViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Course> CoursesBeingAssigned { get; } = new ObservableCollection<Course>();
         public Course SelectedCourse { get; private set; }
         public ObservableCollection<Room> AvailableRooms { get; } = new ObservableCollection<Room>();
 
-        private RoomSearch roomSearch;
+        private AvailableRoomSearch RoomSearch;
+        private AssignmentConflictDetector ConflictDetector;
+        CourseRepository CourseRepo;
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public AssignmentViewModel(IList<Course> courses)
         {
@@ -28,11 +33,12 @@ namespace ClassroomAssignment.ViewModel
 
 
 
-            ICourseRepository courseRepository = CourseRepository.GetInstance();
+            CourseRepo = CourseRepository.GetInstance();
             IRoomRepository roomRepository = RoomRepository.GetInstance();
-            roomSearch = new RoomSearch(roomRepository, courseRepository);
+            RoomSearch = new AvailableRoomSearch(roomRepository, CourseRepo);
 
             SelectCourse(CoursesBeingAssigned.First());
+            AddConflictingCourses();
         }
 
         public void SelectCourse(Course course)
@@ -48,7 +54,7 @@ namespace ClassroomAssignment.ViewModel
             bool result = int.TryParse(course.RoomCapRequest, out capacity);
             if (!result) capacity = -1;
 
-            List<Room> rooms = roomSearch.
+            List<Room> rooms = RoomSearch.
                  AvailableRooms(course.MeetingDays, course.StartTime.Value, course.EndTime.Value, capacity);
 
             IEnumerable<Room> sortedRoomsByCapacity = rooms.OrderBy(x => x.Capacity);
@@ -56,6 +62,25 @@ namespace ClassroomAssignment.ViewModel
             foreach (var room in sortedRoomsByCapacity)
             {
                 AvailableRooms.Add(room);
+            }
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableRooms)));
+        }
+
+        public void AddConflictingCourses()
+        {
+            List<Conflict> conflicts = CourseRepo.GetConflictsInvolvingCourses(CoursesBeingAssigned.ToList());
+
+            foreach (var conflict in conflicts)
+            {
+                foreach (var courseInConflict in conflict.ConflictingCourses)
+                {
+                    if (!CoursesBeingAssigned.Contains(courseInConflict))
+                    {
+                        CoursesBeingAssigned.Add(courseInConflict);
+                    }
+                }
             }
         }
 

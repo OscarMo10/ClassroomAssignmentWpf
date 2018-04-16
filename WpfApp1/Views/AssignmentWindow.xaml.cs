@@ -30,13 +30,14 @@ namespace ClassroomAssignment.Views
             DataContext = viewModel;
 
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
+
         }
 
       
 
         private void AssignCoursesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Course course = AssignCoursesListView.SelectedItem as Course;
+             Course course = AssignCoursesListView.SelectedItem as Course;
             viewModel.SelectCourse(course);
         }
 
@@ -44,5 +45,9 @@ namespace ClassroomAssignment.Views
         {
             Debug.Write("Hello");
         }
+
+       
+
+        
     }
 }

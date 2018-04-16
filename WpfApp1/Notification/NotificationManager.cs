@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
-using ClassroomAssignment.Repo;
+using ClassroomAssignment.Operations;
 
 namespace ClassroomAssignment.Notification
 {
@@ -14,11 +14,11 @@ namespace ClassroomAssignment.Notification
     {
         private static NotificationManager _instance;
         private static CourseRepository _courseRepository;
-        public static RoomConflictDetector _courseConflictFinder { get; set; }
+        public static AssignmentConflictDetector _courseConflictFinder { get; set; }
 
         public static event EventHandler<CourseConflictEventArgs> OnCourseConflict;
 
-        private NotificationManager(CourseRepository courseRepository, RoomConflictDetector roomConflictFinder)
+        private NotificationManager(CourseRepository courseRepository, AssignmentConflictDetector roomConflictFinder)
         {
             _courseRepository = courseRepository;
             _courseConflictFinder = roomConflictFinder;

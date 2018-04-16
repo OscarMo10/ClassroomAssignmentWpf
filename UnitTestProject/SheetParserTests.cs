@@ -18,7 +18,6 @@ namespace UnitTestProject
         const int NUMBER_OF_PARSED_COURSES = 21;
         static List<Course> courseList;
         static Course firstCourseRecord;
-        static List<Room> roomList;
 
         [ClassInitialize]
         public static void Initialize(TestContext context)
@@ -28,7 +27,7 @@ namespace UnitTestProject
             var testFolder = Path.Combine(debugFolder, "testData");
             var files = Directory.GetFiles(testFolder);
 
-            RoomRepository.InitInstance(roomList);
+            RoomRepository.InitInstance();
             courseList = SheetParser.Parse(files, RoomRepository.GetInstance());
             firstCourseRecord = courseList.First();
         }

@@ -99,7 +99,7 @@
     <Compile Include="Notification\NotificationManager.cs" />
     <Compile Include="Operations\AssignmentConflictDetector.cs" />
     <Compile Include="Repo\ObservableCourseRepository.cs" />
-    <Compile Include="RoomScheduleControl.xaml.cs">
+    <Compile Include="Views\RoomScheduleControl.xaml.cs">
       <DependentUpon>RoomScheduleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AssignmentViewModel.cs" />
@@ -121,7 +121,6 @@
     <Compile Include="Views\CourseDetailWindow.xaml.cs">
       <DependentUpon>CourseDetailWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RoomScheduleView.cs" />
     <Compile Include="Visual\ExcelSchedulePrinter.cs" />
     <Compile Include="Visual\ISchedulePrinter.cs" />
     <Compile Include="Visual\ScheduleVisualization.cs" />
@@ -131,7 +130,7 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="RoomScheduleControl.xaml">
+    <Page Include="Views\RoomScheduleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

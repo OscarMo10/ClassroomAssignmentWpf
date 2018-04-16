@@ -20,7 +20,7 @@
     <StackPanel Orientation="Vertical" Margin="0,0,0,25">
 
         <Grid Height="269">
-            <DataGrid x:Name="CoursesDataGrid" SelectionChanged="DataGrid_SelectionChanged"  AutoGenerateColumns="False" ItemsSource="{Binding}" CellEditEnding="CourseDataGrid_CellEditEnding" Margin="0,0,0,37">
+            <DataGrid x:Name="CoursesDataGrid" CanUserAddRows="False" SelectionChanged="DataGrid_SelectionChanged"  AutoGenerateColumns="False" ItemsSource="{Binding}" CellEditEnding="CourseDataGrid_CellEditEnding" Margin="0,0,0,37">
                 <DataGrid.RowHeaderStyle>
                     <Style TargetType="{x:Type DataGridRowHeader}">
                         <Setter Property="Width" Value="25" />

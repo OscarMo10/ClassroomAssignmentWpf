@@ -15,6 +15,9 @@ using ClassroomAssignment.ViewModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using ClassroomAssignment.Views;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace ClassroomAssignment
 {
@@ -24,12 +27,38 @@ namespace ClassroomAssignment
     public partial class MainWindow : Window
     {
         public MainWindowViewModel ViewModel { get; set; } = new MainWindowViewModel();
+        
         public MainWindow()
         {
             InitializeComponent();
             DataContext = ViewModel;
         }
 
+        private void Menu_Save(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog2 = new SaveFileDialog();
+            saveFileDialog2.Filter = "Binary File |*.bin";
+
+            if(saveFileDialog2.ShowDialog() == true)
+            {
+                var fileName = saveFileDialog2.FileName;
+
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = File.Open(fileName, FileMode.Create, FileAccess.Write);
+
+                formatter.Serialize(stream, ViewModel.Courses.ToList());
+                stream.Close();
+
+                /*
+                XmlSerializer serializer = new XmlSerializer(typeof(Course));
+                Stream stream = File.Open(fileName, FileMode.Create);
+
+                serializer.Serialize(stream, ViewModel);
+                stream.Close();
+                */
+                
+            }
+        }
 
         private void Menu_Export(object sender, EventArgs e)
         {

@@ -54,7 +54,7 @@ namespace ClassroomAssignment.Model
 
         public class MeetingPatternOptions
         {
-            public const string TIME_PATTERN = @"(M|T|W|Th|F)+ (\d{1,2}(?::\d{1,2})?(?:am|pm))-(\d{1,2}(?::\d{1,2})?(?:am|pm))";
+            public const string TIME_PATTERN = @"(S|M|T|W|Th|F|Sa)+ (\d{1,2}(?::\d{1,2})?(?:am|pm))-(\d{1,2}(?::\d{1,2})?(?:am|pm))";
             public const string DOES_NOT_MEET = "Does Not Meet";
         }
 

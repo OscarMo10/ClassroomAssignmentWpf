@@ -30,6 +30,7 @@ namespace ClassroomAssignment.Views
             DataContext = viewModel;
 
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
+            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
 
         }
 

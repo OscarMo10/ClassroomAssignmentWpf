@@ -21,8 +21,10 @@ namespace ClassroomAssignment.Views
     /// </summary>
     public partial class RoomScheduleControl : UserControl
     {
+        private Dictionary<TimeSpan, int> timeToRowMap = new Dictionary<TimeSpan, int>();
+        private Dictionary<DayOfWeek, int> dayToColumnMap = new Dictionary<DayOfWeek, int>();
+        private TextBlockCache textBlockCache = new TextBlockCache();
 
-        TextBlockCache textBlockCache = new TextBlockCache();
         public RoomScheduleControl()
         {
             InitializeComponent();
@@ -33,23 +35,44 @@ namespace ClassroomAssignment.Views
             AddFormatting();
         }
 
-        public void SetCourses(List<Course> coursesForRoom)
+        public void SetCoursesForRoom(IEnumerable<Course> courses)
         {
-            foreach (var course in coursesForRoom)
+            foreach (var course in courses)
             {
                 foreach (var day in course.MeetingDays)
                 {
-                    var textBlock = textBlockCache.GetTextBlock(day, course.StartTime.Value);
-                    if (textBlockCache == null)
-                    {
-                        textBlock = new TextBlock();
-                        ScheduleGrid.Children.Add(textBlock);
-                        textBlockCache.AddTextBlock(day, course.StartTime.Value, textBlock);
-                    }
-
-
+                    var textBlock = GetTextBlock(day, course.StartTime.Value);
+                    textBlock.Text = LabelForCourse(course);
+                    Grid.SetRowSpan(textBlock, RowSpanForCourse(course));
                 }
             }
+        }
+
+        private int RowSpanForCourse(Course course)
+        {
+            TimeSpan courseLength = course.EndTime.Value - course.StartTime.Value;
+
+            return (int)courseLength.TotalMinutes / 15;
+        }
+
+        private TextBlock GetTextBlock(DayOfWeek day, TimeSpan time)
+        {
+            var textBlock = textBlockCache.GetTextBlock(day, time);
+            if (textBlockCache == null)
+            {
+                textBlock = new TextBlock();
+                ScheduleGrid.Children.Add(textBlock);
+                Grid.SetRow(textBlock, timeToRowMap[time]);
+                Grid.SetColumn(textBlock, dayToColumnMap[day]);
+                textBlockCache.AddTextBlock(day, time, textBlock);
+            }
+
+            return textBlock;
+        }
+
+        private string LabelForCourse(Course course)
+        {
+            return course.CourseName;
         }
 
         private void AddRowDefinitions()
@@ -98,7 +121,7 @@ namespace ClassroomAssignment.Views
         {
             
             int i = 0;
-            for (DayOfWeek day = DayOfWeek.Monday; day < DayOfWeek.Saturday; day++)
+            for (DayOfWeek day = DayOfWeek.Sunday; day <= DayOfWeek.Saturday; day++)
             {
                 var textblock = new TextBlock();
                 textblock.Margin = new Thickness(0, 0, 5, 0);

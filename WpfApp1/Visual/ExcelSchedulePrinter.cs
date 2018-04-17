@@ -46,7 +46,7 @@ namespace ClassroomAssignment.Model.Visual
             // initialize TimeMap, maps times to row location
             TimeMap.Add(StartTime, startTimeLocationRow);
             var currTime = StartTime;
-            var currRow = startTimeLocationRow;
+            var currRow = startTimeLocationRow - 1;
             while(currTime.CompareTo(EndTime) < 0)
             {
                 currTime = currTime.Add(TimeInterval);
@@ -172,7 +172,7 @@ namespace ClassroomAssignment.Model.Visual
                     cell.SetCellValue(cellValue);
                     sheet.AutoSizeColumn(column, true);
 
-                    CellRangeAddress cellRange = new CellRangeAddress(startRow, endRow, column, column);
+                    CellRangeAddress cellRange = new CellRangeAddress(startRow , endRow, column, column);
                     var regionIndex = sheet.AddMergedRegion(cellRange);
                 }
             }

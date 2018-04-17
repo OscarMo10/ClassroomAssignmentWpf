@@ -59,8 +59,8 @@ namespace ClassroomAssignment.Operations
             if (!candidate) return false;
 
             bool hasConflict = true;
-            if (courseA.EndTime < courseB.StartTime) hasConflict = false;
-            else if (courseB.EndTime < courseA.StartTime) hasConflict = false;
+            if (courseA.EndTime <= courseB.StartTime) hasConflict = false;
+            else if (courseB.EndTime <= courseA.StartTime) hasConflict = false;
 
             return hasConflict;
         }

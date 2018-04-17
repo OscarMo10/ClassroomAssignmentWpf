@@ -30,8 +30,8 @@ namespace ClassroomAssignment.Views
             DataContext = viewModel;
 
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
+            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
 
-            InitScheduleView();
         }
 
       
@@ -47,20 +47,7 @@ namespace ClassroomAssignment.Views
             Debug.Write("Hello");
         }
 
-        private void InitScheduleView()
-        {
-            ScheduleVisualGrid.RowDefinitions.Add(new RowDefinition());
-            ScheduleVisualGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            var roomScheduleView = new RoomScheduleView();
-            roomScheduleView.SetRoomName("PKI 155");
-            roomScheduleView.SetRoomCapacity("10");
-            ScheduleVisualGrid.Children.Add(roomScheduleView);
-
-
-            Grid.SetRow(roomScheduleView, 0);
-            Grid.SetColumn(roomScheduleView, 0);
-            
-        }
+       
 
         
     }

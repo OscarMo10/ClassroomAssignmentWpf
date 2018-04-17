@@ -18,7 +18,6 @@ namespace UnitTestProject
         const int NUMBER_OF_PARSED_COURSES = 21;
         static List<Course> courseList;
         static Course firstCourseRecord;
-        static List<Room> roomList;
 
         [ClassInitialize]
         public static void Initialize(TestContext context)

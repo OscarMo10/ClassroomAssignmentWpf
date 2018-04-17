@@ -9,6 +9,7 @@ using System.Collections.Specialized;
 using System.Collections;
 using NPOI.HSSF.UserModel;
 using System.IO;
+using ClassroomAssignment.Extension;
 
 namespace ClassroomAssignment.Model.Visual
 {
@@ -55,11 +56,14 @@ namespace ClassroomAssignment.Model.Visual
             }
 
             // initialize DayMap: Maps days to column locations
-            DayMap.Add(DayOfWeek.Monday, 2);
-            DayMap.Add(DayOfWeek.Tuesday, 3);
-            DayMap.Add(DayOfWeek.Wednesday, 4);
-            DayMap.Add(DayOfWeek.Thursday, 5);
-            DayMap.Add(DayOfWeek.Friday, 6);
+            int i = 2;
+            DayMap.Add(DayOfWeek.Sunday, i++);
+            DayMap.Add(DayOfWeek.Monday, i++);
+            DayMap.Add(DayOfWeek.Tuesday, i++);
+            DayMap.Add(DayOfWeek.Wednesday, i++);
+            DayMap.Add(DayOfWeek.Thursday, i++);
+            DayMap.Add(DayOfWeek.Friday, i++);
+            DayMap.Add(DayOfWeek.Saturday, i++);
 
         }
         
@@ -67,14 +71,15 @@ namespace ClassroomAssignment.Model.Visual
         public void Print(ICourseRepository courseRepo, IRoomRepository roomRepo)
         {
             List<Course> courses = courseRepo.Courses.ToList();
-            List<Course> roomedCourses = courses.FindAll(x => x.AlreadyAssignedRoom && x.MeetingDays != null);
-            Dictionary<string, List<Course>> roomCourseMap = getRoomNameToCoursesMap(roomedCourses);
 
-            List<string> roomWithCourses = roomCourseMap.Keys.ToList<string>();
+            var coursesInRoom = from course in courses
+                                where course.AlreadyAssignedRoom && course.MeetingDays != null
+                                group course by course.RoomAssignment;
 
-            foreach (string room in roomWithCourses)
+
+            foreach (var courseGroup in coursesInRoom)
             {
-                
+                string room = courseGroup.Key;
                 ISheet sheet = _workbook.CloneSheet(_workbook.GetSheetIndex(_scheduleTemplate));
                 var sheetIndex = _workbook.GetSheetIndex(sheet);
                 _workbook.SetSheetName(sheetIndex, room);
@@ -82,35 +87,14 @@ namespace ClassroomAssignment.Model.Visual
 
                 ICell cell = sheet.GetRow(RoomNameLocation.Item1).GetCell(RoomNameLocation.Item2);
                 cell.SetCellValue(room);
-                
-                PrintCourses(sheet, roomCourseMap[room]);
+
+                PrintCourses(sheet, courseGroup.ToList());
                 printLegend(sheet);
             }
 
-            SortWorkbookSheets();
+            _workbook.SortWorksheets();
 
-            using(var fileStream = File.OpenWrite(_outputFile))
-            {
-                _workbook.Write(fileStream);
-            }
-        }
-
-        private void SortWorkbookSheets()
-        {
-
-            var listOfNames = new List<string>();
-
-            for (int i = 0; i < _workbook.NumberOfSheets; i++)
-            {
-                listOfNames.Add(_workbook.GetSheetName(i));
-            }
-
-            listOfNames.Sort();
-
-            for (int i = 0; i < _workbook.NumberOfSheets; i++)
-            {
-                _workbook.SetSheetOrder(listOfNames[i], i);
-            }
+            _workbook.WriteToFile(_outputFile);
         }
 
         private void printLegend(ISheet sheet)

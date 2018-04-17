@@ -17,6 +17,7 @@ namespace ClassroomAssignment.ViewModel
         public ObservableCollection<Course> CoursesBeingAssigned { get; } = new ObservableCollection<Course>();
         public Course SelectedCourse { get; private set; }
         public ObservableCollection<Room> AvailableRooms { get; } = new ObservableCollection<Room>();
+        public ObservableCollection<Course> CoursesForSelectedRoom = new ObservableCollection<Course>();
 
         private AvailableRoomSearch RoomSearch;
         private AssignmentConflictDetector ConflictDetector;
@@ -32,13 +33,14 @@ namespace ClassroomAssignment.ViewModel
             }
 
 
-
             CourseRepo = CourseRepository.GetInstance();
             IRoomRepository roomRepository = RoomRepository.GetInstance();
             RoomSearch = new AvailableRoomSearch(roomRepository, CourseRepo);
 
             SelectCourse(CoursesBeingAssigned.First());
             AddConflictingCourses();
+            SelectCurrentRoom(RoomRepository.GetInstance().AllRooms().First());
+
         }
 
         public void SelectCourse(Course course)
@@ -64,8 +66,27 @@ namespace ClassroomAssignment.ViewModel
                 AvailableRooms.Add(room);
             }
 
+            SelectCurrentRoom(AvailableRooms.FirstOrDefault());
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableRooms)));
+        }
+
+        public void SelectCurrentRoom(Room room)
+        {
+            var allCoursesForRoom = from course in CourseRepo.Courses
+                                    where course.RoomAssignment == room.RoomName
+                                    select course;
+
+            while (CoursesForSelectedRoom.FirstOrDefault() != null)
+            {
+                CoursesForSelectedRoom.RemoveAt(0);
+            }
+
+            foreach (var course in allCoursesForRoom)
+            {
+                CoursesForSelectedRoom.Add(course);
+            }
         }
 
         public void AddConflictingCourses()

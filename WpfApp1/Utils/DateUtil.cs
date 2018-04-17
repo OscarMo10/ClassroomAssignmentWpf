@@ -19,7 +19,7 @@ namespace ClassroomAssignment.Model.Utils
             DayNameMatcher.Add("W", DayOfWeek.Wednesday);
             DayNameMatcher.Add("Th", DayOfWeek.Thursday);
             DayNameMatcher.Add("F", DayOfWeek.Friday);
-            DayNameMatcher.Add("S", DayOfWeek.Saturday);
+            DayNameMatcher.Add("Sa", DayOfWeek.Saturday);
         }
 
         public static string ShortToLongDayName(string dayAbbreviation)

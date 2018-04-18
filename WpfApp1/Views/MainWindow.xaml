@@ -36,6 +36,7 @@
             <MenuItem Header="_File">
                 <MenuItem Header="Export Room Schedules" Click="Menu_Export"/>
                 <MenuItem Header="_Save" Click="Menu_Save"/>
+                <MenuItem Header="_Open" Click="Menu_Open"/>
 
             </MenuItem>
         </Menu>

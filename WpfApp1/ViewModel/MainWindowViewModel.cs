@@ -25,7 +25,17 @@ namespace ClassroomAssignment.ViewModel
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         public bool ContinueButtonEnabled { get; } = false;
-        public IList<Course> Courses { get; set; }
+
+        private IList<Course> _courses;
+        public IList<Course> Courses
+        {
+            get { return _courses; }
+            set
+            {
+                _courses = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
+            }
+        }
         public IList<Conflict> Conflicts { get; set; }
 
         

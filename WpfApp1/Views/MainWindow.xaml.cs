@@ -18,6 +18,8 @@ using ClassroomAssignment.Views;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using ClassroomAssignment.Repo;
+using System.Collections.ObjectModel;
 
 namespace ClassroomAssignment
 {
@@ -43,22 +45,23 @@ namespace ClassroomAssignment
             {
                 var fileName = saveFileDialog2.FileName;
 
-                IFormatter formatter = new BinaryFormatter();
-                Stream stream = File.Open(fileName, FileMode.Create, FileAccess.Write);
+                try
+                {
+                    IFormatter formatter = new BinaryFormatter();
+                    Stream stream = File.Open(fileName, FileMode.Create, FileAccess.Write);
 
-                formatter.Serialize(stream, ViewModel.Courses.ToList());
-                stream.Close();
+                    formatter.Serialize(stream, ViewModel.Courses.ToList());
+                    stream.Close();
 
-                /*
-                XmlSerializer serializer = new XmlSerializer(typeof(Course));
-                Stream stream = File.Open(fileName, FileMode.Create);
+                }
+                catch(SerializationException a)
+                {
+                    Console.WriteLine("Failed to deserialize. Reason: " + a.Message);
+                }
 
-                serializer.Serialize(stream, ViewModel);
-                stream.Close();
-                */
-                
             }
         }
+
 
         private void Menu_Export(object sender, EventArgs e)
         {
@@ -88,9 +91,6 @@ namespace ClassroomAssignment
         {
         }
 
-      
-       
-
         private void AssignMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var course = CoursesDataGrid.CurrentItem as Course;
@@ -119,6 +119,34 @@ namespace ClassroomAssignment
             assignmentWindow.Show();
 
             Close();
+        }
+
+        private void Menu_Open(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Binary File |*.bin";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var fileName = openFileDialog.FileName;
+
+                try
+                {
+                    IFormatter format = new BinaryFormatter();
+                    Stream stream = File.Open(fileName, FileMode.Open, FileAccess.ReadWrite);
+
+                    ViewModel.Courses = new ObservableCollection<Course>(format.Deserialize(stream) as List<Course>); 
+                    stream.Close();
+
+                }
+                catch (SerializationException f)
+                {
+                    Console.WriteLine("Failed to deserialize. Reason: " + f.Message);
+                }
+                
+
+            }
+
         }
     }
 }

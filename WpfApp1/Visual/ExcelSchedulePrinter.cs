@@ -56,7 +56,7 @@ namespace ClassroomAssignment.Model.Visual
             }
 
             // initialize DayMap: Maps days to column locations
-            int i = 2;
+            int i = 1;
             DayMap.Add(DayOfWeek.Sunday, i++);
             DayMap.Add(DayOfWeek.Monday, i++);
             DayMap.Add(DayOfWeek.Tuesday, i++);

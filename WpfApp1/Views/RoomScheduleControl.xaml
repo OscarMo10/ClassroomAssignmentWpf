@@ -6,8 +6,26 @@
              xmlns:local="clr-namespace:ClassroomAssignment"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-    
+
+    <UserControl.Resources>
+        <Style x:Key="TimeStyle" TargetType="{x:Type TextBlock}">
+            
+        </Style>
+        <Style x:Key="DayOfWeekHeaderStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0,0,5,0" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Width" Value="100" />
+        </Style>
+
+        <Style x:Key="LeftMostColumnBorder" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="1,0,1,0" />
+            <Setter Property="BorderBrush" Value="DimGray" />
+        </Style>
+        <Style x:Key="ColumnBorder" TargetType="{x:Type Border}" >
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+            <Setter Property="BorderBrush" Value="DimGray" />
+        </Style>
+    </UserControl.Resources>
     
     <Grid >
         <Grid.RowDefinitions>

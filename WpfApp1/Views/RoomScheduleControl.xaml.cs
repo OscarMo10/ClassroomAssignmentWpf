@@ -21,51 +21,266 @@ namespace ClassroomAssignment.Views
     /// </summary>
     public partial class RoomScheduleControl : UserControl
     {
-        private Dictionary<TimeSpan, int> timeToRowMap = new Dictionary<TimeSpan, int>();
-        private Dictionary<DayOfWeek, int> dayToColumnMap = new Dictionary<DayOfWeek, int>();
-        private TextBlockCache textBlockCache = new TextBlockCache();
+
+        private const int COLUMN_WIDTH = 50;
+        private const int TIME_DURATION_UNIT_IN_MINUTES = 15;
+        private static readonly DateTime FIRST_TIME_SLOT = new DateTime(1, 1, 1, 7, 0, 0);
+        private static readonly DateTime LAST_TIME_SLOT = new DateTime(1, 1, 1, 22, 0, 0);
+        private const DayOfWeek FIRST_DAY_OF_SCHEDULE = DayOfWeek.Sunday;
+        private const DayOfWeek LAST_DAY_OF_SCHEDULE = DayOfWeek.Saturday;
+        private const string SCHEDULE_ITEM_TAG = "scheduleItem";
+
+        private static Dictionary<TimeSpan, int> timeToRowMap = new Dictionary<TimeSpan, int>();
+        private static Dictionary<DayOfWeek, int> dayToColumnMap = new Dictionary<DayOfWeek, int>();
+
+        static RoomScheduleControl()
+        {
+            InitTimeToRowMap();
+            InitDayToColumnMap();
+        }
+
+        private static void InitTimeToRowMap()
+        {
+            var column = 2;
+            for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
+            {
+                dayToColumnMap.Add(day, column++);
+            }
+        }
+
+        private static void InitDayToColumnMap()
+        {
+            var currentTime = FIRST_TIME_SLOT;
+
+            int row = 1;
+            while (currentTime <= LAST_TIME_SLOT)
+            {
+                timeToRowMap.Add(currentTime.TimeOfDay, row++);
+                currentTime = currentTime.AddMinutes(TIME_DURATION_UNIT_IN_MINUTES);
+            }
+        }
 
         public RoomScheduleControl()
         {
             InitializeComponent();
-            AddRowDefinitions();
-            AddColumnDefinitions();
-            SetHrColumn();
-            SetDayOfWeekRow();
-            AddFormatting();
+            SetupScheduleGrid();
         }
+
+
+
+        #region Setup
+
+        private void SetupScheduleGrid()
+        {
+            SetupStructure();
+            PopulateHeaders();
+        }
+
+        private void SetupStructure()
+        {
+            AddTimeColumn();
+            AddEmptyColumn();
+            AddDayOfWeekColumns();
+            AddEmptyColumn();
+
+            AddDayOfWeekRow();
+            AddTimeRows();
+            AddBorders();
+        }
+
+        private void PopulateHeaders()
+        {
+            SetupTimeRowHeaders();
+            SetupDayOfWeekColumnHeaders();
+        }
+
+        private void AddTimeRows()
+        {
+            for (int i = 0; i < timeToRowMap.Count; i++)
+            {
+                ScheduleGrid.RowDefinitions.Add(new RowDefinition());
+            }
+        }
+
+        private void AddDayOfWeekRow()
+        {
+            ScheduleGrid.RowDefinitions.Add(new RowDefinition());
+        }
+
+        private void AddDayOfWeekColumns()
+        {
+            var column = ScheduleGrid.ColumnDefinitions.Count;
+            for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
+            {
+                var columnDef = new ColumnDefinition();
+                columnDef.Width = new GridLength(1, GridUnitType.Star);
+                ScheduleGrid.ColumnDefinitions.Add(columnDef);
+            }
+        }
+
+        private void AddTimeColumn()
+        {
+            ScheduleGrid.ColumnDefinitions.Add(new ColumnDefinition());
+        }
+
+        private void AddEmptyColumn()
+        {
+            var columnDef = new ColumnDefinition();
+            columnDef.Width = new GridLength(COLUMN_WIDTH, GridUnitType.Pixel);
+            ScheduleGrid.ColumnDefinitions.Add(columnDef);
+        }
+
+
+        private void SetupTimeRowHeaders()
+        {
+            var currentTime = FIRST_TIME_SLOT;
+
+            while (currentTime <= LAST_TIME_SLOT)
+            {
+                var textblock = GetTextBlockForTime(currentTime);
+                ScheduleGrid.Children.Add(textblock);
+                Grid.SetColumn(textblock, 0);
+                Grid.SetRow(textblock, timeToRowMap[currentTime.TimeOfDay]);
+                currentTime = currentTime.AddMinutes(TIME_DURATION_UNIT_IN_MINUTES);
+            }
+        }
+
+        private void SetupDayOfWeekColumnHeaders()
+        {
+            const int firstRow = 0;
+            for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
+            {
+                var textBlock = GetTextBlockForDay(day);
+                ScheduleGrid.Children.Add(textBlock);
+                Grid.SetRow(textBlock, firstRow);
+                Grid.SetColumn(textBlock, dayToColumnMap[day]);
+            }
+        }
+
+        private TextBlock GetTextBlockForDay(DayOfWeek day)
+        {
+            var textBlock = new TextBlock();
+            textBlock.Style = FindResource("DayOfWeekHeaderStyle") as Style;
+            textBlock.Text = day.ToString();
+
+            return textBlock;
+        }
+
+        private TextBlock GetTextBlockForTime(DateTime time)
+        {
+            var textblock = new TextBlock();
+            textblock.Text = time.ToString("h tt");
+            if (time.Minute != 0) textblock.Visibility = Visibility.Hidden;
+
+            return textblock;
+        }
+
+
+        private void AddBorders()
+        {
+            AddDayOfWeekColumnBorders();
+            AddHrlyRowBorders();
+        }
+
+        private void AddDayOfWeekColumnBorders()
+        {
+            
+            for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
+            {
+                Border border = new Border();
+                if (day == FIRST_DAY_OF_SCHEDULE)
+                {
+                    border.Style = FindResource("LeftMostColumnBorder") as Style;
+                }
+                else
+                {
+                    border.Style = FindResource("ColumnBorder") as Style;
+                }
+
+                ScheduleGrid.Children.Add(border);
+                Grid.SetColumn(border, dayToColumnMap[day]);
+                Grid.SetRow(border, 1);
+                Grid.SetRowSpan(border, ScheduleGrid.RowDefinitions.Count - 1);
+            }
+        }
+
+        private void AddHrlyRowBorders()
+        {
+            var thickness = new Thickness(0, 1, 0, 0);
+
+            var currentTime = FIRST_TIME_SLOT;
+            while (currentTime <= LAST_TIME_SLOT)
+            {
+                if (currentTime.Minute == 0)
+                {
+                    var border = new Border();
+                    border.BorderThickness = thickness;
+                    border.BorderBrush = Brushes.Gray;
+                    ScheduleGrid.Children.Add(border);
+
+                    Grid.SetRow(border, timeToRowMap[currentTime.TimeOfDay]);
+                    Grid.SetColumnSpan(border, 10);
+                }
+
+                currentTime = currentTime.AddMinutes(TIME_DURATION_UNIT_IN_MINUTES);
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public void SetCoursesForRoom(IEnumerable<Course> courses)
         {
+            RemoveOldScheduleItems();
+
             foreach (var course in courses)
             {
                 foreach (var day in course.MeetingDays)
                 {
                     var textBlock = GetTextBlock(day, course.StartTime.Value);
+                    textBlock.TextAlignment = TextAlignment.Center;
                     textBlock.Text = LabelForCourse(course);
                     Grid.SetRowSpan(textBlock, RowSpanForCourse(course));
                 }
             }
         }
 
-        private int RowSpanForCourse(Course course)
+        #endregion
+
+        #region Private Helper Methods
+
+        private void RemoveOldScheduleItems()
         {
-            TimeSpan courseLength = course.EndTime.Value - course.StartTime.Value;
+            var textblocksToRemove = new List<TextBlock>();
+            foreach (var child in ScheduleGrid.Children)
+            {
+                TextBlock textBlock = child as TextBlock;
+                if (textBlock != null)
+                {
+                    if ((textBlock.Tag as string) == SCHEDULE_ITEM_TAG)
+                    {
+                        textblocksToRemove.Add(textBlock);
+                    }
+                }
+            }
 
-            return (int)courseLength.TotalMinutes / 15;
+            foreach (var textblock in textblocksToRemove)
+            {
+                ScheduleGrid.Children.Remove(textblock);
+            }
         }
-
         private TextBlock GetTextBlock(DayOfWeek day, TimeSpan time)
         {
-            var textBlock = textBlockCache.GetTextBlock(day, time);
-            if (textBlockCache == null)
-            {
-                textBlock = new TextBlock();
-                ScheduleGrid.Children.Add(textBlock);
-                Grid.SetRow(textBlock, timeToRowMap[time]);
-                Grid.SetColumn(textBlock, dayToColumnMap[day]);
-                textBlockCache.AddTextBlock(day, time, textBlock);
-            }
+            var textBlock = new TextBlock();
+            textBlock.Tag = SCHEDULE_ITEM_TAG;
+            var color = Brushes.LightSlateGray.Color;
+            color.A = 100;
+            textBlock.Background = new SolidColorBrush(color);
+            textBlock.Margin = new Thickness(5, 0, 5, 0);
+            ScheduleGrid.Children.Add(textBlock);
+            Grid.SetRow(textBlock, timeToRowMap[time]);
+            Grid.SetColumn(textBlock, dayToColumnMap[day]);
 
             return textBlock;
         }
@@ -75,120 +290,13 @@ namespace ClassroomAssignment.Views
             return course.CourseName;
         }
 
-        private void AddRowDefinitions()
+        private int RowSpanForCourse(Course course)
         {
-            for (int i = 0; i < 90; i++)
-            {
-                var rowDef = new RowDefinition();
-                ScheduleGrid.RowDefinitions.Add(rowDef);
-            }
+            TimeSpan courseLength = course.EndTime.Value - course.StartTime.Value;
+
+            return (int)courseLength.TotalMinutes / TIME_DURATION_UNIT_IN_MINUTES;
         }
 
-        private void AddColumnDefinitions()
-        {
-            ScheduleGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            var columnDef = new ColumnDefinition();
-            columnDef.Width = new GridLength(50, GridUnitType.Pixel);
-            ScheduleGrid.ColumnDefinitions.Add(columnDef);
+        #endregion
 
-
-            for (int i = 0; i < 10; i++)
-            {
-                columnDef = new ColumnDefinition();
-                ScheduleGrid.ColumnDefinitions.Add(columnDef);
-            }
-        }
-
-        private void SetHrColumn()
-        {
-            var date = new DateTime(1, 1, 1, 7, 0, 0);
-
-            for (int i = 0; i < 62; i++)
-            {
-                var textblock = new TextBlock();
-                textblock.Text = date.ToString("h tt");
-                if (date.Minute == 0) textblock.Visibility = Visibility.Hidden;
-                ScheduleGrid.Children.Add(textblock);
-
-                Grid.SetColumn(textblock, 0);
-                Grid.SetRow(textblock, i + 3);
-
-                date = date.AddMinutes(15);
-            }
-        }
-
-        private void SetDayOfWeekRow()
-        {
-            
-            int i = 0;
-            for (DayOfWeek day = DayOfWeek.Sunday; day <= DayOfWeek.Saturday; day++)
-            {
-                var textblock = new TextBlock();
-                textblock.Margin = new Thickness(0, 0, 5, 0);
-                textblock.Width = 100;
-                textblock.Text = day.ToString();
-                textblock.TextAlignment = TextAlignment.Center;
-
-                ScheduleGrid.Children.Add(textblock);
-                Grid.SetColumn(textblock, 3 + i++);
-                Grid.SetRow(textblock, 0);
-            }
-
-        }
-
-        private void AddFormatting()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Border border = new Border();
-                if (i == 0)
-                {
-                    border.BorderThickness = new Thickness(2, 0, 1, 0);
-                }
-                else if (i == 4)
-                {
-                    border.BorderThickness = new Thickness(1, 0, 2, 0);
-                }
-                else
-                {
-                    border.BorderThickness = new Thickness(1, 0, 1, 0);
-                } 
-
-                border.BorderBrush = Brushes.Black;
-                ScheduleGrid.Children.Add(border);
-                Grid.SetColumn(border, 3 + i);
-                Grid.SetRow(border, 1);
-                Grid.SetRowSpan(border, ScheduleGrid.RowDefinitions.Count - 1);
-            }
-            
-        }
-
-        private class TextBlockCache
-        {
-            private Dictionary<DayOfWeek, Dictionary<TimeSpan, TextBlock>> textblockFinder = new Dictionary<DayOfWeek, Dictionary<TimeSpan, TextBlock>>();
-
-            public TextBlockCache()
-            {
-                for (DayOfWeek day = DayOfWeek.Monday; day <= DayOfWeek.Friday; day++)
-                {
-                    textblockFinder.Add(day, new Dictionary<TimeSpan, TextBlock>());
-                }
-            }
-
-            public TextBlock GetTextBlock(DayOfWeek day, TimeSpan timeSpan)
-            {
-                var textblockDict = textblockFinder[day];
-                if (textblockDict.ContainsKey(timeSpan)) return textblockDict[timeSpan];
-
-                return null;
-            }
-
-            public void AddTextBlock(DayOfWeek day, TimeSpan time, TextBlock textBlock)
-            {
-                textblockFinder[day].Add(time, textBlock);
-            }
-        }
-    }
-
-   
 }

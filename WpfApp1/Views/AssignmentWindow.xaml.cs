@@ -47,8 +47,11 @@ namespace ClassroomAssignment.Views
             Debug.Write("Hello");
         }
 
-       
-
-        
+        private void AvailableRoomsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var room = AvailableRoomsListView.SelectedItem as Room;
+            viewModel.SelectCurrentRoom(room);
+            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
+        }
     }
 }

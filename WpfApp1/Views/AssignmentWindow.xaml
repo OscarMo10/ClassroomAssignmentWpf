@@ -153,7 +153,7 @@
 
                 <StackPanel Grid.Column="0">
                     <Label Content="Available Rooms" HorizontalAlignment="Center"/>
-                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black">
+                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" SelectionChanged="AvailableRoomsListView_SelectionChanged" SelectionMode="Single">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

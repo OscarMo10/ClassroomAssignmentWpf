@@ -20,8 +20,7 @@ namespace ClassroomAssignment.ViewModel
         public ObservableCollection<Course> CoursesForSelectedRoom = new ObservableCollection<Course>();
 
         private AvailableRoomSearch RoomSearch;
-        private AssignmentConflictDetector ConflictDetector;
-        CourseRepository CourseRepo;
+        private CourseRepository CourseRepo = CourseRepository.GetInstance();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -33,47 +32,55 @@ namespace ClassroomAssignment.ViewModel
             }
 
 
-            CourseRepo = CourseRepository.GetInstance();
             IRoomRepository roomRepository = RoomRepository.GetInstance();
             RoomSearch = new AvailableRoomSearch(roomRepository, CourseRepo);
 
             SelectCourse(CoursesBeingAssigned.First());
             AddConflictingCourses();
-            SelectCurrentRoom(RoomRepository.GetInstance().AllRooms().First());
-
         }
 
         public void SelectCourse(Course course)
+        {
+            SelectedCourse = course;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
+            UpdateAvailableRoomsForSelectedCourse(course);
+        }
+
+        private void UpdateAvailableRoomsForSelectedCourse(Course course)
+        {
+            RemoveStaleAvailableRooms();
+            AddAvailableRooms(course);
+            SelectCurrentRoom(AvailableRooms.FirstOrDefault());
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableRooms)));
+        }
+
+        private void AddAvailableRooms(Course course)
+        {
+            int capacity = int.MaxValue;
+            bool result = int.TryParse(course.RoomCapRequest, out capacity);
+            List<Room> rooms = RoomSearch.
+                 AvailableRooms(course.MeetingDays, course.StartTime.Value, course.EndTime.Value, capacity);
+
+            foreach (var room in rooms.OrderBy(x => x.Capacity))
+            {
+                AvailableRooms.Add(room);
+            }
+        }
+
+       
+        private void RemoveStaleAvailableRooms()
         {
             while (AvailableRooms.Count != 0)
             {
                 AvailableRooms.RemoveAt(0);
             }
-
-            SelectedCourse = course;
-
-            int capacity;
-            bool result = int.TryParse(course.RoomCapRequest, out capacity);
-            if (!result) capacity = -1;
-
-            List<Room> rooms = RoomSearch.
-                 AvailableRooms(course.MeetingDays, course.StartTime.Value, course.EndTime.Value, capacity);
-
-            IEnumerable<Room> sortedRoomsByCapacity = rooms.OrderBy(x => x.Capacity);
-
-            foreach (var room in sortedRoomsByCapacity)
-            {
-                AvailableRooms.Add(room);
-            }
-
-            SelectCurrentRoom(AvailableRooms.FirstOrDefault());
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableRooms)));
         }
 
         public void SelectCurrentRoom(Room room)
         {
+            if (room == null) return;
+
             var allCoursesForRoom = from course in CourseRepo.Courses
                                     where course.RoomAssignment == room.RoomName
                                     select course;

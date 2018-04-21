@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Views
+namespace ClassroomAssignment.Windows
 {
     /// <summary>
     /// Interaction logic for AssignmentWindow.xaml
@@ -51,6 +51,7 @@ namespace ClassroomAssignment.Views
         {
             var room = AvailableRoomsListView.SelectedItem as Room;
             viewModel.SelectCurrentRoom(room);
+            RoomSchedule.SetRoom(room);
             RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
         }
     }

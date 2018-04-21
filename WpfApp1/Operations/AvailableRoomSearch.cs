@@ -48,6 +48,54 @@ namespace ClassroomAssignment.Operations
 
         }
 
+        public List<ScheduleSlot> ScheduleSlotsAvailable(SearchParameters searchParameters)
+        {
+
+            var coursesGroupedByRoom = from course in courseRepository.Courses
+                                 where course.AlreadyAssignedRoom
+                                 join room in roomRepository.Rooms on course.RoomAssignment equals room.RoomName
+                                 where room.Capacity >= searchParameters.Capacity && course.StartTime.Value >= searchParameters.StartTime && course.EndTime <= searchParameters.EndTime
+                                 orderby course.StartTime.Value
+                                 group course by course.RoomAssignment;
+
+            List<ScheduleSlot> availableSlots = new List<ScheduleSlot>();
+
+            foreach (var courseGroup in coursesGroupedByRoom)
+            {
+                List<Course> courses = courseGroup.ToList();
+
+                if (courses[0].StartTime - searchParameters.StartTime >= searchParameters.Duration)
+                {
+                    availableSlots.Add(
+                        new ScheduleSlot()
+                        {
+                            RoomAvailable = roomRepository.GetRoomWithName(courseGroup.Key),
+                            StartTime = searchParameters.StartTime,
+                            EndTime = courses[0].StartTime.Value,
+                            MeetingDays = searchParameters.MeetingDays.AsEnumerable()
+                        });
+                }
+
+                for (int i = 0; i < courses.Count - 1; i++)
+                {
+                    if (courses[i + 1].StartTime - courses[i].EndTime >= searchParameters.Duration)
+                    {
+                        availableSlots.Add(
+                            new ScheduleSlot()
+                            {
+                                RoomAvailable = roomRepository.GetRoomWithName(courseGroup.Key),
+                                StartTime = courses[i].EndTime.Value,
+                                EndTime = courses[i+1].StartTime.Value,
+                                MeetingDays = searchParameters.MeetingDays.AsEnumerable()
+                            });
+                    }
+                }
+            }
+
+            
+            return availableSlots;
+        }
+
         private bool CoursesConflictWithTime(IGrouping<string, Course> courseGroup, TimeSpan startTime, TimeSpan endTime)
         {
             bool hasConflict = true;

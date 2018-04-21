@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Views
+namespace ClassroomAssignment.Windows
 {
     /// <summary>
     /// Interaction logic for CourseDetailWindow.xaml

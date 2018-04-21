@@ -62,6 +62,11 @@ namespace ClassroomAssignment.Model.Repo
             return rooms;
         }
 
+        public Room GetRoomWithName(string roomName)
+        {
+            return Rooms.Find(x => x.RoomName == roomName);
+        }
+
         public string GetNormalizedRoomName(string roomName)
         {
             // TODO: Placeholder implementation

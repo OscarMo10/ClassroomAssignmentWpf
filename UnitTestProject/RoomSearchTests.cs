@@ -47,6 +47,23 @@ namespace UnitTestProject
 
             Assert.AreEqual<int>(1, availableRooms.Count);
             Assert.AreEqual<string>("PKI 158", availableRooms[0].RoomName);
+        }
+
+        [TestMethod]
+        public void AvailableSlots()
+        {
+            var courseRepo = new NonConflictingCourseRepo();
+            var roomRepo = new RoomRepo();
+            var roomSearch = new AvailableRoomSearch(roomRepo, courseRepo);
+
+            SearchParameters searchParameters;
+            searchParameters.MeetingDays = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Wednesday };
+            searchParameters.Capacity = 10;
+            searchParameters.Duration = new TimeSpan(1, 0, 0);
+            searchParameters.StartTime = new TimeSpan(13, 0, 0);
+            searchParameters.EndTime = new TimeSpan(20, 0, 0);
+
+            roomSearch.ScheduleSlotsAvailable(searchParameters);
 
         }
 

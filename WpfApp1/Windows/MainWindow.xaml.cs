@@ -14,12 +14,12 @@ using ClassroomAssignment.Model.Visual;
 using ClassroomAssignment.ViewModel;
 using System.Diagnostics;
 using System.Windows.Input;
-using ClassroomAssignment.Views;
+using ClassroomAssignment.Windows;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 
-namespace ClassroomAssignment
+namespace ClassroomAssignment.Windows
 {
     /// <summary>
     /// Interaction logic for Window1.xaml

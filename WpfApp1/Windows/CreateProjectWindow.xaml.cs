@@ -17,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinForms = System.Windows.Forms;
 
-namespace ClassroomAssignment
+namespace ClassroomAssignment.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Views
+namespace ClassroomAssignment.Views.RoomSchedule
 {
     /// <summary>
     /// Interaction logic for RoomScheduleControl.xaml
@@ -184,7 +184,7 @@ namespace ClassroomAssignment.Views
 
         private void AddDayOfWeekColumnBorders()
         {
-            
+
             for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
             {
                 Border border = new Border();
@@ -230,6 +230,12 @@ namespace ClassroomAssignment.Views
 
         #region Public Methods
 
+        public void SetRoom(Room room)
+        {
+            RoomNameTextBlock.Text = room.RoomName;
+            RoomCapacityTextBlock.Text = room.Capacity.ToString();
+        }
+
         public void SetCoursesForRoom(IEnumerable<Course> courses)
         {
             RemoveOldScheduleItems();
@@ -270,6 +276,7 @@ namespace ClassroomAssignment.Views
                 ScheduleGrid.Children.Remove(textblock);
             }
         }
+
         private TextBlock GetTextBlock(DayOfWeek day, TimeSpan time)
         {
             var textBlock = new TextBlock();
@@ -298,5 +305,5 @@ namespace ClassroomAssignment.Views
         }
 
         #endregion
-
+    }
 }

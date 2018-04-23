@@ -63,7 +63,8 @@ namespace UnitTestProject
             searchParameters.StartTime = new TimeSpan(13, 0, 0);
             searchParameters.EndTime = new TimeSpan(20, 0, 0);
 
-            roomSearch.ScheduleSlotsAvailable(searchParameters);
+            List<ScheduleSlot> slots = roomSearch.ScheduleSlotsAvailable(searchParameters);
+            Assert.AreEqual<int>(3, slots.Count);
 
         }
 

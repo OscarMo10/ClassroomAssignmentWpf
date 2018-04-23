@@ -18,6 +18,7 @@ namespace UnitTestProject.TestModels
         {
             AddCourse1();
             AddCourse2();
+            AddCourse3();
         }
 
         public void AddCourse1()

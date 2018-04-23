@@ -117,6 +117,7 @@
     <Compile Include="Repo\IRoomRepository.cs" />
     <Compile Include="Utils\DateUtil.cs" />
     <Compile Include="Utils\TimeUtil.cs" />
+    <Compile Include="Visual\ScheduleGridStructure.cs" />
     <Compile Include="Windows\AssignmentWindow.xaml.cs">
       <DependentUpon>AssignmentWindow.xaml</DependentUpon>
     </Compile>

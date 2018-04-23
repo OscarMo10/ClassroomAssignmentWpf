@@ -30,7 +30,7 @@ namespace ClassroomAssignment.Windows
             DataContext = viewModel;
 
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
-            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
+            //RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
 
         }
 
@@ -51,8 +51,8 @@ namespace ClassroomAssignment.Windows
         {
             var room = AvailableRoomsListView.SelectedItem as Room;
             viewModel.SelectCurrentRoom(room);
-            RoomSchedule.SetRoom(room);
-            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
+            //RoomSchedule.SetRoom(room);
+            //RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
         }
     }
 }

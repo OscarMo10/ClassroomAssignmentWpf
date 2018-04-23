@@ -90,6 +90,18 @@ namespace ClassroomAssignment.Operations
                             });
                     }
                 }
+
+                if (searchParameters.EndTime - courses.Last().EndTime.Value  >= searchParameters.Duration)
+                {
+                    availableSlots.Add(
+                        new ScheduleSlot()
+                        {
+                            RoomAvailable = roomRepository.GetRoomWithName(courseGroup.Key),
+                            StartTime = courses.Last().EndTime.Value,
+                            EndTime = searchParameters.EndTime,
+                            MeetingDays = searchParameters.MeetingDays.AsEnumerable()
+                        });
+                }
             }
 
             

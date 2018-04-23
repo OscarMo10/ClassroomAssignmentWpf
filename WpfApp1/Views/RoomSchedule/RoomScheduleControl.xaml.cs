@@ -1,6 +1,9 @@
 ﻿using ClassroomAssignment.Model;
+using ClassroomAssignment.Visual;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,48 +27,39 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         private const int COLUMN_WIDTH = 50;
         private const int TIME_DURATION_UNIT_IN_MINUTES = 15;
-        private static readonly DateTime FIRST_TIME_SLOT = new DateTime(1, 1, 1, 7, 0, 0);
-        private static readonly DateTime LAST_TIME_SLOT = new DateTime(1, 1, 1, 22, 0, 0);
+        private static readonly TimeSpan FIRST_TIME_SLOT = new TimeSpan(7, 0, 0);
+        private static readonly TimeSpan LAST_TIME_SLOT = new TimeSpan(22, 0, 0);
         private const DayOfWeek FIRST_DAY_OF_SCHEDULE = DayOfWeek.Sunday;
         private const DayOfWeek LAST_DAY_OF_SCHEDULE = DayOfWeek.Saturday;
         private const string SCHEDULE_ITEM_TAG = "scheduleItem";
 
-        private static Dictionary<TimeSpan, int> timeToRowMap = new Dictionary<TimeSpan, int>();
-        private static Dictionary<DayOfWeek, int> dayToColumnMap = new Dictionary<DayOfWeek, int>();
+        private ScheduleGridLayout gridLayout;
 
-        static RoomScheduleControl()
+        public static readonly DependencyProperty CoursesInRoomProperty =
+            DependencyProperty.Register(nameof(CoursesInRoom), typeof(ObservableCollection<Course>), typeof(RoomScheduleControl), new PropertyMetadata(default(ObservableCollection<Course>)));
+
+        [Bindable(true)]
+        public ObservableCollection<Course> CoursesInRoom
         {
-            InitTimeToRowMap();
-            InitDayToColumnMap();
-        }
-
-        private static void InitTimeToRowMap()
-        {
-            var column = 2;
-            for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
-            {
-                dayToColumnMap.Add(day, column++);
-            }
-        }
-
-        private static void InitDayToColumnMap()
-        {
-            var currentTime = FIRST_TIME_SLOT;
-
-            int row = 1;
-            while (currentTime <= LAST_TIME_SLOT)
-            {
-                timeToRowMap.Add(currentTime.TimeOfDay, row++);
-                currentTime = currentTime.AddMinutes(TIME_DURATION_UNIT_IN_MINUTES);
-            }
+            get { return (ObservableCollection<Course>)GetValue(CoursesInRoomProperty); }
+            set { SetValue(CoursesInRoomProperty, value); }
         }
 
         public RoomScheduleControl()
         {
             InitializeComponent();
+
+            CoursesInRoom = new ObservableCollection<Course>();
+
+            gridLayout = new ScheduleGridLayout(
+                FIRST_TIME_SLOT,
+                LAST_TIME_SLOT,
+                FIRST_DAY_OF_SCHEDULE, 
+                LAST_DAY_OF_SCHEDULE, 
+                TIME_DURATION_UNIT_IN_MINUTES
+                );
             SetupScheduleGrid();
         }
-
 
 
         #region Setup
@@ -96,7 +90,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         private void AddTimeRows()
         {
-            for (int i = 0; i < timeToRowMap.Count; i++)
+            foreach (var slot in gridLayout.TimeSlotsInSchedule())
             {
                 ScheduleGrid.RowDefinitions.Add(new RowDefinition());
             }
@@ -110,7 +104,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         private void AddDayOfWeekColumns()
         {
             var column = ScheduleGrid.ColumnDefinitions.Count;
-            for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
+            foreach (var day in gridLayout.DaysOfWeekInGrid())
             {
                 var columnDef = new ColumnDefinition();
                 columnDef.Width = new GridLength(1, GridUnitType.Star);
@@ -133,15 +127,12 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         private void SetupTimeRowHeaders()
         {
-            var currentTime = FIRST_TIME_SLOT;
-
-            while (currentTime <= LAST_TIME_SLOT)
+            foreach (var slot in gridLayout.TimeSlotsInSchedule())
             {
-                var textblock = GetTextBlockForTime(currentTime);
+                var textblock = GetTextBlockForTime(slot);
                 ScheduleGrid.Children.Add(textblock);
                 Grid.SetColumn(textblock, 0);
-                Grid.SetRow(textblock, timeToRowMap[currentTime.TimeOfDay]);
-                currentTime = currentTime.AddMinutes(TIME_DURATION_UNIT_IN_MINUTES);
+                Grid.SetRow(textblock, gridLayout.GetRowForTime(slot));
             }
         }
 
@@ -153,7 +144,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
                 var textBlock = GetTextBlockForDay(day);
                 ScheduleGrid.Children.Add(textBlock);
                 Grid.SetRow(textBlock, firstRow);
-                Grid.SetColumn(textBlock, dayToColumnMap[day]);
+                Grid.SetColumn(textBlock, gridLayout.GetColumnForDay(day));
             }
         }
 
@@ -166,11 +157,11 @@ namespace ClassroomAssignment.Views.RoomSchedule
             return textBlock;
         }
 
-        private TextBlock GetTextBlockForTime(DateTime time)
+        private TextBlock GetTextBlockForTime(TimeSpan time)
         {
             var textblock = new TextBlock();
-            textblock.Text = time.ToString("h tt");
-            if (time.Minute != 0) textblock.Visibility = Visibility.Hidden;
+            textblock.Text = new DateTime().Add(time).ToString("h tt");
+            if (time.Minutes != 0) textblock.Visibility = Visibility.Hidden;
 
             return textblock;
         }
@@ -185,7 +176,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         private void AddDayOfWeekColumnBorders()
         {
 
-            for (DayOfWeek day = FIRST_DAY_OF_SCHEDULE; day <= LAST_DAY_OF_SCHEDULE; day++)
+            foreach (var day in gridLayout.DaysOfWeekInGrid())
             {
                 Border border = new Border();
                 if (day == FIRST_DAY_OF_SCHEDULE)
@@ -198,7 +189,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
                 }
 
                 ScheduleGrid.Children.Add(border);
-                Grid.SetColumn(border, dayToColumnMap[day]);
+                Grid.SetColumn(border, gridLayout.GetColumnForDay(day));
                 Grid.SetRow(border, 1);
                 Grid.SetRowSpan(border, ScheduleGrid.RowDefinitions.Count - 1);
             }
@@ -208,21 +199,18 @@ namespace ClassroomAssignment.Views.RoomSchedule
         {
             var thickness = new Thickness(0, 1, 0, 0);
 
-            var currentTime = FIRST_TIME_SLOT;
-            while (currentTime <= LAST_TIME_SLOT)
+            foreach (var time in gridLayout.TimeSlotsInSchedule())
             {
-                if (currentTime.Minute == 0)
+                if (time.Minutes == 0)
                 {
                     var border = new Border();
                     border.BorderThickness = thickness;
                     border.BorderBrush = Brushes.Gray;
                     ScheduleGrid.Children.Add(border);
 
-                    Grid.SetRow(border, timeToRowMap[currentTime.TimeOfDay]);
+                    Grid.SetRow(border,gridLayout.GetRowForTime(time));
                     Grid.SetColumnSpan(border, 10);
                 }
-
-                currentTime = currentTime.AddMinutes(TIME_DURATION_UNIT_IN_MINUTES);
             }
         }
 
@@ -250,6 +238,18 @@ namespace ClassroomAssignment.Views.RoomSchedule
                     Grid.SetRowSpan(textBlock, RowSpanForCourse(course));
                 }
             }
+        }
+
+        public void AddAvailableSlot(TimeSpan startTime, TimeSpan endTime)
+        {
+            int row = gridLayout.GetRowForTime(startTime);
+            int span = gridLayout.SpanForDurationInMinutes((int)(endTime - startTime).TotalMinutes);
+
+            var textblock = new TextBlock();
+            textblock.Tag = "Available";
+            var start = new DateTime().Add(startTime);
+            var end = new DateTime().Add(endTime);
+            textblock.Text = string.Format("{0}{1}{2:t}-{3:t}", "Available", Environment.NewLine, start, end);
         }
 
         #endregion
@@ -286,8 +286,8 @@ namespace ClassroomAssignment.Views.RoomSchedule
             textBlock.Background = new SolidColorBrush(color);
             textBlock.Margin = new Thickness(5, 0, 5, 0);
             ScheduleGrid.Children.Add(textBlock);
-            Grid.SetRow(textBlock, timeToRowMap[time]);
-            Grid.SetColumn(textBlock, dayToColumnMap[day]);
+            Grid.SetRow(textBlock, gridLayout.GetRowForTime(time));
+            Grid.SetColumn(textBlock, gridLayout.GetColumnForDay(day));
 
             return textBlock;
         }
@@ -297,11 +297,12 @@ namespace ClassroomAssignment.Views.RoomSchedule
             return course.CourseName;
         }
 
+
         private int RowSpanForCourse(Course course)
         {
             TimeSpan courseLength = course.EndTime.Value - course.StartTime.Value;
 
-            return (int)courseLength.TotalMinutes / TIME_DURATION_UNIT_IN_MINUTES;
+            return gridLayout.SpanForDurationInMinutes((int) courseLength.TotalMinutes);
         }
 
         #endregion

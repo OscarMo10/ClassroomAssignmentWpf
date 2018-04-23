@@ -51,25 +51,42 @@ namespace ClassroomAssignment.Operations
         public List<ScheduleSlot> ScheduleSlotsAvailable(SearchParameters searchParameters)
         {
 
-            var coursesGroupedByRoom = from course in courseRepository.Courses
-                                 where course.AlreadyAssignedRoom
-                                 join room in roomRepository.Rooms on course.RoomAssignment equals room.RoomName
-                                 where room.Capacity >= searchParameters.Capacity && course.StartTime.Value >= searchParameters.StartTime && course.EndTime <= searchParameters.EndTime
-                                 orderby course.StartTime.Value
-                                 group course by course.RoomAssignment;
+
+            var coursesGroupedByRoom = from room in roomRepository.Rooms
+                                       where room.Capacity >= searchParameters.Capacity
+                                       join course in courseRepository.Courses on room.RoomName equals course.RoomAssignment into courseGroup
+                                       select new { Room = room, Courses = courseGroup };
+
 
             List<ScheduleSlot> availableSlots = new List<ScheduleSlot>();
-
             foreach (var courseGroup in coursesGroupedByRoom)
             {
-                List<Course> courses = courseGroup.ToList();
+
+                List<Course> courses = courseGroup.Courses
+                    .Where(x => x.MeetingDays.Any(y => x.MeetingDays.Contains(y)) && x.StartTime.HasValue && x.StartTime.Value >= searchParameters.StartTime && x.StartTime <= searchParameters.EndTime)
+                    .OrderBy(x => x.StartTime.Value)
+                    .ToList();
+
+                if (courses.Count == 0)
+                {
+                    availableSlots.Add(
+                        new ScheduleSlot()
+                        {
+                            RoomAvailable = courseGroup.Room,
+                            StartTime = searchParameters.StartTime,
+                            EndTime = searchParameters.EndTime,
+                            MeetingDays = searchParameters.MeetingDays.AsEnumerable()
+                        });
+
+                    continue;
+                }
 
                 if (courses[0].StartTime - searchParameters.StartTime >= searchParameters.Duration)
                 {
                     availableSlots.Add(
                         new ScheduleSlot()
                         {
-                            RoomAvailable = roomRepository.GetRoomWithName(courseGroup.Key),
+                            RoomAvailable = courseGroup.Room,
                             StartTime = searchParameters.StartTime,
                             EndTime = courses[0].StartTime.Value,
                             MeetingDays = searchParameters.MeetingDays.AsEnumerable()
@@ -83,7 +100,7 @@ namespace ClassroomAssignment.Operations
                         availableSlots.Add(
                             new ScheduleSlot()
                             {
-                                RoomAvailable = roomRepository.GetRoomWithName(courseGroup.Key),
+                                RoomAvailable = courseGroup.Room,
                                 StartTime = courses[i].EndTime.Value,
                                 EndTime = courses[i+1].StartTime.Value,
                                 MeetingDays = searchParameters.MeetingDays.AsEnumerable()
@@ -96,7 +113,7 @@ namespace ClassroomAssignment.Operations
                     availableSlots.Add(
                         new ScheduleSlot()
                         {
-                            RoomAvailable = roomRepository.GetRoomWithName(courseGroup.Key),
+                            RoomAvailable = courseGroup.Room,
                             StartTime = courses.Last().EndTime.Value,
                             EndTime = searchParameters.EndTime,
                             MeetingDays = searchParameters.MeetingDays.AsEnumerable()

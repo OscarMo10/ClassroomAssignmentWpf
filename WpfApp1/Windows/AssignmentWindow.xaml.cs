@@ -30,7 +30,7 @@ namespace ClassroomAssignment.Windows
             DataContext = viewModel;
 
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
-            //RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
+            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
 
         }
 
@@ -39,7 +39,7 @@ namespace ClassroomAssignment.Windows
         private void AssignCoursesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
              Course course = AssignCoursesListView.SelectedItem as Course;
-            viewModel.SelectCourse(course);
+            viewModel.CourseSelectedForAssignment(course);
         }
 
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -50,9 +50,17 @@ namespace ClassroomAssignment.Windows
         private void AvailableRoomsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var room = AvailableRoomsListView.SelectedItem as Room;
-            viewModel.SelectCurrentRoom(room);
-            //RoomSchedule.SetRoom(room);
-            //RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
+            viewModel.SetCurrentRoom(room);
+            RoomSchedule.SetRoom(room);
+            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
+            
+            foreach (var slot in viewModel.AvailableSlots)
+            {
+                foreach (var meetingDay in slot.MeetingDays)
+                {
+                    RoomSchedule.ShowAvailableSlot(meetingDay, slot.StartTime, slot.EndTime);
+                }
+            }
         }
     }
 }

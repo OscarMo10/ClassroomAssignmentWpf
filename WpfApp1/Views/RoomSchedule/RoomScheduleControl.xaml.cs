@@ -35,21 +35,20 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         private ScheduleGridLayout gridLayout;
 
-        public static readonly DependencyProperty CoursesInRoomProperty =
-            DependencyProperty.Register(nameof(CoursesInRoom), typeof(ObservableCollection<Course>), typeof(RoomScheduleControl), new PropertyMetadata(default(ObservableCollection<Course>)));
+        //public static readonly DependencyProperty CoursesInRoomProperty =
+        //    DependencyProperty.Register(nameof(CoursesInRoom), typeof(ObservableCollection<Course>), typeof(RoomScheduleControl), new PropertyMetadata(default(ObservableCollection<Course>)));
 
-        [Bindable(true)]
-        public ObservableCollection<Course> CoursesInRoom
-        {
-            get { return (ObservableCollection<Course>)GetValue(CoursesInRoomProperty); }
-            set { SetValue(CoursesInRoomProperty, value); }
-        }
+        //[Bindable(true)]
+        //public ObservableCollection<Course> CoursesInRoom
+        //{
+        //    get { return (ObservableCollection<Course>)GetValue(CoursesInRoomProperty); }
+        //    set { SetValue(CoursesInRoomProperty, value); }
+        //}
 
         public RoomScheduleControl()
         {
             InitializeComponent();
 
-            CoursesInRoom = new ObservableCollection<Course>();
 
             gridLayout = new ScheduleGridLayout(
                 FIRST_TIME_SLOT,
@@ -240,16 +239,21 @@ namespace ClassroomAssignment.Views.RoomSchedule
             }
         }
 
-        public void AddAvailableSlot(TimeSpan startTime, TimeSpan endTime)
+        public void ShowAvailableSlot(DayOfWeek meetingDay, TimeSpan startTime, TimeSpan endTime)
         {
             int row = gridLayout.GetRowForTime(startTime);
             int span = gridLayout.SpanForDurationInMinutes((int)(endTime - startTime).TotalMinutes);
 
             var textblock = new TextBlock();
+            textblock.Background = Brushes.Green;
             textblock.Tag = "Available";
             var start = new DateTime().Add(startTime);
             var end = new DateTime().Add(endTime);
             textblock.Text = string.Format("{0}{1}{2:t}-{3:t}", "Available", Environment.NewLine, start, end);
+            ScheduleGrid.Children.Add(textblock);
+            Grid.SetRow(textblock, gridLayout.GetRowForTime(startTime));
+            Grid.SetColumn(textblock, gridLayout.GetColumnForDay(meetingDay));
+            Grid.SetRowSpan(textblock, span);
         }
 
         #endregion

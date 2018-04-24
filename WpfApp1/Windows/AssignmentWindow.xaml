@@ -150,8 +150,13 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0">
+
+                <StackPanel Grid.Column="0" Grid.Row="0">
                     <Label Content="Available Rooms" HorizontalAlignment="Center"/>
                     <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" SelectionChanged="AvailableRoomsListView_SelectionChanged" SelectionMode="Single">
                         <ListView.ItemTemplate>
@@ -166,11 +171,25 @@
                     </ListView>
                 </StackPanel>
 
+                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0"> 
+                    <TextBlock Text="Search Parameters" TextAlignment="Center" />
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="-" Padding="5" Grid.Column="0"/>
+                        <TextBlock x:Name="RangeTextBlock" Text="0" Grid.Column="1"/>
+                        <Button Content="+" Padding="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="2"/>
+                    </Grid>
+                </StackPanel>
 
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
                     <TextBlock x:Name="RoomAssignmentTextBlock" />
                     <Label x:Name="AssignmentStatusLabel"/>
                 </StackPanel>
+                
             </Grid>
             <Button Content="Save" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,21,0,0" />
 

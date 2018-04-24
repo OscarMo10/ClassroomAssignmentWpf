@@ -60,7 +60,7 @@ namespace ClassroomAssignment.ViewModel
         {
             int capacity = int.MaxValue;
             bool result = int.TryParse(course.RoomCapRequest, out capacity);
-            List<Room> rooms = RoomSearch.
+            IEnumerable<Room> rooms = RoomSearch.
                  AvailableRooms(course.MeetingDays, course.StartTime.Value, course.EndTime.Value, capacity);
 
             foreach (var room in rooms.OrderBy(x => x.Capacity))

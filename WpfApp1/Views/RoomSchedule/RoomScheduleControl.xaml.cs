@@ -32,6 +32,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         private const DayOfWeek FIRST_DAY_OF_SCHEDULE = DayOfWeek.Sunday;
         private const DayOfWeek LAST_DAY_OF_SCHEDULE = DayOfWeek.Saturday;
         private const string SCHEDULE_ITEM_TAG = "scheduleItem";
+        private const string AVAILABLE_ITEM_TAG = "availableItem";
 
         private ScheduleGridLayout gridLayout;
 
@@ -239,14 +240,36 @@ namespace ClassroomAssignment.Views.RoomSchedule
             }
         }
 
+        public void RemoveStaleAvailableItems()
+        {
+            List<TextBlock> staleAvailableItems = new List<TextBlock>();
+            foreach (var child in ScheduleGrid.Children)
+            {
+                TextBlock textBlock;
+                if ((textBlock = child as TextBlock) != null)
+                {
+                    if ((textBlock.Tag as string) == AVAILABLE_ITEM_TAG)
+                    {
+                        staleAvailableItems.Add(textBlock);
+                    }
+                }
+            }
+
+            foreach (var staleItem in staleAvailableItems)
+            {
+                ScheduleGrid.Children.Remove(staleItem);
+            }
+        }
+
         public void ShowAvailableSlot(DayOfWeek meetingDay, TimeSpan startTime, TimeSpan endTime)
         {
+
             int row = gridLayout.GetRowForTime(startTime);
             int span = gridLayout.SpanForDurationInMinutes((int)(endTime - startTime).TotalMinutes);
 
             var textblock = new TextBlock();
             textblock.Background = Brushes.Green;
-            textblock.Tag = "Available";
+            textblock.Tag = AVAILABLE_ITEM_TAG;
             var start = new DateTime().Add(startTime);
             var end = new DateTime().Add(endTime);
             textblock.Text = string.Format("{0}{1}{2:t}-{3:t}", "Available", Environment.NewLine, start, end);

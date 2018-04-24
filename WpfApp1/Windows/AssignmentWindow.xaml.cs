@@ -53,6 +53,7 @@ namespace ClassroomAssignment.Windows
             viewModel.SetCurrentRoom(room);
             RoomSchedule.SetRoom(room);
             RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
+            RoomSchedule.RemoveStaleAvailableItems();
             
             foreach (var slot in viewModel.AvailableSlots)
             {

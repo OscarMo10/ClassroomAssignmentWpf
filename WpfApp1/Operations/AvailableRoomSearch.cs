@@ -23,29 +23,16 @@ namespace ClassroomAssignment.Operations
         }
 
         
-        public List<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
+        public IEnumerable<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
         {
-            var possibleRooms = from room in roomRepository.Rooms
-                                where room.Capacity >= minCapacity
-                                select room;
+            SearchParameters searchParameters = new SearchParameters();
+            searchParameters.MeetingDays = meetingDays;
+            searchParameters.StartTime = startTime;
+            searchParameters.EndTime = endTime;
+            searchParameters.Capacity = minCapacity;
+            searchParameters.Duration = endTime - startTime;
 
-           
-             var coursesForRoom = from course in courseRepository.Courses
-                                 where course.AlreadyAssignedRoom
-                                 join room in possibleRooms on course.RoomAssignment equals room.RoomName
-                                 group course by course.RoomAssignment;
-
-            List<Room> availableRooms = new List<Room>();
-            foreach(var courseGroup in coursesForRoom)
-            {
-                if (!CoursesConflictWithTime(courseGroup, startTime, endTime))
-                {
-                    availableRooms.Add(roomRepository.Rooms.Find(x => x.RoomName == courseGroup.Key));
-                }
-            }
-
-            return availableRooms;
-
+            return ScheduleSlotsAvailable(searchParameters).ConvertAll(x => x.RoomAvailable).Distinct();
         }
 
         public List<ScheduleSlot> ScheduleSlotsAvailable(SearchParameters searchParameters)

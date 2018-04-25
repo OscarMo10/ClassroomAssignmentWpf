@@ -23,8 +23,8 @@ namespace ClassroomAssignment.Visual
         private readonly TimeSpan _timeUnitInMinutes;
         public TimeSpan TimeUnitInMinutes => _timeUnitInMinutes;
 
-        private static Dictionary<TimeSpan, int> timeToRowMap = new Dictionary<TimeSpan, int>();
-        private static Dictionary<DayOfWeek, int> dayToColumnMap = new Dictionary<DayOfWeek, int>();
+        private Dictionary<TimeSpan, int> timeToRowMap = new Dictionary<TimeSpan, int>();
+        private Dictionary<DayOfWeek, int> dayToColumnMap = new Dictionary<DayOfWeek, int>();
 
         public ScheduleGridLayout(TimeSpan firstTimeSlot, TimeSpan lastTimeSlot, DayOfWeek firstDayOfSchedule, DayOfWeek lastDayOfSchedule, int timeUnitInMinutes)
         {

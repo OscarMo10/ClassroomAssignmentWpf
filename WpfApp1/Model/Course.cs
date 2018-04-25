@@ -29,7 +29,9 @@ namespace ClassroomAssignment.Model
             [Description("Assigned Courses")]
             Assigned,
             [Description("No Room Required")]
-            NoRoomRequired
+            NoRoomRequired, 
+            [Description("Conflicting")]
+            Conflicting
         };
 
         [field: NonSerializedAttribute()]
@@ -522,6 +524,8 @@ namespace ClassroomAssignment.Model
         {
             get
             {
+                var conflicts = CourseRepository.GetInstance().GetConflictsInvolvingCourses(new List<Course>() { this });
+                if (conflicts.Count != 0) return CourseState.Conflicting;
                 if (AmbiguousState) return CourseState.Ambiguous;
                 if (AlreadyAssignedRoom) return CourseState.Assigned;
                 else if (NeedsRoom) return CourseState.Unassigned;

@@ -50,7 +50,7 @@ namespace ClassroomAssignment.Operations
             {
 
                 List<Course> courses = courseGroup.Courses
-                    .Where(x => x.MeetingDays.Any(y => x.MeetingDays.Contains(y)) && x.StartTime.HasValue && x.StartTime.Value >= searchParameters.StartTime && x.StartTime <= searchParameters.EndTime)
+                    .Where(x => x.MeetingDays.Intersect(searchParameters.MeetingDays).Count(z => true) != 0 && x.StartTime.HasValue && x.StartTime.Value >= searchParameters.StartTime && x.StartTime <= searchParameters.EndTime)
                     .OrderBy(x => x.StartTime.Value)
                     .ToList();
 

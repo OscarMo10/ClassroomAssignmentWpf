@@ -42,12 +42,16 @@
                                             <DataTrigger Binding="{Binding Type}" Value="3">
                                                 <Setter Property="Fill" Value="Black" />
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="4">
+                                                <Setter Property="Fill" Value="Red" />
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <Label Content="{Binding CourseTitle}" FontSize="10" Margin="0,0,5,0"/>
-                            <Label Content="{Binding SectionNumber}" FontSize="10" />
+                            <Label Content="{Binding CourseName}" FontSize="12" Margin="0,0,5,0"/>
+                            <Label Content="Section: " FontSize="12"/>
+                            <Label Content="{Binding SectionNumber}" FontSize="12" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -86,7 +90,7 @@
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
                     <TextBlock Text="Room Assignment: " Margin="0,0,5,0" LineHeight="10" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectionChanged="RoomOptionsComboBox_SelectionChanged" SelectedItem="RoomName" SelectedValue="CurrentCourse" SelectedValuePath="RoomAssignment">
+                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectionChanged="RoomOptionsComboBox_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

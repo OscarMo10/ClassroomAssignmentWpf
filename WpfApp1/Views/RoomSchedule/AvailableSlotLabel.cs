@@ -17,6 +17,10 @@ namespace ClassroomAssignment.Views.RoomSchedule
             var end = new DateTime().Add(endTime);
             Margin = new Thickness(5, 0, 5, 0);
             Text = string.Format("{0}{1}{2:t}-{3:t}", "Available", Environment.NewLine, start, end);
+            TextAlignment = TextAlignment.Center;
+            Padding = new Thickness(5);
+            
+            
 
             SetBackground();
         }

@@ -34,14 +34,19 @@ namespace ClassroomAssignment.ViewModel
 
         private void _currentCourse_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            List<Course> courses = CoursesBeingAssigned.ToList();
+            CoursesBeingAssigned.Clear();
+            foreach (Course course in courses)
+            {
+                CoursesBeingAssigned.Add(course);
+            }
+
             UpdateCoursesForCurrentRoom();
             UpdateRoomsForCurrentCourse(CurrentCourse);
             RemoveStaleAvailableRooms();
             UpdateAvailableSlotForCurrentRoom();
             AddAvailableRooms(CurrentCourse);
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCourse)));
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableSlots)));
-
+            AddConflictingCourses();
         }
 
         private Room _currentRoom;

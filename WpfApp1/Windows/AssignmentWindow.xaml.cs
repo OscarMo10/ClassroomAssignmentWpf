@@ -1,4 +1,5 @@
 ﻿using ClassroomAssignment.Model;
+using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,11 @@ namespace ClassroomAssignment.Windows
         {
             Course course = AssignCoursesListView.SelectedItem as Course;
             viewModel.CurrentCourse = course;
+            CourseDetailControl.SetCourse(course);
+            if (course.RoomAssignment != null)
+            {
+                RoomOptionsComboBox.SelectedItem = RoomRepository.GetInstance().GetRoomWithName(course.RoomAssignment);
+            }
         }
 
         private void CurrentCourseChanged()
@@ -62,14 +68,13 @@ namespace ClassroomAssignment.Windows
             viewModel.CurrentRoom = room;
         }
 
-       
+
         private void RoomOptionsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Room room = RoomOptionsComboBox.SelectedItem as Room;
             viewModel.CurrentCourse.RoomAssignment = room.RoomName;
 
-            //RoomOptionsComboBox.SelectedIndex = index;
-            
+
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

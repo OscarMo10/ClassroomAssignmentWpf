@@ -14,8 +14,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <Label Content="Section Information" Grid.Row="0"/>
-        <Separator/>
+        <Label Content="Section Information" FontSize="15" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,2" Margin="0,0,0,15"/>
+
 
         <Grid Height="Auto" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -26,28 +26,28 @@
             <StackPanel Grid.Column="0">
 
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Title/Topic"/>
-                    <Label Content="{Binding CourseTitle}" BorderBrush="Black"/>
+                    <Label Content="Title/Topic"   />
+                    <Label Content="{Binding CourseTitle}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Section #"/>
-                    <Label Content="{Binding SectionNumber}"/>
+                    <Label Content="{Binding SectionNumber}"  BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Credit Hrs"/>
-                    <Label Content="{Binding CreditHrs}"/>
+                    <Label Content="{Binding CreditHrs}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Status"/>
-                    <Label Content="{Binding Status}"/>
+                    <Label Content="{Binding Status}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Grade Mode"/>
-                    <Label Content="{Binding GradeMode}"/>
+                    <Label Content="{Binding GradeMode}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
             </StackPanel>
 
@@ -55,27 +55,27 @@
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Session"/>
-                    <Label Content="{Binding Session}"/>
+                    <Label Content="{Binding Session}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Campus"/>
-                    <Label Content="{Binding Campus}"/>
+                    <Label Content="{Binding Campus}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Instr. Method"/>
-                    <Label Content="{Binding InstructionMethod}"/>
+                    <Label Content="{Binding InstructionMethod}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Section Type"/>
-                    <Label Content="{Binding SectionType}"/>
+                    <Label Content="{Binding SectionType}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Grade Mode"/>
-                    <Label Content="{Binding GradeMode}"/>
+                    <Label Content="{Binding GradeMode}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

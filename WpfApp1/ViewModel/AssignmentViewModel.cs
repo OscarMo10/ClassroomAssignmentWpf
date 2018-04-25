@@ -17,11 +17,6 @@ namespace ClassroomAssignment.ViewModel
     public class AssignmentViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Course> CoursesBeingAssigned { get; } = new ObservableCollection<Course>();
-
-        public CourseState Unassigned { get; private set; } = CourseState.Unassigned;
-        public CourseState Ambiguous { get; set; } = CourseState.Ambiguous;
-        public CourseState Assigned { get; set; } = CourseState.Assigned;
-        public CourseState NoRoomRequired { get; set; } = CourseState.NoRoomRequired;
         public List<Room> AllRooms { get; } = RoomRepository.GetInstance().Rooms;
 
         private Course _currentCourse;
@@ -31,9 +26,20 @@ namespace ClassroomAssignment.ViewModel
             set
             {
                 _currentCourse = value;
+                _currentCourse.PropertyChanged += _currentCourse_PropertyChanged;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCourse)));
                 UpdateAvailableRoomsForSelectedCourse(CurrentCourse);
             }
+        }
+
+        private void _currentCourse_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            //UpdateCoursesForCurrentRoom(CurrentRoom);
+            //UpdateAvailableRoomsForSelectedCourse(CurrentCourse);
+            //UpdateAvailableSlotForCurrentRoom(CurrentRoom);
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCourse)));
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableSlots)));
+
         }
 
         private Room _currentRoom;
@@ -44,35 +50,44 @@ namespace ClassroomAssignment.ViewModel
             {
                 Room room = value;
                 if (room == null) return;
+                _currentRoom = value;
+                UpdateCoursesForCurrentRoom();
+                UpdateAvailableSlotForCurrentRoom();
 
-                var courses = from course in CourseRepo.Courses
-                                         where course.RoomAssignment == room.RoomName
-                                         select course;
-
-                CoursesForSelectedRoom.Clear();
-                foreach (Course course in courses)
-                {
-                    CoursesForSelectedRoom.Add(course);
-                }
-
-
-
-                var searchParameters = CurrentCourse.GetSearchParameters();
-
-                List<ScheduleSlot> slots = RoomSearch.ScheduleSlotsAvailable(searchParameters);
-                AvailableSlots.Clear();
-                foreach (var slot in slots.FindAll(x => x.RoomAvailable == room))
-                {
-                    AvailableSlots.Add(slot);
-                }
-
-                _currentRoom = room;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableSlots)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentRoom)));
 
             }
         }
+
+        public void UpdateAvailableSlotForCurrentRoom()
+        {
+            var searchParameters = CurrentCourse.GetSearchParameters();
+
+            List<ScheduleSlot> slots = RoomSearch.ScheduleSlotsAvailable(searchParameters);
+            AvailableSlots.Clear();
+            foreach (var slot in slots.FindAll(x => x.RoomAvailable == CurrentRoom))
+            {
+                AvailableSlots.Add(slot);
+            }
+        }
+
+        public void UpdateCoursesForCurrentRoom()
+        {
+            if (CurrentRoom == null) return;
+            var room = CurrentRoom;
+            var courses = from course in CourseRepo.Courses
+                          where course.RoomAssignment == room.RoomName
+                          select course;
+
+            CoursesForSelectedRoom.Clear();
+            foreach (Course course in courses)
+            {
+                CoursesForSelectedRoom.Add(course);
+            }
+        }
+
         public ObservableCollection<Room> AvailableRooms { get; } = new ObservableCollection<Room>();
         public ObservableCollection<Course> CoursesForSelectedRoom = new ObservableCollection<Course>();
         public ObservableCollection<ScheduleSlot> AvailableSlots = new ObservableCollection<ScheduleSlot>();
@@ -122,7 +137,7 @@ namespace ClassroomAssignment.ViewModel
         }
 
        
-        private void RemoveStaleAvailableRooms()
+        public void RemoveStaleAvailableRooms()
         {
             while (AvailableRooms.Count != 0)
             {

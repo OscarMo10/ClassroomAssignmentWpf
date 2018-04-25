@@ -127,6 +127,9 @@
     <Compile Include="Windows\AssignmentWindow.xaml.cs">
       <DependentUpon>AssignmentWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CourseChangesWindow.xaml.cs">
+      <DependentUpon>CourseChangesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CourseDetailWindow.xaml.cs">
       <DependentUpon>CourseDetailWindow.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AssignmentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CourseChangesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

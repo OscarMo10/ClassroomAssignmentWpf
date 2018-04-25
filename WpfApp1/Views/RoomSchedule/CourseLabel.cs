@@ -13,7 +13,8 @@ namespace ClassroomAssignment.Views.RoomSchedule
     class CourseLabel : TextBlock
     {
         private readonly Course _boundCourse;
-        public Course BoundCourse => _boundCourse;
+        public Course BoundCourse
+        { get => _boundCourse; }
 
         public CourseLabel(Course course)
         {

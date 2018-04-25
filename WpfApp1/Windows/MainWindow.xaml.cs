@@ -84,6 +84,14 @@ namespace ClassroomAssignment.Windows
 
         }
 
+
+        private void Menu_Changes(object sender, EventArgs e)
+        {
+            CourseChangesWindow courseChangesWindow = new CourseChangesWindow();
+            courseChangesWindow.Show();
+
+        }
+
         private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e)
         {
         }

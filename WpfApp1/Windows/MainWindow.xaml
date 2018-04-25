@@ -35,6 +35,7 @@
         <Menu Height="Auto" Width="Auto" Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="Export Room Schedules" Click="Menu_Export"/>
+                <MenuItem Header="Changes" Click="Menu_Changes" />
                 <MenuItem Header="_Save" Click="Menu_Save"/>
 
             </MenuItem>
@@ -52,6 +53,7 @@
                             </Style>
                         </MenuItem.Style>
                     </MenuItem>
+                    
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.GroupStyle>

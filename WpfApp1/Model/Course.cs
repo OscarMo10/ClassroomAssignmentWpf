@@ -680,15 +680,7 @@ namespace ClassroomAssignment.Model
             return 1096323362 + EqualityComparer<string>.Default.GetHashCode(ClassID);
         }
 
-        public static bool operator ==(Course a, Course b)
-        {
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(Course a, Course b)
-        {
-            return !a.Equals(b);
-        }
+       
 
         #endregion
     }

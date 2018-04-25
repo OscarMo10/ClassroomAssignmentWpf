@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,6 +56,14 @@ namespace ClassroomAssignment.Windows
 
             RoomRepository.InitInstance();
             List<Course> courses = SheetParser.Parse(docLocations, RoomRepository.GetInstance());
+            var fileName = "original.bin";
+
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = File.Open(fileName, FileMode.Create, FileAccess.Write);
+
+            formatter.Serialize(stream, courses);
+            stream.Close();
+
             CourseRepository.initInstance(courses);
 
 

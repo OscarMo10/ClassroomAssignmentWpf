@@ -14,38 +14,46 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" Grid.Column="0" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Ellipse
+        <Grid  Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button x:Name="BackButton" Content="Back" Grid.Row="0" Width="50" Margin="0,20,0,10" Click="BackButton_Click"/>
+            <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse
                             Width="10"
                             Height="10">
-                            <Ellipse.Style>
-                                <Style TargetType="Ellipse">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Type}" Value="0">
-                                            <Setter Property="Fill" Value="Purple" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Type}" Value="1">
-                                            <Setter Property="Fill" Value="Yellow" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Type}" Value="2">
-                                            <Setter Property="Fill" Value="Green" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Type}" Value="3">
-                                            <Setter Property="Fill" Value="Black" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Ellipse.Style>
-                        </Ellipse>
-                        <Label Content="{Binding CourseTitle}" FontSize="10" Margin="0,0,5,0"/>
-                        <Label Content="{Binding SectionNumber}" FontSize="10" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Type}" Value="0">
+                                                <Setter Property="Fill" Value="Purple" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="1">
+                                                <Setter Property="Fill" Value="Yellow" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="2">
+                                                <Setter Property="Fill" Value="Green" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="3">
+                                                <Setter Property="Fill" Value="Black" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <Label Content="{Binding CourseTitle}" FontSize="10" Margin="0,0,5,0"/>
+                            <Label Content="{Binding SectionNumber}" FontSize="10" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <views:CourseDetailControl x:Name="CourseDetailControl"/>
@@ -78,7 +86,7 @@
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
                     <TextBlock Text="Room Assignment: " Margin="0,0,5,0" LineHeight="10" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectionChanged="RoomOptionsComboBox_SelectionChanged">
+                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectionChanged="RoomOptionsComboBox_SelectionChanged" SelectedItem="RoomName">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -93,6 +101,6 @@
             </Grid>
         </StackPanel>
 
-        <scheduleView:RoomScheduleControl x:Name="RoomSchedule" Grid.Column="2" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}"/>
+        <scheduleView:RoomScheduleControl x:Name="RoomSchedule" DataContext="{Binding}" Grid.Column="2" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}"/>
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.Operations;
+using ClassroomAssignment.ViewModel;
 using ClassroomAssignment.Visual;
 using System;
 using System.Collections.Generic;
@@ -67,35 +68,22 @@ namespace ClassroomAssignment.Views.RoomSchedule
             set
             {
                 _coursesForRoom = value;
+               
                 value.CollectionChanged += CoursesForRoom_CollectionChanged;
             }
         }
 
         private void CoursesForRoom_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
             {
                 RemoveStaleCourseLabels();
-                SetCoursesForRoom(CoursesForRoom);
-
-                foreach (var course in e.NewItems)
-                {
-                    (course as Course).PropertyChanged += CourseInRoom_PropertyChanged;
-                }
+                
             }
-        }
 
-        private void CourseInRoom_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var course = sender as Course;
-
-            foreach (var child in ScheduleGrid.Children)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                CourseLabel courseLabel;
-                if ((courseLabel = child as CourseLabel) != null)
-                {
-                    if (courseLabel)
-                }
+                SetCoursesForRoom(CoursesForRoom);
             }
         }
 
@@ -158,6 +146,8 @@ namespace ClassroomAssignment.Views.RoomSchedule
                 TIME_DURATION_UNIT_IN_MINUTES
                 );
             SetupScheduleGrid();
+
+            
         }
 
 
@@ -323,6 +313,8 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         private void SetRoom(Room room)
         {
+            if (room == null) return;
+
             RoomNameTextBlock.Text = room.RoomName;
             RoomCapacityTextBlock.Text = room.Capacity.ToString();
         }

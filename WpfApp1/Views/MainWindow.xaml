@@ -122,6 +122,7 @@
             <DataGrid.Columns> 
                 <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True" Width="Auto"/>
                 <DataGridTextColumn Header="SIS ID" Binding="{Binding SIS_ID}" IsReadOnly="True" Width="Auto" />
+                <DataGridTextColumn Header="Course ID" Binding="{Binding CatalogNumber}" IsReadOnly="True" Width="Auto"/>
                 <DataGridTextColumn Header="Course Title" Binding="{Binding CourseTitle}" IsReadOnly="True" Width="Auto"/>
                 <DataGridTextColumn Header="Instruction Method" Binding="{Binding InstructionMethod}" IsReadOnly="True" Width="Auto" />
                 <DataGridTextColumn Header="Meeting Pattern" Binding="{Binding MeetingPattern}" IsReadOnly="True" Width="Auto" />

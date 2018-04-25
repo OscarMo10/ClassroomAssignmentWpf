@@ -60,7 +60,7 @@ namespace ClassroomAssignment.Model
             }
         }
 
-        private string _term; 
+        private string _term;
         public string Term
         {
             get => _term;
@@ -168,7 +168,7 @@ namespace ClassroomAssignment.Model
         /// <summary>
         /// Property maps to the "Title/Topic" column of the department spreadsheet.
         /// </summary>
-        public string Topic  
+        public string Topic
         {
             get => _topic;
             set
@@ -463,7 +463,7 @@ namespace ClassroomAssignment.Model
             get
             {
                 bool nowAmbiguous = false;
-                if (!NeedsRoom || AlreadyAssignedRoom) nowAmbiguous =  false;
+                if (!NeedsRoom || AlreadyAssignedRoom) nowAmbiguous = false;
                 else nowAmbiguous = HasMultipleRoomAssignments();
 
                 if (nowAmbiguous != _ambiguousState)
@@ -512,7 +512,7 @@ namespace ClassroomAssignment.Model
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Type));
                 }
-               
+
             }
         }
         public List<DayOfWeek> MeetingDays { get; set; }
@@ -534,14 +534,28 @@ namespace ClassroomAssignment.Model
             get => int.Parse(ClassID);
         }
 
-        public string CourseDescription => CourseName
-                + Environment.NewLine
-                + string.Format("Sect. {0}", SectionNumber)
-                + Environment.NewLine
-                + Instructor
-                + Environment.NewLine
-                + MeetingPattern;
+        public string CourseDescription
+        {
+            get
+            {
+                var stringBuilder = new StringBuilder()
+                    .Append(CourseName)
+                    .AppendLine()
+                    .AppendFormat("Sect. {0}", SectionNumber)
+                    .AppendLine();
+                var instructors = Instructor.Split(new char[] { ';' });
 
+                foreach (var instructor in instructors)
+                {
+                    stringBuilder.Append(instructor);
+                    stringBuilder.AppendLine();
+                }
+
+                stringBuilder.Append(MeetingPattern);
+
+                return stringBuilder.ToString();
+            }
+        }
 
         #endregion
 

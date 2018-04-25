@@ -60,7 +60,6 @@ namespace ClassroomAssignment.Windows
         {
             var room = AvailableRoomsListView.SelectedItem as Room;
             viewModel.CurrentRoom = room;
-            RoomSchedule.RoomScheduled = room;
         }
 
        
@@ -68,13 +67,8 @@ namespace ClassroomAssignment.Windows
         {
             Room room = RoomOptionsComboBox.SelectedItem as Room;
             viewModel.CurrentCourse.RoomAssignment = room.RoomName;
-            int index = RoomOptionsComboBox.SelectedIndex;
-            if (room == null) return;
 
-            viewModel.UpdateCoursesForCurrentRoom();
-            viewModel.RemoveStaleAvailableRooms();
-            viewModel.UpdateAvailableSlotForCurrentRoom();
-            RoomOptionsComboBox.SelectedIndex = index;
+            //RoomOptionsComboBox.SelectedIndex = index;
             
         }
 

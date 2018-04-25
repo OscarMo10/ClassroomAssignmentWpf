@@ -28,15 +28,17 @@ namespace ClassroomAssignment.ViewModel
                 _currentCourse = value;
                 _currentCourse.PropertyChanged += _currentCourse_PropertyChanged;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCourse)));
-                UpdateAvailableRoomsForSelectedCourse(CurrentCourse);
+                UpdateRoomsForCurrentCourse(CurrentCourse);
             }
         }
 
         private void _currentCourse_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //UpdateCoursesForCurrentRoom(CurrentRoom);
-            //UpdateAvailableRoomsForSelectedCourse(CurrentCourse);
-            //UpdateAvailableSlotForCurrentRoom(CurrentRoom);
+            UpdateCoursesForCurrentRoom();
+            UpdateRoomsForCurrentCourse(CurrentCourse);
+            RemoveStaleAvailableRooms();
+            UpdateAvailableSlotForCurrentRoom();
+            AddAvailableRooms(CurrentCourse);
             //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCourse)));
             //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableSlots)));
 
@@ -55,7 +57,6 @@ namespace ClassroomAssignment.ViewModel
                 UpdateAvailableSlotForCurrentRoom();
 
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableSlots)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentRoom)));
 
             }
@@ -114,11 +115,10 @@ namespace ClassroomAssignment.ViewModel
 
 
 
-        private void UpdateAvailableRoomsForSelectedCourse(Course course)
+        private void UpdateRoomsForCurrentCourse(Course course)
         {
             RemoveStaleAvailableRooms();
             AddAvailableRooms(course);
-            CurrentRoom = AvailableRooms.FirstOrDefault();
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableRooms)));
         }

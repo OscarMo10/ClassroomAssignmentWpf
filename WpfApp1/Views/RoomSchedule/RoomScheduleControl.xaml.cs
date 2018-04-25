@@ -41,16 +41,13 @@ namespace ClassroomAssignment.Views.RoomSchedule
         private int currentColorIndex = 0;
 
         #region Dependency Properties
-        private readonly DependencyProperty _roomScheduledProperty;
-        public DependencyProperty RoomScheduledProperty
-        {
-            get => _roomScheduledProperty;
-        }
+        // private readonly DependencyProperty _roomScheduledProperty;
+        public static readonly DependencyProperty RoomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl), new PropertyMetadata(new PropertyChangedCallback(OnRoomChanged)));
 
-        private void OnRoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnRoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var currentRoom = e.NewValue as Room;
-            SetRoom(currentRoom);
+            ((RoomScheduleControl)d).SetRoom(currentRoom);
         }
 
         [Bindable(true)]
@@ -71,6 +68,16 @@ namespace ClassroomAssignment.Views.RoomSchedule
                
                 value.CollectionChanged += CoursesForRoom_CollectionChanged;
             }
+        }
+
+        public static readonly DependencyProperty CoursesForRoomProperty = DependencyProperty.Register("CoursesForRoom", typeof(ObservableCollection<Course>), typeof(RoomScheduleControl), new PropertyMetadata(new PropertyChangedCallback(CoursesForRoomChanged)));
+
+        private static void CoursesForRoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as RoomScheduleControl;
+            control.RemoveStaleAvailableItems();
+            control.ShowAvailableSlots();
+            control.SetCoursesForRoom(control.CoursesForRoom);
         }
 
         private void CoursesForRoom_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -102,8 +109,12 @@ namespace ClassroomAssignment.Views.RoomSchedule
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                RemoveStaleAvailableItems();
                 ShowAvailableSlots();
+            }
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
+            {
+                RemoveStaleAvailableItems();
+
             }
         }
 
@@ -136,7 +147,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         {
             InitializeComponent();
 
-            _roomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRoomChanged)));
+            //_roomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRoomChanged)));
 
             gridLayout = new ScheduleGridLayout(
                 FIRST_TIME_SLOT,

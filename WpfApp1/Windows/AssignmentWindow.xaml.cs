@@ -23,6 +23,7 @@ namespace ClassroomAssignment.Windows
     public partial class AssignmentWindow : Window
     {
         private AssignmentViewModel viewModel;
+
         public AssignmentWindow(List<Course> courses)
         {
             InitializeComponent();
@@ -30,38 +31,38 @@ namespace ClassroomAssignment.Windows
             DataContext = viewModel;
 
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
-            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
-
+            RoomSchedule.RoomScheduled = viewModel.CurrentRoom;
+            RoomSchedule.CoursesForRoom = viewModel.CoursesForSelectedRoom;
+            RoomSchedule.AvailableScheduleSlots = viewModel.AvailableSlots;
         }
 
-      
+
 
         private void AssignCoursesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-             Course course = AssignCoursesListView.SelectedItem as Course;
-            viewModel.CourseSelectedForAssignment(course);
+            Course course = AssignCoursesListView.SelectedItem as Course;
+            viewModel.CurrentCourse = course;
         }
 
-        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void CurrentCourseChanged()
         {
-            Debug.Write("Hello");
+            if (viewModel.CurrentCourse == null) return;
+            CourseDetailControl.SetCourse(viewModel.CurrentCourse);
+
         }
+
 
         private void AvailableRoomsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var room = AvailableRoomsListView.SelectedItem as Room;
-            viewModel.SetCurrentRoom(room);
-            RoomSchedule.SetRoom(room);
-            RoomSchedule.SetCoursesForRoom(viewModel.CoursesForSelectedRoom);
-            RoomSchedule.RemoveStaleAvailableItems();
-            
-            foreach (var slot in viewModel.AvailableSlots)
-            {
-                foreach (var meetingDay in slot.MeetingDays)
-                {
-                    RoomSchedule.ShowAvailableSlot(meetingDay, slot.StartTime, slot.EndTime);
-                }
-            }
+            viewModel.CurrentRoom = room;
+        }
+
+       
+        private void RoomOptionsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Room room = RoomOptionsComboBox.SelectedItem as Room;
+            viewModel.CurrentCourse.RoomAssignment = room.RoomName;
         }
     }
 }

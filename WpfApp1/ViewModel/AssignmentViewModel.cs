@@ -9,16 +9,73 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ClassroomAssignment.Model.Course;
+using static ClassroomAssignment.Extension.CourseExtensions;
 
 namespace ClassroomAssignment.ViewModel
 {
     public class AssignmentViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Course> CoursesBeingAssigned { get; } = new ObservableCollection<Course>();
-        public Course SelectedCourse { get; private set; }
+
+        public CourseState Unassigned { get; private set; } = CourseState.Unassigned;
+        public CourseState Ambiguous { get; set; } = CourseState.Ambiguous;
+        public CourseState Assigned { get; set; } = CourseState.Assigned;
+        public CourseState NoRoomRequired { get; set; } = CourseState.NoRoomRequired;
+        public List<Room> AllRooms { get; } = RoomRepository.GetInstance().Rooms;
+
+        private Course _currentCourse;
+        public Course CurrentCourse
+        {
+            get => _currentCourse;
+            set
+            {
+                _currentCourse = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCourse)));
+                UpdateAvailableRoomsForSelectedCourse(CurrentCourse);
+            }
+        }
+
+        private Room _currentRoom;
+        public Room CurrentRoom
+        {
+            get => _currentRoom;
+            set
+            {
+                Room room = value;
+                if (room == null) return;
+
+                var courses = from course in CourseRepo.Courses
+                                         where course.RoomAssignment == room.RoomName
+                                         select course;
+
+                CoursesForSelectedRoom.Clear();
+                foreach (Course course in courses)
+                {
+                    CoursesForSelectedRoom.Add(course);
+                }
+
+
+
+                var searchParameters = CurrentCourse.GetSearchParameters();
+
+                List<ScheduleSlot> slots = RoomSearch.ScheduleSlotsAvailable(searchParameters);
+                AvailableSlots.Clear();
+                foreach (var slot in slots.FindAll(x => x.RoomAvailable == room))
+                {
+                    AvailableSlots.Add(slot);
+                }
+
+                _currentRoom = room;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableSlots)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentRoom)));
+
+            }
+        }
         public ObservableCollection<Room> AvailableRooms { get; } = new ObservableCollection<Room>();
-        public IEnumerable<Course> CoursesForSelectedRoom = new List<Course>();
-        public IEnumerable<ScheduleSlot> AvailableSlots = new List<ScheduleSlot>();
+        public ObservableCollection<Course> CoursesForSelectedRoom = new ObservableCollection<Course>();
+        public ObservableCollection<ScheduleSlot> AvailableSlots = new ObservableCollection<ScheduleSlot>();
 
         private AvailableRoomSearch RoomSearch;
         private CourseRepository CourseRepo = CourseRepository.GetInstance();
@@ -36,22 +93,17 @@ namespace ClassroomAssignment.ViewModel
             IRoomRepository roomRepository = RoomRepository.GetInstance();
             RoomSearch = new AvailableRoomSearch(roomRepository, CourseRepo);
 
-            CourseSelectedForAssignment(CoursesBeingAssigned.First());
+            CurrentCourse = CoursesBeingAssigned.First();
             AddConflictingCourses();
         }
 
-        public void CourseSelectedForAssignment(Course course)
-        {
-            SelectedCourse = course;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
-            UpdateAvailableRoomsForSelectedCourse(course);
-        }
+
 
         private void UpdateAvailableRoomsForSelectedCourse(Course course)
         {
             RemoveStaleAvailableRooms();
             AddAvailableRooms(course);
-            SetCurrentRoom(AvailableRooms.FirstOrDefault());
+            CurrentRoom = AvailableRooms.FirstOrDefault();
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableRooms)));
         }
@@ -78,28 +130,7 @@ namespace ClassroomAssignment.ViewModel
             }
         }
 
-        public void SetCurrentRoom(Room room)
-        {
-            if (room == null) return;
-
-            CoursesForSelectedRoom = from course in CourseRepo.Courses
-                                    where course.RoomAssignment == room.RoomName
-                                    select course;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CoursesForSelectedRoom)));
-
-
-            var searchParameters = new SearchParameters();
-            searchParameters.MeetingDays = SelectedCourse.MeetingDays;
-            searchParameters.StartTime = SelectedCourse.StartTime.Value;
-            searchParameters.EndTime = SelectedCourse.EndTime.Value;
-            searchParameters.Capacity = int.Parse(SelectedCourse.RoomCapRequest);
-            searchParameters.Duration = SelectedCourse.EndTime.Value - SelectedCourse.StartTime.Value;
-
-            List<ScheduleSlot> slots = RoomSearch.ScheduleSlotsAvailable(searchParameters);
-            AvailableSlots = slots.FindAll(x => x.RoomAvailable == room);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailableSlots)));
-        }
-
+      
 
 
         public void AddConflictingCourses()

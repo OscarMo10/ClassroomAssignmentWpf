@@ -52,7 +52,6 @@
                             </Style>
                         </MenuItem.Style>
                     </MenuItem>
-                    <MenuItem x:Name="ReassignMenuItem" Header="Reassign" Click="ReassignMenuItem_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.GroupStyle>

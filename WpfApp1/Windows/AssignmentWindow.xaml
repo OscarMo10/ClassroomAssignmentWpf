@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClassroomAssignment.Views.RoomSchedule"
+        xmlns:scheduleView="clr-namespace:ClassroomAssignment.Views.RoomSchedule"
+        xmlns:views ="clr-namespace:ClassroomAssignment.Views"
         mc:Ignorable="d"
         Title="AssignmentWindow" Height="500" Width="800" WindowState="Maximized">
     <Grid>
@@ -17,6 +18,28 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
+                        <Ellipse
+                            Width="10"
+                            Height="10">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Type}" Value="0">
+                                            <Setter Property="Fill" Value="Purple" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Type}" Value="1">
+                                            <Setter Property="Fill" Value="Yellow" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Type}" Value="2">
+                                            <Setter Property="Fill" Value="Green" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Type}" Value="3">
+                                            <Setter Property="Fill" Value="Black" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
                         <Label Content="{Binding CourseTitle}" FontSize="10" Margin="0,0,5,0"/>
                         <Label Content="{Binding SectionNumber}" FontSize="10" />
                     </StackPanel>
@@ -24,94 +47,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Orientation="Vertical" Grid.Column="1" DataContext="{Binding SelectedCourse}">
-            <Label Content="Section Information"/>
-            <Separator/>
-
-            <Grid Height="Auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Title/Topic"/>
-                        <Label Content="{Binding CourseTitle}" BorderBrush="Black"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Section #"/>
-                        <Label Content="{Binding SectionNumber}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Credit Hrs"/>
-                        <Label Content="{Binding CreditHrs}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Status"/>
-                        <Label Content="{Binding Status}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Grade Mode"/>
-                        <Label Content="{Binding GradeMode}"/>
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel Grid.Column="1">
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Session"/>
-                        <Label Content="{Binding Session}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Campus"/>
-                        <Label Content="{Binding Campus}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Instr. Method"/>
-                        <Label Content="{Binding InstructionMethod}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Section Type"/>
-                        <Label Content="{Binding SectionType}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Grade Mode"/>
-                        <Label Content="{Binding GradeMode}"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <StackPanel Grid.Column="0">
-                    <Label Content="Instructor" FontWeight="Bold"/>
-                    <Label Content="{Binding Instructor}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="1">
-                    <Label Content="Room" FontWeight="Bold"/>
-                    <Label Content="{Binding Room}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2">
-                    <Label Content="Schedule" FontWeight="Bold"/>
-                    <Label Content="{Binding MeetingPattern}"/>
-                </StackPanel>
-            </Grid>
+        <StackPanel Orientation="Vertical" Grid.Column="1">
+            <views:CourseDetailControl x:Name="CourseDetailControl"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -119,46 +56,14 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0">
-                    <Label Content="Enrollment" FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical">
-                            <Label Content="Maximum"/>
-                            <Label Content="{Binding MaximumEnrollment}"/>
-                        </StackPanel>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                        <StackPanel Orientation="Vertical">
-                            <Label Content="Wait Cap"/>
-                            <Label Content="{Binding WaitCap}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical">
-                            <Label Content="Rm Cap Request"/>
-                            <Label Content="{Binding RoomCapRequest}"/>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel Grid.Column="1">
-                    <Label Content="Notes" FontWeight="Bold"/>
-                    <Label Content="{Binding Notes}"/>
-                </StackPanel>
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-
-                <StackPanel Grid.Column="0" Grid.Row="0">
-                    <Label Content="Available Rooms" HorizontalAlignment="Center"/>
-                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" SelectionChanged="AvailableRoomsListView_SelectionChanged" SelectionMode="Single">
+                    <Label Content="Available Rooms" HorizontalAlignment="Center" Grid.Row="0"/>
+                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" SelectionChanged="AvailableRoomsListView_SelectionChanged" Grid.Row="1">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -169,36 +74,25 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </StackPanel>
+                </Grid>
 
-                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0"> 
-                    <TextBlock Text="Search Parameters" TextAlignment="Center" />
-                    <Grid HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Button Content="-" Padding="5" Grid.Column="0"/>
-                        <TextBlock x:Name="RangeTextBlock" Text="0" Grid.Column="1"/>
-                        <Button Content="+" Padding="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="2"/>
-                    </Grid>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock Text="Room Assignment: " Margin="0,0,5,0" LineHeight="10" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectionChanged="RoomOptionsComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding RoomName}" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Capacity: "/>
+                                    <TextBlock Text="{Binding Capacity}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
-                    <TextBlock x:Name="RoomAssignmentTextBlock" />
-                    <Label x:Name="AssignmentStatusLabel"/>
-                </StackPanel>
-                
             </Grid>
-            <Button Content="Save" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,21,0,0" />
-
-
-
-
-
         </StackPanel>
 
-        <local:RoomScheduleControl x:Name="RoomSchedule" Grid.Column="3" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}"/>
+        <scheduleView:RoomScheduleControl x:Name="RoomSchedule" Grid.Column="2" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}"/>
     </Grid>
 </Window>

@@ -91,6 +91,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extension\CourseExtensions.cs" />
     <Compile Include="Extension\EnumExtensions.cs" />
     <Compile Include="Extension\WorkbookExtension.cs" />
     <Compile Include="Model\Room.cs" />
@@ -102,6 +103,11 @@
     <Compile Include="Operations\ScheduleSlot.cs" />
     <Compile Include="Operations\SearchParameters.cs" />
     <Compile Include="Repo\ObservableCourseRepository.cs" />
+    <Compile Include="Views\CourseDetailControl.xaml.cs">
+      <DependentUpon>CourseDetailControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RoomSchedule\AvailableSlotLabel.cs" />
+    <Compile Include="Views\RoomSchedule\CourseLabel.cs" />
     <Compile Include="Views\RoomSchedule\RoomScheduleControl.xaml.cs">
       <DependentUpon>RoomScheduleControl.xaml</DependentUpon>
     </Compile>
@@ -133,6 +139,10 @@
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CourseDetailControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RoomSchedule\RoomScheduleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

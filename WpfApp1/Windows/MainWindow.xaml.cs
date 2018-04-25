@@ -96,10 +96,6 @@ namespace ClassroomAssignment.Windows
             var course = CoursesDataGrid.CurrentItem as Course;
          }
 
-        private void ReassignMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void AssignClassCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

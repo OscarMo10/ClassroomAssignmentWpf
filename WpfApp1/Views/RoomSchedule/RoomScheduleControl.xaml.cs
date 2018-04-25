@@ -1,4 +1,6 @@
 ﻿using ClassroomAssignment.Model;
+using ClassroomAssignment.Model.Repo;
+using ClassroomAssignment.Operations;
 using ClassroomAssignment.Visual;
 using System;
 using System.Collections.Generic;
@@ -31,35 +33,135 @@ namespace ClassroomAssignment.Views.RoomSchedule
         private static readonly TimeSpan LAST_TIME_SLOT = new TimeSpan(22, 0, 0);
         private const DayOfWeek FIRST_DAY_OF_SCHEDULE = DayOfWeek.Sunday;
         private const DayOfWeek LAST_DAY_OF_SCHEDULE = DayOfWeek.Saturday;
-        private const string SCHEDULE_ITEM_TAG = "scheduleItem";
-        private const string AVAILABLE_ITEM_TAG = "availableItem";
 
         private ScheduleGridLayout gridLayout;
+        static List<SolidColorBrush> BackgroundColors;
+        private Dictionary<string, SolidColorBrush> colorMap = new Dictionary<string, SolidColorBrush>();
+        private int currentColorIndex = 0;
 
-        //public static readonly DependencyProperty CoursesInRoomProperty =
-        //    DependencyProperty.Register(nameof(CoursesInRoom), typeof(ObservableCollection<Course>), typeof(RoomScheduleControl), new PropertyMetadata(default(ObservableCollection<Course>)));
+        #region Dependency Properties
+        private readonly DependencyProperty _roomScheduledProperty;
+        public DependencyProperty RoomScheduledProperty
+        {
+            get => _roomScheduledProperty;
+        }
 
-        //[Bindable(true)]
-        //public ObservableCollection<Course> CoursesInRoom
-        //{
-        //    get { return (ObservableCollection<Course>)GetValue(CoursesInRoomProperty); }
-        //    set { SetValue(CoursesInRoomProperty, value); }
-        //}
+        private void OnRoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var currentRoom = e.NewValue as Room;
+            SetRoom(currentRoom);
+        }
+
+        [Bindable(true)]
+        public Room RoomScheduled
+        {
+            get { return GetValue(RoomScheduledProperty) as Room; }
+
+            set { SetValue(RoomScheduledProperty, value); }
+        }
+
+        private ObservableCollection<Course> _coursesForRoom;
+        public ObservableCollection<Course> CoursesForRoom
+        {
+            get => _coursesForRoom;
+            set
+            {
+                _coursesForRoom = value;
+                value.CollectionChanged += CoursesForRoom_CollectionChanged;
+            }
+        }
+
+        private void CoursesForRoom_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                RemoveStaleCourseLabels();
+                SetCoursesForRoom(CoursesForRoom);
+
+                foreach (var course in e.NewItems)
+                {
+                    (course as Course).PropertyChanged += CourseInRoom_PropertyChanged;
+                }
+            }
+        }
+
+        private void CourseInRoom_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var course = sender as Course;
+
+            foreach (var child in ScheduleGrid.Children)
+            {
+                CourseLabel courseLabel;
+                if ((courseLabel = child as CourseLabel) != null)
+                {
+                    if (courseLabel)
+                }
+            }
+        }
+
+        private ObservableCollection<ScheduleSlot> _availableScheduleSlots;
+        public ObservableCollection<ScheduleSlot> AvailableScheduleSlots
+        {
+            get => _availableScheduleSlots;
+            set
+            {
+                _availableScheduleSlots = value;
+                value.CollectionChanged += AvailableSlots_CollectionChanged;
+            }
+        }
+
+        private void AvailableSlots_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                RemoveStaleAvailableItems();
+                ShowAvailableSlots();
+            }
+        }
+
+        #endregion
+
+
+
+        static RoomScheduleControl()
+        {
+            var colors = new List<SolidColorBrush>()
+            {
+                Brushes.Aqua,
+                Brushes.Azure,
+                Brushes.Beige,
+                Brushes.BurlyWood,
+                Brushes.Cornsilk,
+                Brushes.Coral,
+                Brushes.FloralWhite
+            };
+
+            BackgroundColors = colors.ConvertAll(x =>
+            {
+                var color = x.Color;
+                color.A = 200;
+                return new SolidColorBrush(color);
+            });
+        }
 
         public RoomScheduleControl()
         {
             InitializeComponent();
 
+            _roomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRoomChanged)));
 
             gridLayout = new ScheduleGridLayout(
                 FIRST_TIME_SLOT,
                 LAST_TIME_SLOT,
-                FIRST_DAY_OF_SCHEDULE, 
-                LAST_DAY_OF_SCHEDULE, 
+                FIRST_DAY_OF_SCHEDULE,
+                LAST_DAY_OF_SCHEDULE,
                 TIME_DURATION_UNIT_IN_MINUTES
                 );
             SetupScheduleGrid();
         }
+
+
+        
 
 
         #region Setup
@@ -216,25 +318,27 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         #endregion
 
+
         #region Public Methods
 
-        public void SetRoom(Room room)
+        private void SetRoom(Room room)
         {
             RoomNameTextBlock.Text = room.RoomName;
             RoomCapacityTextBlock.Text = room.Capacity.ToString();
         }
 
-        public void SetCoursesForRoom(IEnumerable<Course> courses)
+        private void SetCoursesForRoom(IEnumerable<Course> courses)
         {
-            RemoveOldScheduleItems();
+            RemoveStaleCourseLabels();
 
             foreach (var course in courses)
             {
                 foreach (var day in course.MeetingDays)
                 {
-                    var textBlock = GetTextBlock(day, course.StartTime.Value);
+                    var textBlock = GetCourseLabel(day, course);
+                    textBlock.Background = GetBackgroundColorForCourse(course);
                     textBlock.TextAlignment = TextAlignment.Center;
-                    textBlock.Text = LabelForCourse(course);
+                    textBlock.Text = course.CourseDescription;
                     Grid.SetRowSpan(textBlock, RowSpanForCourse(course));
                 }
             }
@@ -245,85 +349,85 @@ namespace ClassroomAssignment.Views.RoomSchedule
             List<TextBlock> staleAvailableItems = new List<TextBlock>();
             foreach (var child in ScheduleGrid.Children)
             {
-                TextBlock textBlock;
-                if ((textBlock = child as TextBlock) != null)
-                {
-                    if ((textBlock.Tag as string) == AVAILABLE_ITEM_TAG)
-                    {
-                        staleAvailableItems.Add(textBlock);
-                    }
-                }
+                AvailableSlotLabel textBlock;
+                if ((textBlock = child as AvailableSlotLabel) != null) staleAvailableItems.Add(textBlock);
+              
             }
 
-            foreach (var staleItem in staleAvailableItems)
-            {
-                ScheduleGrid.Children.Remove(staleItem);
-            }
+            foreach (var staleItem in staleAvailableItems) ScheduleGrid.Children.Remove(staleItem);
         }
 
-        public void ShowAvailableSlot(DayOfWeek meetingDay, TimeSpan startTime, TimeSpan endTime)
+        public void ShowAvailableSlots()
         {
+            foreach (var slot in AvailableScheduleSlots)
+            {
+                foreach (var day in slot.MeetingDays)
+                {
+                    int row = gridLayout.GetRowForTime(slot.StartTime);
+                    int span = gridLayout.SpanForDurationInMinutes((int)(slot.EndTime - slot.StartTime).TotalMinutes);
 
-            int row = gridLayout.GetRowForTime(startTime);
-            int span = gridLayout.SpanForDurationInMinutes((int)(endTime - startTime).TotalMinutes);
+                    var availableSlot = new AvailableSlotLabel(slot.StartTime, slot.EndTime);
 
-            var textblock = new TextBlock();
-            textblock.Background = Brushes.Green;
-            textblock.Tag = AVAILABLE_ITEM_TAG;
-            var start = new DateTime().Add(startTime);
-            var end = new DateTime().Add(endTime);
-            textblock.Text = string.Format("{0}{1}{2:t}-{3:t}", "Available", Environment.NewLine, start, end);
-            ScheduleGrid.Children.Add(textblock);
-            Grid.SetRow(textblock, gridLayout.GetRowForTime(startTime));
-            Grid.SetColumn(textblock, gridLayout.GetColumnForDay(meetingDay));
-            Grid.SetRowSpan(textblock, span);
+                    ScheduleGrid.Children.Add(availableSlot);
+                    Grid.SetRow(availableSlot, gridLayout.GetRowForTime(slot.StartTime));
+                    Grid.SetColumn(availableSlot, gridLayout.GetColumnForDay(day));
+                    Grid.SetRowSpan(availableSlot, span);
+                }
+            }
         }
 
         #endregion
 
         #region Private Helper Methods
 
-        private void RemoveOldScheduleItems()
+        private SolidColorBrush GetBackgroundColorForCourse(Course course)
         {
-            var textblocksToRemove = new List<TextBlock>();
+            if (colorMap.ContainsKey(course.SubjectCode))
+            {
+                return colorMap[course.SubjectCode];
+            }
+            else if (BackgroundColors.Count == currentColorIndex + 1)
+            {
+                return BackgroundColors.Last();
+            }
+            else
+            {
+                currentColorIndex++;
+                colorMap[course.SubjectCode] = BackgroundColors[currentColorIndex];
+                return colorMap[course.SubjectCode];
+            }
+        }
+
+        private void RemoveStaleCourseLabels()
+        {
+            var staleLabels = new List<CourseLabel>();
             foreach (var child in ScheduleGrid.Children)
             {
-                TextBlock textBlock = child as TextBlock;
-                if (textBlock != null)
+                CourseLabel availableSlot = child as CourseLabel;
+                if (availableSlot != null)
                 {
-                    if ((textBlock.Tag as string) == SCHEDULE_ITEM_TAG)
-                    {
-                        textblocksToRemove.Add(textBlock);
-                    }
+                    staleLabels.Add(availableSlot);
                 }
             }
 
-            foreach (var textblock in textblocksToRemove)
+            foreach (var staleLabel in staleLabels)
             {
-                ScheduleGrid.Children.Remove(textblock);
+                ScheduleGrid.Children.Remove(staleLabel);
             }
         }
 
-        private TextBlock GetTextBlock(DayOfWeek day, TimeSpan time)
+        private CourseLabel GetCourseLabel(DayOfWeek day, Course course)
         {
-            var textBlock = new TextBlock();
-            textBlock.Tag = SCHEDULE_ITEM_TAG;
-            var color = Brushes.LightSlateGray.Color;
-            color.A = 100;
-            textBlock.Background = new SolidColorBrush(color);
-            textBlock.Margin = new Thickness(5, 0, 5, 0);
-            ScheduleGrid.Children.Add(textBlock);
-            Grid.SetRow(textBlock, gridLayout.GetRowForTime(time));
-            Grid.SetColumn(textBlock, gridLayout.GetColumnForDay(day));
+            var courseLabel = new CourseLabel(course);
+            var brush = BackgroundColors[0];
+            courseLabel.Background = brush;
 
-            return textBlock;
+            ScheduleGrid.Children.Add(courseLabel);
+            Grid.SetRow(courseLabel, gridLayout.GetRowForTime(course.StartTime.Value));
+            Grid.SetColumn(courseLabel, gridLayout.GetColumnForDay(day));
+
+            return courseLabel;
         }
-
-        private string LabelForCourse(Course course)
-        {
-            return course.CourseName;
-        }
-
 
         private int RowSpanForCourse(Course course)
         {
@@ -333,5 +437,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         }
 
         #endregion
+
+       
     }
 }

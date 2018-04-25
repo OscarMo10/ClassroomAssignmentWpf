@@ -510,6 +510,7 @@ namespace ClassroomAssignment.Model
                 {
                     _roomAssignment = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(Type));
                 }
                
             }
@@ -532,6 +533,14 @@ namespace ClassroomAssignment.Model
         {
             get => int.Parse(ClassID);
         }
+
+        public string CourseDescription => CourseName
+                + Environment.NewLine
+                + string.Format("Sect. {0}", SectionNumber)
+                + Environment.NewLine
+                + Instructor
+                + Environment.NewLine
+                + MeetingPattern;
 
 
         #endregion
@@ -662,6 +671,20 @@ namespace ClassroomAssignment.Model
                 RoomAssignment = Notes;
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            var course = obj as Course;
+            return course != null &&
+                   ClassID == course.ClassID;
+        }
+
+        public override int GetHashCode()
+        {
+            return 1096323362 + EqualityComparer<string>.Default.GetHashCode(ClassID);
+        }
+
+       
 
         #endregion
     }

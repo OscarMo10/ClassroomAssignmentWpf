@@ -10,5 +10,6 @@ namespace ClassroomAssignment.Model.Repo
     {
         string GetNormalizedRoomName(string roomName);
         List<Room> Rooms { get; }
+        Room GetRoomWithName(string roomName);
     }
 }

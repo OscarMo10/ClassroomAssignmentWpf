@@ -14,14 +14,14 @@ using ClassroomAssignment.Model.Visual;
 using ClassroomAssignment.ViewModel;
 using System.Diagnostics;
 using System.Windows.Input;
-using ClassroomAssignment.Views;
+using ClassroomAssignment.Windows;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using ClassroomAssignment.Repo;
 using System.Collections.ObjectModel;
 
-namespace ClassroomAssignment
+namespace ClassroomAssignment.Windows
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -87,6 +87,14 @@ namespace ClassroomAssignment
 
         }
 
+
+        private void Menu_Changes(object sender, EventArgs e)
+        {
+            CourseChangesWindow courseChangesWindow = new CourseChangesWindow();
+            courseChangesWindow.Show();
+
+        }
+
         private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e)
         {
         }
@@ -96,10 +104,6 @@ namespace ClassroomAssignment
             var course = CoursesDataGrid.CurrentItem as Course;
          }
 
-        private void ReassignMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void AssignClassCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

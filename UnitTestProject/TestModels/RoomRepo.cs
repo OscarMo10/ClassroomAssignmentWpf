@@ -33,6 +33,11 @@ namespace UnitTestProject.TestModels
         {
             throw new NotImplementedException();
         }
+
+        public Room GetRoomWithName(string roomName)
+        {
+            return Rooms.Find(x => x.RoomName == roomName);
+        }
     }
 
     

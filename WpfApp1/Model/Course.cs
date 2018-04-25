@@ -592,7 +592,7 @@ namespace ClassroomAssignment.Model
         {
             Regex regex = new Regex(DataConstants.MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(MeetingPattern);
-
+            
             if (match.Success)
             {
                 var daysCapture = match.Groups[1].Captures;
@@ -620,6 +620,10 @@ namespace ClassroomAssignment.Model
                 NeedsRoom = false;
             }
             else if (Room.Equals(RoomOptions.NO_ROOM_NEEDED))
+            {
+                NeedsRoom = false;
+            }
+            else if(MeetingPattern.Equals(MeetingPatternOptions.DOES_NOT_MEET))
             {
                 NeedsRoom = false;
             }

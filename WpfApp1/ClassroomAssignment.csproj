@@ -102,7 +102,6 @@
     <Compile Include="Operations\AssignmentConflictDetector.cs" />
     <Compile Include="Operations\ScheduleSlot.cs" />
     <Compile Include="Operations\SearchParameters.cs" />
-    <Compile Include="Repo\ObservableCourseRepository.cs" />
     <Compile Include="Views\CourseDetailControl.xaml.cs">
       <DependentUpon>CourseDetailControl.xaml</DependentUpon>
     </Compile>

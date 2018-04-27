@@ -10,8 +10,10 @@ using System.Collections;
 using NPOI.HSSF.UserModel;
 using System.IO;
 using ClassroomAssignment.Extension;
+using ClassroomAssignment.Model;
+using ClassroomAssignment.Repo;
 
-namespace ClassroomAssignment.Model.Visual
+namespace ClassroomAssignment.Visual
 {
     class ExcelSchedulePrinter : ISchedulePrinter
     {

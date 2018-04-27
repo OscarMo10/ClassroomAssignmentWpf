@@ -1,5 +1,5 @@
 ﻿using ClassroomAssignment.Model;
-using ClassroomAssignment.Model.Repo;
+using ClassroomAssignment.Repo;
 using Microsoft.Win32;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using ClassroomAssignment.Model.Visual;
+using ClassroomAssignment.Visual;
 using ClassroomAssignment.ViewModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -18,7 +18,6 @@ using ClassroomAssignment.Windows;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
-using ClassroomAssignment.Repo;
 using System.Collections.ObjectModel;
 
 namespace ClassroomAssignment.Windows
@@ -79,7 +78,6 @@ namespace ClassroomAssignment.Windows
                     workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
                     ExcelSchedulePrinter printer = new ExcelSchedulePrinter(fileName, workbook);
                     ICourseRepository courseRepository = CourseRepository.GetInstance();
-                    //IRoomRepository roomRepository = InMemoryRoomRepository.getInstance();
 
                     new ScheduleVisualization(courseRepository, null, printer).PrintSchedule();
                 }
@@ -95,9 +93,7 @@ namespace ClassroomAssignment.Windows
 
         }
 
-        private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e)
-        {
-        }
+
 
         private void AssignMenuItem_Click(object sender, RoutedEventArgs e)
         {

@@ -13,8 +13,7 @@
         <CommandBinding Command="vm:CustomCommands.Assign" CanExecute="AssignClassCommand_CanExecute" Executed="AssignClassCommand_Executed"/>
     </Window.CommandBindings>
         <Window.Resources>
-        <CollectionViewSource x:Key="cvsCourses" Source="{Binding Courses}"
-                              Filter="CollectionViewSource_Filter" >
+        <CollectionViewSource x:Key="cvsCourses" Source="{Binding Courses}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Type"/>
             </CollectionViewSource.GroupDescriptions>

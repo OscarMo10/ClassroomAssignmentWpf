@@ -1,11 +1,12 @@
 ﻿using ClassroomAssignment.Model.Repo;
+using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassroomAssignment.Model.Visual
+namespace ClassroomAssignment.Visual
 {
     public class ScheduleVisualization
     {

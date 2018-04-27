@@ -15,15 +15,20 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using ClassroomAssignment.Model;
 
-namespace ClassroomAssignment.Model.Repo
+namespace ClassroomAssignment.Repo
 {
     [Serializable]
-    class CourseRepository : ObservableCourseRepository
+    class CourseRepository : ICourseRepository
     {
-        private static CourseRepository _instance;
+        public IEnumerable<Course> Courses { get; }
 
+        private static CourseRepository _instance;
         private AssignmentConflictDetector roomConflictDetector;
+        private List<Conflict> CachedAllConflicts;
+
+        public event EventHandler<ChangeInConflictsEventArgs> ChangeInConflicts;
 
         public static CourseRepository GetInstance()
         {
@@ -38,13 +43,20 @@ namespace ClassroomAssignment.Model.Repo
             _instance.roomConflictDetector = new AssignmentConflictDetector(_instance);
         }
 
-        private CourseRepository(ICollection<Course> courses) : base(courses)
+        private CourseRepository(IEnumerable<Course> courses)
         {
+            Courses = courses;
         }
 
         public List<Conflict> GetConflicts()
         {
-            return new AssignmentConflictDetector(this).AllConflicts();
+            if (CachedAllConflicts == null)
+            {
+                CachedAllConflicts =  new AssignmentConflictDetector(this).AllConflicts();
+            }
+
+
+            return CachedAllConflicts;
         }
 
         public List<Conflict> GetConflictsInvolvingCourses(List<Course> courses)
@@ -52,6 +64,11 @@ namespace ClassroomAssignment.Model.Repo
             return new AssignmentConflictDetector(this).ConflictsInvolvingCourses(courses);
         }
 
-        
+
+        public class ChangeInConflictsEventArgs : EventArgs
+        {
+            public IEnumerable<Conflict> Conflicts { get; set; }
+        }
+
     }
 }

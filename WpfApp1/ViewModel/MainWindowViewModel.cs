@@ -1,6 +1,6 @@
 ﻿using ClassroomAssignment.Model;
-using ClassroomAssignment.Model.Repo;
-using ClassroomAssignment.Model.Visual;
+using ClassroomAssignment.Repo;
+using ClassroomAssignment.Visual;
 using ClassroomAssignment.Notification;
 using ClassroomAssignment.Operations;
 using Microsoft.Win32;
@@ -26,8 +26,8 @@ namespace ClassroomAssignment.ViewModel
     {
         public bool ContinueButtonEnabled { get; } = false;
 
-        private IList<Course> _courses;
-        public IList<Course> Courses
+        private IEnumerable<Course> _courses;
+        public IEnumerable<Course> Courses
         {
             get { return _courses; }
             set

@@ -1,5 +1,4 @@
 ﻿using ClassroomAssignment.Model;
-using ClassroomAssignment.Model.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using ClassroomAssignment.Operations;
+using ClassroomAssignment.Repo;
 
 namespace ClassroomAssignment.Notification
 {
@@ -20,11 +20,11 @@ namespace ClassroomAssignment.Notification
 
         private NotificationManager(CourseRepository courseRepository, AssignmentConflictDetector roomConflictFinder)
         {
-            _courseRepository = courseRepository;
-            _courseConflictFinder = roomConflictFinder;
+            //_courseRepository = courseRepository;
+            //_courseConflictFinder = roomConflictFinder;
 
-            _courseRepository.CourseModified += NotificationManager_CourseModified;
-            _courseRepository.CourseCollectionModified += _courseRepository_CourseCollectionModified;
+            //_courseRepository.CourseModified += NotificationManager_CourseModified;
+            //_courseRepository.CourseCollectionModified += _courseRepository_CourseCollectionModified;
             
         }
 

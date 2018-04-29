@@ -42,7 +42,7 @@ namespace ClassroomAssignment.Operations
 
             var coursesGroupedByRoom = from room in roomRepository.Rooms
                                        where room.Capacity >= searchParameters.Capacity
-                                       join course in courseRepository.Courses on room.RoomName equals course.RoomAssignment into courseGroup
+                                       join course in courseRepository.Courses on room equals course.RoomAssignment into courseGroup
                                        select new { Room = room, Courses = courseGroup };
 
 

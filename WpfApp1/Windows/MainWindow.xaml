@@ -133,7 +133,7 @@
         </DataGrid>
 
         <ScrollViewer Grid.Row="2">
-            <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}">
+            <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" SelectionChanged="ConflictsListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="ConflictTemplate">
                         <Label Content="{Binding Description}"></Label>

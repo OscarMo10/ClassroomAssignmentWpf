@@ -24,12 +24,11 @@ namespace ClassroomAssignment.Windows
     public partial class AssignmentWindow : Window
     {
         private AssignmentViewModel viewModel;
-        List<Course> AssignedCourses;
+
         public AssignmentWindow(List<Course> courses)
         {
 
             InitializeComponent();
-            AssignedCourses = courses;
             viewModel = new AssignmentViewModel(courses);
 
             DataContext = viewModel;
@@ -46,34 +45,8 @@ namespace ClassroomAssignment.Windows
         private void AssignCoursesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Course course = AssignCoursesListView.SelectedItem as Course;
-            viewModel.CurrentCourse = course;
+
             CourseDetailControl.SetCourse(course);
-            if (course.RoomAssignment != null)
-            {
-                RoomOptionsComboBox.SelectedItem = RoomRepository.GetInstance().GetRoomWithName(course.RoomAssignment);
-            }
-        }
-
-        private void CurrentCourseChanged()
-        {
-            if (viewModel.CurrentCourse == null) return;
-            CourseDetailControl.SetCourse(viewModel.CurrentCourse);
-
-        }
-
-
-        private void AvailableRoomsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var room = AvailableRoomsListView.SelectedItem as Room;
-            viewModel.CurrentRoom = room;
-        }
-
-
-        private void RoomOptionsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Room room = RoomOptionsComboBox.SelectedItem as Room;
-            viewModel.CurrentCourse.RoomAssignment = room.RoomName;
-
 
         }
 

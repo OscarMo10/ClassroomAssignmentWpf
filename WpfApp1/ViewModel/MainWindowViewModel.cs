@@ -36,7 +36,7 @@ namespace ClassroomAssignment.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
             }
         }
-        public IList<Conflict> Conflicts { get; set; }
+        public IEnumerable<Conflict> Conflicts { get; set; }
 
         
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,20 +49,15 @@ namespace ClassroomAssignment.ViewModel
             Courses = courseRepo.Courses;
             
             Conflicts = courseRepo.GetConflicts();
-            courseRepo.CourseModified += CourseRepo_CourseModified;
+            courseRepo.ChangeInConflicts += CourseRepo_ChangeInConflicts;
         }
 
-        private void CourseRepo_CourseModified(object sender, PropertyChangedEventArgs e)
+        private void CourseRepo_ChangeInConflicts(object sender, CourseRepository.ChangeInConflictsEventArgs e)
         {
-            Conflicts = CourseRepository.GetInstance().GetConflicts();
-            
+            Conflicts = e.Conflicts;
         }
 
-        private void Courses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         private int CompareCourses(Course c1, Course c2)
         {
             var value1 = CourseValue(c1);

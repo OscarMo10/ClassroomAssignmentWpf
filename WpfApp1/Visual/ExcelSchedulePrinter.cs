@@ -81,7 +81,7 @@ namespace ClassroomAssignment.Visual
 
             foreach (var courseGroup in coursesInRoom)
             {
-                string room = courseGroup.Key;
+                string room = courseGroup.Key.RoomName;
                 ISheet sheet = _workbook.CloneSheet(_workbook.GetSheetIndex(_scheduleTemplate));
                 var sheetIndex = _workbook.GetSheetIndex(sheet);
                 _workbook.SetSheetName(sheetIndex, room);
@@ -116,10 +116,10 @@ namespace ClassroomAssignment.Visual
             }
         }
 
-        private Dictionary<string, List<Course>> getRoomNameToCoursesMap(IEnumerable<Course> courses) 
+        private Dictionary<Room, List<Course>> getRoomNameToCoursesMap(IEnumerable<Course> courses) 
         {
 
-            Dictionary<string, List<Course>> roomCourseMap = new Dictionary<string, List<Course>>();
+            Dictionary<Room, List<Course>> roomCourseMap = new Dictionary<Room, List<Course>>();
 
             foreach (Course course in courses)
             {

@@ -499,11 +499,11 @@ namespace ClassroomAssignment.Model
         /// </summary>
         public bool AlreadyAssignedRoom
         {
-            get => string.IsNullOrEmpty(RoomAssignment) ? false : true;
+            get => RoomAssignment == null ? false : true;
         }
 
-        private string _roomAssignment;
-        public string RoomAssignment
+        private Room _roomAssignment;
+        public Room RoomAssignment
         {
             get => _roomAssignment;
 
@@ -679,15 +679,15 @@ namespace ClassroomAssignment.Model
                 //IRoomRepository roomRepository = InMemoryRoomRepository.getInstance();
                 //var room = roomRepository.getNormalizedRoomName(Room);
                 var room = Room.Replace("Peter Kiewit Institute", "PKI");
-                RoomAssignment = room;
+                RoomAssignment = RoomRepository.GetInstance().GetRoomWithName(room);
             }
             else if (commentColMatch.Success)
             {
-                RoomAssignment = Comments;
+                RoomAssignment = RoomRepository.GetInstance().GetRoomWithName(Comments);
             }
             else if (notesColMatch.Success)
             {
-                RoomAssignment = Notes;
+                RoomAssignment = RoomRepository.GetInstance().GetRoomWithName(Notes);
             }
         }
 

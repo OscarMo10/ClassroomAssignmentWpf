@@ -141,13 +141,13 @@ namespace ClassroomAssignment.Views.RoomSchedule
                 color.A = 200;
                 return new SolidColorBrush(color);
             });
+
         }
 
         public RoomScheduleControl()
         {
             InitializeComponent();
 
-            //_roomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRoomChanged)));
 
             gridLayout = new ScheduleGridLayout(
                 FIRST_TIME_SLOT,
@@ -327,7 +327,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
             if (room == null) return;
 
             RoomNameTextBlock.Text = room.RoomName;
-            RoomCapacityTextBlock.Text = room.Capacity.ToString();
+            RoomCapacityTextBlock.Text = string.Format("Capacity: {0}",  room.Capacity);
         }
 
         private void SetCoursesForRoom(IEnumerable<Course> courses)
@@ -347,7 +347,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
             }
         }
 
-        public void RemoveStaleAvailableItems()
+        private void RemoveStaleAvailableItems()
         {
             List<TextBlock> staleAvailableItems = new List<TextBlock>();
             foreach (var child in ScheduleGrid.Children)
@@ -360,7 +360,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
             foreach (var staleItem in staleAvailableItems) ScheduleGrid.Children.Remove(staleItem);
         }
 
-        public void ShowAvailableSlots()
+        private void ShowAvailableSlots()
         {
             foreach (var slot in AvailableScheduleSlots)
             {

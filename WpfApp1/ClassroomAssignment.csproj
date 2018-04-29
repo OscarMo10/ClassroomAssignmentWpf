@@ -126,7 +126,7 @@
     <Compile Include="Windows\AssignmentWindow.xaml.cs">
       <DependentUpon>AssignmentWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CourseChangesWindow.xaml.cs">
+    <Compile Include="Changes\CourseChangesWindow.xaml.cs">
       <DependentUpon>CourseChangesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\CourseDetailWindow.xaml.cs">
@@ -138,6 +138,8 @@
     <Compile Include="Windows\AmbiguityResolverWindow.xaml.cs">
       <DependentUpon>AmbiguityResolverWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Changes\CourseDifference.cs" />
+    <Compile Include="Changes\CourseDifferenceToBorderBrushConverter.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -153,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\CourseChangesWindow.xaml">
+    <Page Include="Changes\CourseChangesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,7 +20,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Button x:Name="BackButton" Content="Back" Grid.Row="0" Width="50" Margin="0,20,0,10" Click="BackButton_Click"/>
-            <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick" Grid.Row="1">
+            <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick" Grid.Row="1" SelectedItem="{Binding CurrentCourse}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -75,7 +75,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Content="Available Rooms" HorizontalAlignment="Center" Grid.Row="0"/>
-                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" SelectionChanged="AvailableRoomsListView_SelectionChanged" Grid.Row="1">
+                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" Grid.Row="1" SelectedItem="{Binding CurrentRoom, Mode=OneWayToSource}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -90,7 +90,7 @@
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
                     <TextBlock Text="Room Assignment: " Margin="0,0,5,0" LineHeight="10" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectionChanged="RoomOptionsComboBox_SelectionChanged">
+                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectedItem="{Binding CurrentCourse.RoomAssignment}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

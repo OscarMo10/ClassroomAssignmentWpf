@@ -1,7 +1,9 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
+using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -17,7 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Windows
+namespace ClassroomAssignment.Changes
 {
     /// <summary>
     /// Interaction logic for CourseChangesWindow.xaml
@@ -58,13 +60,16 @@ namespace ClassroomAssignment.Windows
             {
                 for (int j = 0; j < newCourses.Count; j++)
                 {
-                    var difference = new CourseDifference();
                     if (originalCourses[i].ClassID_AsInt == newCourses[j].ClassID_AsInt)
                     {
-                        if (CoursesAreDifferent(originalCourses[i], newCourses[j]))
+                        if (!CoursesAreSame(originalCourses[i], newCourses[j]))
                         {
+                            var difference = new CourseDifference();
+
                             difference.DifferenceType = "Modified";
-                            difference.MostUpToDateCourse = newCourses[j];
+                            difference.OriginalCourse = originalCourses[i];
+                            difference.NewestCourse = newCourses[j];
+                            differences.Add(difference);
                         }
                     }
 
@@ -75,15 +80,13 @@ namespace ClassroomAssignment.Windows
             return differences;
         }
 
-        private bool CoursesAreDifferent(Course a, Course b)
+        private bool CoursesAreSame(Course a, Course b)
         {
-            return a.RoomAssignment != b.RoomAssignment;
+            if (a.RoomAssignment == null || b.RoomAssignment == null) return a.RoomAssignment == b.RoomAssignment;
+            else return a.RoomAssignment.Equals(b.RoomAssignment);
         }
 
-        private class CourseDifference
-        {
-            public string DifferenceType { get; set; }
-            public Course MostUpToDateCourse { get; set; }
-        }
+       
+        
     }
 }

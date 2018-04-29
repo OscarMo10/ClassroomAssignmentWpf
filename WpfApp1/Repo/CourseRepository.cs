@@ -46,17 +46,26 @@ namespace ClassroomAssignment.Repo
         private CourseRepository(IEnumerable<Course> courses)
         {
             Courses = courses;
+            
+            foreach (var course in courses)
+            {
+                course.PropertyChanged += Course_PropertyChanged;
+            }
+        }
+
+        private void Course_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var course = sender as Course;
+            var conflicts = GetConflicts();
+            var eventArgs = new ChangeInConflictsEventArgs();
+            eventArgs.Conflicts = conflicts;
+
+            ChangeInConflicts?.Invoke(this, eventArgs);
         }
 
         public List<Conflict> GetConflicts()
         {
-            if (CachedAllConflicts == null)
-            {
-                CachedAllConflicts =  new AssignmentConflictDetector(this).AllConflicts();
-            }
-
-
-            return CachedAllConflicts;
+            return new AssignmentConflictDetector(this).AllConflicts();
         }
 
         public List<Conflict> GetConflictsInvolvingCourses(List<Course> courses)

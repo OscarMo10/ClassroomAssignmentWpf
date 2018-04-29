@@ -19,6 +19,8 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using System.Collections.ObjectModel;
+using ClassroomAssignment.Operations;
+using ClassroomAssignment.Changes;
 
 namespace ClassroomAssignment.Windows
 {
@@ -147,6 +149,16 @@ namespace ClassroomAssignment.Windows
 
             }
 
+        }
+
+        private void ConflictsListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var conflict = ConflictsListView.SelectedItem as Conflict;
+            if (conflict != null)
+            {
+                new AssignmentWindow(conflict.ConflictingCourses).Show();
+                this.Close();
+            }
         }
     }
 }

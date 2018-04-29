@@ -2,14 +2,18 @@
 using ClassroomAssignment.Model.Repo;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -28,7 +32,7 @@ namespace ClassroomAssignment
         {
             InitializeComponent();
 
-            
+
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,7 +61,7 @@ namespace ClassroomAssignment
             CourseRepository.initInstance(courses);
 
 
-            if (courses.FindAll(m =>m.AmbiguousState).Count > 0)
+            if (courses.FindAll(m => m.AmbiguousState).Count > 0)
             {
                 AmbiguityResolverWindow mainWindow = new AmbiguityResolverWindow();
                 mainWindow.Show();
@@ -69,12 +73,38 @@ namespace ClassroomAssignment
             }
 
             this.Close();
-           
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog2 = new OpenFileDialog();
+            openFileDialog2.Filter = "Binary File |*.bin";
+
+            if (openFileDialog2.ShowDialog() == true)
+            {
+                var fileName = openFileDialog2.FileName;
+
+                try
+                {
+                    IFormatter format = new BinaryFormatter();
+                    Stream stream = File.Open(fileName, FileMode.Open, FileAccess.ReadWrite);
+
+                    ViewModel.Courses = new ObservableCollection<Course>(format.Deserialize(stream) as List<Course>);
+                    stream.Close();
+
+                }
+                catch (SerializationException f)
+                {
+                    Console.WriteLine("Failed to deserialize. Reason: " + f.Message);
+                }
+
+            }
         }
     }
 }

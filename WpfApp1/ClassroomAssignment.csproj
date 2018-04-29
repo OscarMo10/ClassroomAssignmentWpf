@@ -140,6 +140,9 @@
     </Compile>
     <Compile Include="Changes\CourseDifference.cs" />
     <Compile Include="Changes\CourseDifferenceToBorderBrushConverter.cs" />
+    <Compile Include="Windows\CourseEditPage.xaml.cs">
+      <DependentUpon>CourseEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CourseDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CourseEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

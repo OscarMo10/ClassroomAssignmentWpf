@@ -60,7 +60,7 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
-            <views:CourseDetailControl x:Name="CourseDetailControl"/>
+            <views:CourseDetailControl x:Name="CourseDetailControl" IsEnabled="False"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>

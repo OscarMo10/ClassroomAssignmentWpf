@@ -97,17 +97,11 @@ namespace ClassroomAssignment.Windows
 
 
 
-        private void AssignMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var course = CoursesDataGrid.CurrentItem as Course;
-         }
-
-
         private void AssignClassCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             Course selectedCourse = CoursesDataGrid.CurrentItem as Course;
 
-            if (selectedCourse == null) e.CanExecute = false;
+            if (selectedCourse == null || selectedCourse.Type == Course.CourseState.NoRoomRequired) e.CanExecute = false;
             else e.CanExecute = true;
         }
 
@@ -159,6 +153,16 @@ namespace ClassroomAssignment.Windows
                 new AssignmentWindow(conflict.ConflictingCourses).Show();
                 this.Close();
             }
+        }
+
+        private void EditCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void EditCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -11,6 +11,7 @@
 
     <Window.CommandBindings>
         <CommandBinding Command="vm:CustomCommands.Assign" CanExecute="AssignClassCommand_CanExecute" Executed="AssignClassCommand_Executed"/>
+        <CommandBinding Command="vm:CustomCommands.Edit" CanExecute="EditCommand_CanExecute" Executed="EditCommand_Executed" />
     </Window.CommandBindings>
         <Window.Resources>
         <CollectionViewSource x:Key="cvsCourses" Source="{Binding Courses}">
@@ -43,17 +44,8 @@
         <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="AssignMenuItem" Header="Assign this" Command="vm:CustomCommands.Assign">
-                        <MenuItem.Style>
-                                <Style TargetType="{x:Type MenuItem}">
-                                <Style.Triggers>
-                                    <DataTrigger>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </MenuItem.Style>
-                    </MenuItem>
-                    
+                    <MenuItem x:Name="AssignMenuItem" Header="Assign" Command="vm:CustomCommands.Assign" />
+                    <MenuItem x:Name="EditMenuItem" Header="Edit" Command="vm:CustomCommands.Edit" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.GroupStyle>

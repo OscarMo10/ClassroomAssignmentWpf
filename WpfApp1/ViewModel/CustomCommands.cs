@@ -10,6 +10,7 @@ namespace ClassroomAssignment.ViewModel
     public static class CustomCommands
     {
         public static readonly RoutedUICommand Assign = new RoutedUICommand("Assign", "Assign", typeof(CustomCommands));
+        public static readonly RoutedUICommand Edit = new RoutedUICommand("Edit", "Edit", typeof(CustomCommands));
 
     }
 }

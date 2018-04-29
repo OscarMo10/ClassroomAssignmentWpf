@@ -27,27 +27,27 @@
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Title/Topic"   />
-                    <Label Content="{Binding CourseTitle}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding CourseTitle}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Section #"/>
-                    <Label Content="{Binding SectionNumber}"  BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding SectionNumber}"  BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Credit Hrs"/>
-                    <Label Content="{Binding CreditHrs}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding CreditHrs}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Status"/>
-                    <Label Content="{Binding Status}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding Status}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Grade Mode"/>
-                    <Label Content="{Binding GradeMode}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding GradeMode}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
             </StackPanel>
 
@@ -55,27 +55,27 @@
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Session"/>
-                    <Label Content="{Binding Session}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding Session}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Campus"/>
-                    <Label Content="{Binding Campus}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding Campus}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Instr. Method"/>
-                    <Label Content="{Binding InstructionMethod}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding InstructionMethod}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Section Type"/>
-                    <Label Content="{Binding SectionType}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding SectionType}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Grade Mode"/>
-                    <Label Content="{Binding GradeMode}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+                    <TextBox Text="{Binding GradeMode}" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -89,17 +89,17 @@
 
             <StackPanel Grid.Column="0">
                 <Label Content="Instructor" FontWeight="Bold"/>
-                <Label Content="{Binding Instructor}"/>
+                <TextBox Text="{Binding Instructor}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1">
                 <Label Content="Room" FontWeight="Bold"/>
-                <Label Content="{Binding Room}"/>
+                <TextBox Text="{Binding Room}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2">
                 <Label Content="Schedule" FontWeight="Bold"/>
-                <Label Content="{Binding MeetingPattern}"/>
+                <TextBox Text="{Binding MeetingPattern}"/>
             </StackPanel>
         </Grid>
 
@@ -114,24 +114,24 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical">
                         <Label Content="Maximum"/>
-                        <Label Content="{Binding MaximumEnrollment}"/>
+                        <TextBox Text="{Binding MaximumEnrollment}"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical">
                         <Label Content="Wait Cap"/>
-                        <Label Content="{Binding WaitCap}"/>
+                        <TextBox Text="{Binding WaitCap}"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical">
                         <Label Content="Rm Cap Request"/>
-                        <Label Content="{Binding RoomCapRequest}"/>
+                        <TextBox Text="{Binding RoomCapRequest}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Column="1">
                 <Label Content="Notes" FontWeight="Bold"/>
-                <Label Content="{Binding Notes}"/>
+                <TextBox Text="{Binding Notes}"/>
             </StackPanel>
         </Grid>
 

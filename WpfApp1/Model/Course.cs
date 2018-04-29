@@ -29,7 +29,9 @@ namespace ClassroomAssignment.Model
             [Description("Assigned Courses")]
             Assigned,
             [Description("No Room Required")]
-            NoRoomRequired
+            NoRoomRequired, 
+            [Description("Conflicting")]
+            Conflicting
         };
 
         [field: NonSerializedAttribute()]
@@ -60,7 +62,7 @@ namespace ClassroomAssignment.Model
             }
         }
 
-        private string _term; 
+        private string _term;
         public string Term
         {
             get => _term;
@@ -168,7 +170,7 @@ namespace ClassroomAssignment.Model
         /// <summary>
         /// Property maps to the "Title/Topic" column of the department spreadsheet.
         /// </summary>
-        public string Topic  
+        public string Topic
         {
             get => _topic;
             set
@@ -463,7 +465,7 @@ namespace ClassroomAssignment.Model
             get
             {
                 bool nowAmbiguous = false;
-                if (!NeedsRoom || AlreadyAssignedRoom) nowAmbiguous =  false;
+                if (!NeedsRoom || AlreadyAssignedRoom) nowAmbiguous = false;
                 else nowAmbiguous = HasMultipleRoomAssignments();
 
                 if (nowAmbiguous != _ambiguousState)
@@ -510,8 +512,9 @@ namespace ClassroomAssignment.Model
                 {
                     _roomAssignment = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(Type));
                 }
-               
+
             }
         }
         public List<DayOfWeek> MeetingDays { get; set; }
@@ -521,6 +524,8 @@ namespace ClassroomAssignment.Model
         {
             get
             {
+                var conflicts = CourseRepository.GetInstance().GetConflictsInvolvingCourses(new List<Course>() { this });
+                if (conflicts.Count != 0) return CourseState.Conflicting;
                 if (AmbiguousState) return CourseState.Ambiguous;
                 if (AlreadyAssignedRoom) return CourseState.Assigned;
                 else if (NeedsRoom) return CourseState.Unassigned;
@@ -533,6 +538,28 @@ namespace ClassroomAssignment.Model
             get => int.Parse(ClassID);
         }
 
+        public string CourseDescription
+        {
+            get
+            {
+                var stringBuilder = new StringBuilder()
+                    .Append(CourseName)
+                    .AppendLine()
+                    .AppendFormat("Sect. {0}", SectionNumber)
+                    .AppendLine();
+                var instructors = Instructor.Split(new char[] { ';' });
+
+                foreach (var instructor in instructors)
+                {
+                    stringBuilder.Append(instructor);
+                    stringBuilder.AppendLine();
+                }
+
+                stringBuilder.Append(MeetingPattern);
+
+                return stringBuilder.ToString();
+            }
+        }
 
         #endregion
 
@@ -592,7 +619,7 @@ namespace ClassroomAssignment.Model
         {
             Regex regex = new Regex(DataConstants.MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(MeetingPattern);
-
+            
             if (match.Success)
             {
                 var daysCapture = match.Groups[1].Captures;
@@ -620,6 +647,10 @@ namespace ClassroomAssignment.Model
                 NeedsRoom = false;
             }
             else if (Room.Equals(RoomOptions.NO_ROOM_NEEDED))
+            {
+                NeedsRoom = false;
+            }
+            else if(MeetingPattern.Equals(MeetingPatternOptions.DOES_NOT_MEET))
             {
                 NeedsRoom = false;
             }
@@ -658,6 +689,20 @@ namespace ClassroomAssignment.Model
                 RoomAssignment = Notes;
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            var course = obj as Course;
+            return course != null &&
+                   ClassID == course.ClassID;
+        }
+
+        public override int GetHashCode()
+        {
+            return 1096323362 + EqualityComparer<string>.Default.GetHashCode(ClassID);
+        }
+
+       
 
         #endregion
     }

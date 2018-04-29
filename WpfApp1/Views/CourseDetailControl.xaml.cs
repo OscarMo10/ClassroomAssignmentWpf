@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassroomAssignment.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ClassroomAssignment.Views
 {
     /// <summary>
-    /// Interaction logic for CourseDetailWindow.xaml
+    /// Interaction logic for CourseDetailControl.xaml
     /// </summary>
-    public partial class CourseDetailWindow : Window
+    public partial class CourseDetailControl : UserControl
     {
-        public CourseDetailWindow()
+        public CourseDetailControl()
         {
             InitializeComponent();
+        }
+
+        public void SetCourse(Course course)
+        {
+            DataContext = course;
         }
     }
 }

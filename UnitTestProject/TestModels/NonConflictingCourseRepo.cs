@@ -18,6 +18,7 @@ namespace UnitTestProject.TestModels
         {
             AddCourse1();
             AddCourse2();
+            AddCourse3();
         }
 
         public void AddCourse1()
@@ -62,6 +63,31 @@ namespace UnitTestProject.TestModels
             testCourse.CourseTitle = "BIOI 1001";
             testCourse.SectionNumber = "1";
             testCourse.MeetingPattern = "MW 1:45pm-3:00pm";
+            testCourse.Instructor = "Dandy, Maley";
+            testCourse.Room = "General Assignment Room";
+            testCourse.Status = "Active";
+            testCourse.Session = "Regular Academic Session";
+            testCourse.Campus = "UNO";
+            testCourse.InstructionMethod = "In Person";
+            testCourse.Comments = "";
+            testCourse.Notes = "PKI 158";
+            testCourse.SetDerivedProperties();
+
+            Courses.Add(testCourse);
+        }
+
+        public void AddCourse3()
+        {
+            Course testCourse = new Course();
+            testCourse.ClassID = "3";
+            testCourse.SIS_ID = "12134";
+            testCourse.TermCode = "1188";
+            testCourse.DepartmentCode = "UNO-BIOI";
+            testCourse.SubjectCode = "BIOI";
+            testCourse.CatalogNumber = "1001";
+            testCourse.CourseTitle = "BIOI 1001";
+            testCourse.SectionNumber = "1";
+            testCourse.MeetingPattern = "MW 5:00pm-6:30pm";
             testCourse.Instructor = "Dandy, Maley";
             testCourse.Room = "General Assignment Room";
             testCourse.Status = "Active";

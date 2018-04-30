@@ -695,15 +695,113 @@ namespace ClassroomAssignment.Model
         {
             var course = obj as Course;
             return course != null &&
-                   ClassID == course.ClassID;
+                   _SIS_ID == course._SIS_ID &&
+                   _term == course._term &&
+                   _termCode == course._termCode &&
+                   _departmentCode == course._departmentCode &&
+                   _subjectCode == course._subjectCode &&
+                   _catalogNumber == course._catalogNumber &&
+                   _courseName == course._courseName &&
+                   _sectionNumber == course._sectionNumber &&
+                   _courseTitle == course._courseTitle &&
+                   _sectionType == course._sectionType &&
+                   _topic == course._topic &&
+                   _meetingPattern == course._meetingPattern &&
+                   _instructor == course._instructor &&
+                   _room == course._room &&
+                   _status == course._status &&
+                   _session == course._session &&
+                   _campus == course._campus &&
+                   _instructionMethod == course._instructionMethod &&
+                   _integerPartner == course._integerPartner &&
+                   _schedule == course._schedule &&
+                   _consent == course._consent &&
+                   _creditHrsMin == course._creditHrsMin &&
+                   _creditHrs == course._creditHrs &&
+                   _gradeMode == course._gradeMode &&
+                   _attributes == course._attributes &&
+                   _roomAttributes == course._roomAttributes &&
+                   _enrollment == course._enrollment &&
+                   _maximumEnrollment == course._maximumEnrollment &&
+                   _priorEnrollment == course._priorEnrollment &&
+                   _projectedEnrollment == course._projectedEnrollment &&
+                   _waitCap == course._waitCap &&
+                   _roomCapRequest == course._roomCapRequest &&
+                   _crossListings == course._crossListings &&
+                   _linkTo == course._linkTo &&
+                   _comments == course._comments &&
+                   _notes == course._notes &&
+                   _ambiguousState == course._ambiguousState &&
+                   _needsRoom == course._needsRoom &&
+                   EqualityComparer<Room>.Default.Equals(_roomAssignment, course._roomAssignment) &&
+                   EqualityComparer<Room>.Default.Equals(RoomAssignment, course.RoomAssignment) &&
+                   EqualityComparer<List<DayOfWeek>>.Default.Equals(MeetingDays, course.MeetingDays) &&
+                   EqualityComparer<TimeSpan?>.Default.Equals(StartTime, course.StartTime) &&
+                   EqualityComparer<TimeSpan?>.Default.Equals(EndTime, course.EndTime);
         }
 
         public override int GetHashCode()
         {
-            return 1096323362 + EqualityComparer<string>.Default.GetHashCode(ClassID);
+            var hashCode = 683931527;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_SIS_ID);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_term);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_termCode);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_departmentCode);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_subjectCode);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_catalogNumber);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_courseName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_sectionNumber);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_courseTitle);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_sectionType);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_topic);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_meetingPattern);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_instructor);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_room);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_status);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_session);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_campus);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_instructionMethod);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_integerPartner);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_schedule);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_consent);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_creditHrsMin);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_creditHrs);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_gradeMode);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_attributes);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_roomAttributes);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_enrollment);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_maximumEnrollment);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_priorEnrollment);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_projectedEnrollment);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_waitCap);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_roomCapRequest);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_crossListings);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_linkTo);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_comments);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_notes);
+            hashCode = hashCode * -1521134295 + _ambiguousState.GetHashCode();
+            hashCode = hashCode * -1521134295 + _needsRoom.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<Room>.Default.GetHashCode(_roomAssignment);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Room>.Default.GetHashCode(RoomAssignment);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<DayOfWeek>>.Default.GetHashCode(MeetingDays);
+            hashCode = hashCode * -1521134295 + EqualityComparer<TimeSpan?>.Default.GetHashCode(StartTime);
+            hashCode = hashCode * -1521134295 + EqualityComparer<TimeSpan?>.Default.GetHashCode(EndTime);
+            return hashCode;
         }
 
-       
+        public static bool operator ==(Course course1, Course course2)
+        {
+            return EqualityComparer<Course>.Default.Equals(course1, course2);
+        }
+
+        public static bool operator !=(Course course1, Course course2)
+        {
+            return !(course1 == course2);
+        }
+
+
+
+
 
         #endregion
     }

@@ -123,11 +123,20 @@
     <Compile Include="Utils\DateUtil.cs" />
     <Compile Include="Utils\TimeUtil.cs" />
     <Compile Include="Visual\ScheduleGridStructure.cs" />
-    <Compile Include="Windows\AssignmentWindow.xaml.cs">
-      <DependentUpon>AssignmentWindow.xaml</DependentUpon>
+    <Compile Include="Windows\AmbiguityResolverPage.xaml.cs">
+      <DependentUpon>AmbiguityResolverPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AppWindow.xaml.cs">
+      <DependentUpon>AppWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AssignmentPage.xaml.cs">
+      <DependentUpon>AssignmentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Changes\CourseChangesWindow.xaml.cs">
       <DependentUpon>CourseChangesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Changes\ChangesPage.xaml.cs">
+      <DependentUpon>ChangesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\CourseDetailWindow.xaml.cs">
       <DependentUpon>CourseDetailWindow.xaml</DependentUpon>
@@ -135,16 +144,16 @@
     <Compile Include="Visual\ExcelSchedulePrinter.cs" />
     <Compile Include="Visual\ISchedulePrinter.cs" />
     <Compile Include="Visual\ScheduleVisualization.cs" />
-    <Compile Include="Windows\AmbiguityResolverWindow.xaml.cs">
-      <DependentUpon>AmbiguityResolverWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Changes\CourseDifference.cs" />
     <Compile Include="Changes\CourseDifferenceToBorderBrushConverter.cs" />
     <Compile Include="Windows\CourseEditPage.xaml.cs">
       <DependentUpon>CourseEditPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Windows\CreateProjectPage.xaml.cs">
+      <DependentUpon>CreateProjectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CourseDetailControl.xaml">
       <SubType>Designer</SubType>
@@ -154,11 +163,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AssignmentWindow.xaml">
+    <Page Include="Windows\AmbiguityResolverPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AppWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AssignmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Changes\CourseChangesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Changes\ChangesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,9 +191,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\CreateProjectWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Windows\CreateProjectPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -182,15 +203,7 @@
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\CourseClassMap.cs" />
     <Compile Include="Model\DataConstants.cs" />
-    <Compile Include="Windows\CreateProjectWindow.xaml.cs">
-      <DependentUpon>CreateProjectWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Windows\AmbiguityResolverWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\MainWindow.xaml">
+    <Page Include="Windows\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

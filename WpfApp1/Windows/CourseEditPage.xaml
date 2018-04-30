@@ -9,7 +9,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CourseEditPage">
 
-    <Grid>
-        <views:CourseDetailControl />
-    </Grid>
+    <StackPanel>
+        <views:CourseDetailControl x:Name="CourseDetail"/>
+        <StackPanel Orientation="Horizontal" >
+            <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click"/>
+            <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </StackPanel>
 </Page>

@@ -26,6 +26,7 @@ namespace ClassroomAssignment.ViewModel
     {
         public bool ContinueButtonEnabled { get; } = false;
 
+
         private IEnumerable<Course> _courses;
         public IEnumerable<Course> Courses
         {

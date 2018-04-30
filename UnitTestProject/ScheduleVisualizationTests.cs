@@ -4,7 +4,8 @@ using Moq;
 using ClassroomAssignment.Model;
 using System.Collections.Generic;
 using ClassroomAssignment.Model.Repo;
-using ClassroomAssignment.Model.Visual;
+using ClassroomAssignment.Visual;
+using ClassroomAssignment.Repo;
 
 namespace UnitTestProject
 {
@@ -39,7 +40,11 @@ namespace UnitTestProject
             testCourse.Notes = "PKI 157";
 
             // This is the "normalized" name for the room
-            testCourse.RoomAssignment = "PKI 157";
+            var room = new Room();
+            room.RoomName = "PKI 157";
+            room.Capacity = 30;
+
+            testCourse.RoomAssignment = room;
             testCourse.MeetingDays = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Wednesday };
 
             Courses = new List<Course>();

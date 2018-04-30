@@ -1,5 +1,6 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
+using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,16 @@ namespace UnitTestProject.TestModels
     {
         private List<Course> _courses = new List<Course>();
 
-        public IList<Course> Courses => _courses;
+        public IEnumerable<Course> Courses => _courses;
+
+        private Room room;
 
         public NonConflictingCourseRepo()
         {
+            room = new Room();
+            room.RoomName = "PKI 157";
+            room.Capacity = 30;
+
             AddCourse1();
             AddCourse2();
             AddCourse3();
@@ -45,10 +52,10 @@ namespace UnitTestProject.TestModels
             testCourse.EndTime = new TimeSpan(14, 45, 0);
 
             // This is the "normalized" name for the room
-            testCourse.RoomAssignment = "PKI 157";
+            testCourse.RoomAssignment = room;
             testCourse.MeetingDays = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Wednesday };
 
-            Courses.Add(testCourse);
+            _courses.Add(testCourse);
         }
 
         public void AddCourse2()
@@ -73,7 +80,7 @@ namespace UnitTestProject.TestModels
             testCourse.Notes = "PKI 158";
             testCourse.SetDerivedProperties();
 
-            Courses.Add(testCourse);
+            _courses.Add(testCourse);
         }
 
         public void AddCourse3()
@@ -98,7 +105,7 @@ namespace UnitTestProject.TestModels
             testCourse.Notes = "PKI 158";
             testCourse.SetDerivedProperties();
 
-            Courses.Add(testCourse);
+            _courses.Add(testCourse);
         }
     }
 }

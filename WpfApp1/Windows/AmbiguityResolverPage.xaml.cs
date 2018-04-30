@@ -1,5 +1,4 @@
 ﻿using ClassroomAssignment.Model;
-using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
@@ -14,31 +13,31 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ClassroomAssignment.Windows
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for AmbiguityResolverPage.xaml
     /// </summary>
-    public partial class AmbiguityResolverWindow : Window, INotifyPropertyChanged
+    public partial class AmbiguityResolverPage : Page
     {
         private List<Course> _ambiguousCourses;
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        public AmbiguityResolverWindow()
+        public AmbiguityResolverPage()
         {
             InitializeComponent();
 
             var allCourses = CourseRepository.GetInstance().Courses;
 
             _ambiguousCourses = allCourses.ToList().FindAll(m => m.AmbiguousState);
-            
+
             CoursesDataGrid.ItemsSource = _ambiguousCourses;
 
             this.Loaded += new RoutedEventHandler(Window_OnLoaded);
-            this.Closed += new EventHandler(Window_OnClosed);
+            this.Unloaded += new RoutedEventHandler(Window_OnClosed);
         }
 
         private void Window_OnLoaded(object sender, RoutedEventArgs e)
@@ -80,22 +79,10 @@ namespace ClassroomAssignment.Windows
         }
 
 
-        
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void CourseDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Window mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
+            NavigationService.Navigate(new Uri(@"Windows/MainPage.xaml", UriKind.Relative));
         }
     }
+
 }

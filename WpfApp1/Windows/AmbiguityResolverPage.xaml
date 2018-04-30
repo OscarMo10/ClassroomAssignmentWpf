@@ -1,13 +1,15 @@
-﻿<Window x:Class="ClassroomAssignment.Windows.AmbiguityResolverWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClassroomAssignment"
-        xmlns:src="clr-namespace:ClassroomAssignment.Model"
-        mc:Ignorable="d"
-        Title="Resolve Ambiguities" SizeToContent="WidthAndHeight" Margin="0,0,0,2" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
+﻿<Page x:Class="ClassroomAssignment.Windows.AmbiguityResolverPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ClassroomAssignment.Windows"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AmbiguityResolverPage"
+      ShowsNavigationUI="False">
+
+    <Page.Resources>
         <Style x:Key="ReadOnlyCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
             <Setter Property="IsEnabled" Value="False"/>
             <Style.Triggers>
@@ -15,12 +17,12 @@
             </Style.Triggers>
 
         </Style>
-    </Window.Resources>
+    </Page.Resources>
 
     <StackPanel Orientation="Vertical" Margin="0,0,0,25">
 
         <Grid Height="269">
-            <DataGrid x:Name="CoursesDataGrid" CanUserAddRows="False" SelectionChanged="DataGrid_SelectionChanged"  AutoGenerateColumns="False" ItemsSource="{Binding}" CellEditEnding="CourseDataGrid_CellEditEnding" Margin="0,0,0,37">
+            <DataGrid x:Name="CoursesDataGrid" CanUserAddRows="False"  AutoGenerateColumns="False" ItemsSource="{Binding}" Margin="0,0,0,37">
                 <DataGrid.RowHeaderStyle>
                     <Style TargetType="{x:Type DataGridRowHeader}">
                         <Setter Property="Width" Value="25" />
@@ -34,7 +36,7 @@
                         </Style.Triggers>
                     </Style>
                 </DataGrid.RowHeaderStyle>
-                
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" IsReadOnly="True"/>
@@ -65,6 +67,6 @@
             </DataGrid>
 
         </Grid>
-        <Button x:Name="ContinueButton" Content="Continue" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" IsEnabled="False"/>
+        <Button x:Name="ContinueButton" Content="Continue" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ContinueButton_Click" IsEnabled="False"/>
     </StackPanel>
-</Window>
+</Page>

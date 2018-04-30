@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static ClassroomAssignment.Model.Course;
 using static ClassroomAssignment.Extension.CourseExtensions;
+using System.Windows.Input;
 
 namespace ClassroomAssignment.ViewModel
 {
@@ -20,6 +21,7 @@ namespace ClassroomAssignment.ViewModel
         public ObservableCollection<Room> AvailableRooms { get; } = new ObservableCollection<Room>();
         public ObservableCollection<Course> CoursesForSelectedRoom = new ObservableCollection<Course>();
         public ObservableCollection<ScheduleSlot> AvailableSlots = new ObservableCollection<ScheduleSlot>();
+
 
         private AvailableRoomSearch RoomSearch;
         private CourseRepository CourseRepo = CourseRepository.GetInstance();
@@ -70,6 +72,22 @@ namespace ClassroomAssignment.ViewModel
             OnCurrentCourseChanged();
         }
 
+        
+
+        public AssignmentViewModel(IList<Course> courses)
+        {
+            foreach (var course in courses)
+            {
+                CoursesBeingAssigned.Add(course);
+            }
+
+
+            IRoomRepository roomRepository = RoomRepository.GetInstance();
+            RoomSearch = new AvailableRoomSearch(roomRepository, CourseRepo);
+
+            CurrentCourse = CoursesBeingAssigned.First();
+        }
+
         private void OnCurrentCourseChanged()
         {
             UpdateCoursesForCurrentRoom();
@@ -103,20 +121,6 @@ namespace ClassroomAssignment.ViewModel
             {
                 CoursesForSelectedRoom.Add(course);
             }
-        }
-
-        public AssignmentViewModel(IList<Course> courses)
-        {
-            foreach (var course in courses)
-            {
-                CoursesBeingAssigned.Add(course);
-            }
-
-
-            IRoomRepository roomRepository = RoomRepository.GetInstance();
-            RoomSearch = new AvailableRoomSearch(roomRepository, CourseRepo);
-
-            CurrentCourse = CoursesBeingAssigned.First();
         }
 
         private void AddAvailableRooms()

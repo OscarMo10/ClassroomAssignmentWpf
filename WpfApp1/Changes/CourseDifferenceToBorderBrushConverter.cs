@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassroomAssignment.Model;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -14,28 +15,45 @@ namespace ClassroomAssignment.Changes
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var dataGridCell = values[0] as DataGridCell;
-            var courseDiff = values[1] as CourseDifference;
+            var dataGrid = values[0] as DataGrid;
+            var dataGridCell = values[1] as DataGridCell;
+            var courseDiff = values[2] as CourseDifference;
 
-
+            
             Brush NoChangeBrush = Brushes.Transparent;
             Brush ChangeBrush = Brushes.Red;
 
-            if (dataGridCell == null || courseDiff == null) return NoChangeBrush;
+            var column = dataGrid.Columns[dataGridCell.Column.DisplayIndex];
 
-            switch (dataGridCell.Column.Header)
+            if (column is DataGridTextColumn)
             {
-                case "Class ID":
-                    if (courseDiff.OriginalCourse.ClassID == courseDiff.NewestCourse.ClassID) return NoChangeBrush;
-                    else return ChangeBrush;
-                case "Room Assignment":
-                    if (courseDiff.OriginalCourse.RoomAssignment == courseDiff.NewestCourse.RoomAssignment) return NoChangeBrush;
-                    else return ChangeBrush;
+                var textColumn = column as DataGridTextColumn;
+                var binding = textColumn.Binding as Binding;
+                var propertyName = binding.Path.Path.Replace("NewestCourse.", "");
 
-                default:
-                    return NoChangeBrush;
+                var property = courseDiff.OriginalCourse.GetType().GetProperty(propertyName);
+                if (property == null) return NoChangeBrush;
+
+                var type = property.PropertyType;
+                if (property.PropertyType == typeof(string))
+                {
+                    var oldValue = property.GetValue(courseDiff.OriginalCourse) as string;
+                    var newValue = property.GetValue(courseDiff.NewestCourse) as string;
+
+                    return oldValue == newValue ? NoChangeBrush : ChangeBrush;
+                }
+                else if (property.PropertyType == typeof(Room))
+                {
+                    var oldValue = property.GetValue(courseDiff.OriginalCourse) as string;
+                    var newValue = property.GetValue(courseDiff.NewestCourse) as string;
+
+                    return oldValue == newValue ? NoChangeBrush : ChangeBrush;
+                }
             }
 
+           
+
+            return Brushes.Beige;
         }
 
       

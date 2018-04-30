@@ -1,9 +1,7 @@
 ﻿using ClassroomAssignment.Model;
-using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,18 +12,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ClassroomAssignment.Windows
 {
     /// <summary>
-    /// Interaction logic for AssignmentWindow.xaml
+    /// Interaction logic for AssignmentPage.xaml
     /// </summary>
-    public partial class AssignmentWindow : Window
+    public partial class AssignmentPage : Page
     {
         private AssignmentViewModel viewModel;
 
-        public AssignmentWindow(List<Course> courses)
+        public AssignmentPage(List<Course> courses)
         {
 
             InitializeComponent();
@@ -50,11 +49,7 @@ namespace ClassroomAssignment.Windows
 
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Close();
-        }
+        
     }
 }
+

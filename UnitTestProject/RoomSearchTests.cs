@@ -7,6 +7,7 @@ using ClassroomAssignment.Model.Repo;
 using System;
 using UnitTestProject.TestModels;
 using ClassroomAssignment.Operations;
+using ClassroomAssignment.Repo;
 
 namespace UnitTestProject
 {

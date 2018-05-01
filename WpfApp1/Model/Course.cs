@@ -562,6 +562,17 @@ namespace ClassroomAssignment.Model
             }
         }
 
+        private List<Course> _crossListedCourses;
+        public List<Course> CrossListedCourses
+        {
+            get => _crossListedCourses.ToList();
+            set
+            {
+                _crossListedCourses = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
 
@@ -637,6 +648,8 @@ namespace ClassroomAssignment.Model
                 EndTime = TimeUtil.StringToTimeSpan(endTimeStr);
             }
         }
+
+       
 
         /// <summary>
         /// Sets the NeedsRoom property using the state of the Course object.
@@ -731,13 +744,7 @@ namespace ClassroomAssignment.Model
                    _linkTo == course._linkTo &&
                    _comments == course._comments &&
                    _notes == course._notes &&
-                   _ambiguousState == course._ambiguousState &&
-                   _needsRoom == course._needsRoom &&
-                   EqualityComparer<Room>.Default.Equals(_roomAssignment, course._roomAssignment) &&
-                   EqualityComparer<Room>.Default.Equals(RoomAssignment, course.RoomAssignment) &&
-                   EqualityComparer<List<DayOfWeek>>.Default.Equals(MeetingDays, course.MeetingDays) &&
-                   EqualityComparer<TimeSpan?>.Default.Equals(StartTime, course.StartTime) &&
-                   EqualityComparer<TimeSpan?>.Default.Equals(EndTime, course.EndTime);
+                   EqualityComparer<Room>.Default.Equals(_roomAssignment, course._roomAssignment);
         }
 
         public override int GetHashCode()
@@ -779,13 +786,8 @@ namespace ClassroomAssignment.Model
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_linkTo);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_comments);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_notes);
-            hashCode = hashCode * -1521134295 + _ambiguousState.GetHashCode();
-            hashCode = hashCode * -1521134295 + _needsRoom.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<Room>.Default.GetHashCode(_roomAssignment);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Room>.Default.GetHashCode(RoomAssignment);
-            hashCode = hashCode * -1521134295 + EqualityComparer<List<DayOfWeek>>.Default.GetHashCode(MeetingDays);
-            hashCode = hashCode * -1521134295 + EqualityComparer<TimeSpan?>.Default.GetHashCode(StartTime);
-            hashCode = hashCode * -1521134295 + EqualityComparer<TimeSpan?>.Default.GetHashCode(EndTime);
+            
             return hashCode;
         }
 

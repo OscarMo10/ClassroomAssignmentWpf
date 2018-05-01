@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -52,6 +53,7 @@ namespace ClassroomAssignment.Windows
 
             RoomRepository.InitInstance();
             List<Course> courses = SheetParser.Parse(docLocations, RoomRepository.GetInstance());
+            InitCrossListedCourses(courses);
             var fileName = "original.bin";
 
             IFormatter formatter = new BinaryFormatter();
@@ -73,6 +75,32 @@ namespace ClassroomAssignment.Windows
             }
 
 
+        }
+
+        private void InitCrossListedCourses(List<Course> courses)
+        {
+            foreach (var course in courses)
+            {
+                if (!string.IsNullOrEmpty(course.CrossListings))
+                {
+                    List<Course> crossListedCourses = new List<Course>();
+
+                    var regex = new Regex(@"\s([A-Z]+)\s(\d+)-(\d+)");
+                    var matches = regex.Matches(course.CrossListings);
+
+                    for (int i = 0; i < matches.Count; i++)
+                    {
+                        var subjectCode = matches[i].Groups[1].Value;
+                        var catalogNumber = matches[i].Groups[2].Value.TrimStart(new char[] { '0' });
+                        var sectionNumber = matches[i].Groups[3].Value.TrimStart(new char[] { '0' });
+                        var c = courses.Find(x => x.SubjectCode == subjectCode && x.CatalogNumber == catalogNumber && x.SectionNumber == sectionNumber);
+
+                        if (c != null) crossListedCourses.Add(c);
+                    }
+                }
+
+
+            }
         }
 
       

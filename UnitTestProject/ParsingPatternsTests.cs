@@ -31,5 +31,14 @@ namespace UnitTestProject
             var endTime = MeetingTimeMatch.Groups[3].Value;
             Assert.AreEqual<string>("8:10pm", endTime);
         }
+
+        [TestMethod]
+        public void TestCrossListedPattern()
+        {
+            var crossListingStr = "Also CSCI 8105-001, MATH 3100-001, MATH 8105-001";
+
+            var regex = new Regex(@"\s[A-Z]+\s\d+-\d+");
+            var match = regex.Matches(crossListingStr);
+        }
     }
 }

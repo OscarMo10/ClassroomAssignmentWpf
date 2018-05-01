@@ -25,7 +25,7 @@ namespace ClassroomAssignment.Changes
 
             var column = dataGrid.Columns[dataGridCell.Column.DisplayIndex];
 
-            if (column is DataGridTextColumn)
+            if (column is DataGridTextColumn && courseDiff != null)
             {
                 var textColumn = column as DataGridTextColumn;
                 var binding = textColumn.Binding as Binding;
@@ -44,8 +44,8 @@ namespace ClassroomAssignment.Changes
                 }
                 else if (property.PropertyType == typeof(Room))
                 {
-                    var oldValue = property.GetValue(courseDiff.OriginalCourse) as string;
-                    var newValue = property.GetValue(courseDiff.NewestCourse) as string;
+                    var oldValue = property.GetValue(courseDiff.OriginalCourse) as Room;
+                    var newValue = property.GetValue(courseDiff.NewestCourse) as Room;
 
                     return oldValue == newValue ? NoChangeBrush : ChangeBrush;
                 }
@@ -53,7 +53,7 @@ namespace ClassroomAssignment.Changes
 
            
 
-            return Brushes.Beige;
+            return NoChangeBrush;
         }
 
       

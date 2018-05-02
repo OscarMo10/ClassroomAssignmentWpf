@@ -21,7 +21,7 @@ namespace ClassroomAssignment.Operations
         public List<Conflict> AllConflicts()
         {
             var courseGroupByRoom = from course in courseRepository.Courses
-                                    where course.AlreadyAssignedRoom
+                                    where course.NeedsRoom && course.AlreadyAssignedRoom
                                     group course by course.RoomAssignment;
 
             List<Conflict> conflicts = new List<Conflict>();

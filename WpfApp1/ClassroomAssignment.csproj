@@ -102,6 +102,10 @@
     <Compile Include="Operations\AssignmentConflictDetector.cs" />
     <Compile Include="Operations\ScheduleSlot.cs" />
     <Compile Include="Operations\SearchParameters.cs" />
+    <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="Views\RoomSearch\AvailableRoomSearchControl.xaml.cs">
+      <DependentUpon>AvailableRoomSearchControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CourseDetailControl.xaml.cs">
       <DependentUpon>CourseDetailControl.xaml</DependentUpon>
     </Compile>
@@ -122,6 +126,7 @@
     <Compile Include="Repo\IRoomRepository.cs" />
     <Compile Include="Utils\DateUtil.cs" />
     <Compile Include="Utils\TimeUtil.cs" />
+    <Compile Include="Views\RoomSearch\StringToTimeSpanValidationRule.cs" />
     <Compile Include="Visual\ScheduleGridStructure.cs" />
     <Compile Include="Windows\AmbiguityResolverPage.xaml.cs">
       <DependentUpon>AmbiguityResolverPage.xaml</DependentUpon>
@@ -155,6 +160,13 @@
     <Compile Include="Windows\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\RoomSearchPage.xaml.cs">
+      <DependentUpon>RoomSearchPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\RoomSearch\AvailableRoomSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CourseDetailControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +216,10 @@
     <Compile Include="Model\CourseClassMap.cs" />
     <Compile Include="Model\DataConstants.cs" />
     <Page Include="Windows\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RoomSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

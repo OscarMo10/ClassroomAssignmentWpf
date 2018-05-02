@@ -95,6 +95,7 @@ namespace ClassroomAssignment.Visual
             }
 
             _workbook.SortWorksheets();
+            _workbook.SetActiveSheet(0);
 
             _workbook.WriteToFile(_outputFile);
         }

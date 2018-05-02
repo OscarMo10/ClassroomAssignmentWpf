@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
 using ClassroomAssignment.Model;
+using System;
 
 namespace UnitTestProject
 {
@@ -39,6 +40,7 @@ namespace UnitTestProject
 
             var regex = new Regex(@"\s[A-Z]+\s\d+-\d+");
             var match = regex.Matches(crossListingStr);
+            var date = DateTime.Parse("07:30 PM");
         }
     }
 }

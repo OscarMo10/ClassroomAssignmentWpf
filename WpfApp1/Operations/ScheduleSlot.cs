@@ -7,11 +7,21 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Operations
 {
-    public struct ScheduleSlot
+    public class ScheduleSlot
     {
-        public Room RoomAvailable;
-        public IEnumerable<DayOfWeek> MeetingDays;
-        public TimeSpan StartTime;
-        public TimeSpan EndTime;
+        public Room RoomAvailable { get; set; }
+        public IEnumerable<DayOfWeek> MeetingDays { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+
+        public string FormattedStartTime
+        {
+            get => new DateTime().Add(StartTime).ToString("hh:mm tt");
+        }
+
+        public string FormattedEndTime
+        {
+            get => new DateTime().Add(EndTime).ToString("hh:mm tt");
+        }
     }
 }

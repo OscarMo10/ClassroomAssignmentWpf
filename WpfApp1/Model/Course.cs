@@ -562,16 +562,7 @@ namespace ClassroomAssignment.Model
             }
         }
 
-        private List<Course> _crossListedCourses;
-        public List<Course> CrossListedCourses
-        {
-            get => _crossListedCourses.ToList();
-            set
-            {
-                _crossListedCourses = value;
-                OnPropertyChanged();
-            }
-        }
+     
 
         #endregion
 

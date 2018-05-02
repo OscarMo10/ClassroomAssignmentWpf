@@ -29,6 +29,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
@@ -41,11 +42,15 @@
 
             </MenuItem>
         </Menu>
-        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="1" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
+        
+        <Button x:Name="RoomSearchButton" Content="Room Search" Grid.Row="1" HorizontalAlignment="Right" Margin="10,0" Click="RoomSearchButton_Click"/>
+        
+        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="2" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
             <DataGrid.ContextMenu>
                 <ContextMenu x:Name="CoursesContextMenu" Opened="CoursesContextMenu_Opened">
                     <MenuItem x:Name="AssignMenuItem" Header="Assign" Click="AssignMenuItem_Click" />
                     <MenuItem x:Name="CoursesMenuItem" Header="Edit" Click="CoursesMenuItem_Click" />
+                    <MenuItem x:Name="IgnoreMenuItem" Header="Ignore" Click="IgnoreMenuItem_Click" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.GroupStyle>
@@ -124,7 +129,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <ScrollViewer Grid.Row="2">
+        <ScrollViewer Grid.Row="3">
             <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="ConflictTemplate">

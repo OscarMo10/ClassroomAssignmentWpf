@@ -179,6 +179,21 @@ namespace ClassroomAssignment.Windows
             var editPage = new CourseEditPage(course);
             NavigationService.Navigate(editPage);
         }
+
+        private void IgnoreMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var courses = CoursesDataGrid.SelectedItems;
+
+            foreach (Course course in courses)
+            {
+                course.NeedsRoom = false;
+            }
+        }
+
+        private void RoomSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new RoomSearchPage());
+        }
     }
 }
 

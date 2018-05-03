@@ -13,6 +13,9 @@ using System.IO;
 
 namespace ClassroomAssignment.Operations
 {
+    /// <summary>
+    /// This file shows all conflict courses, and print them on main view window.
+    /// </summary>
     [Serializable]
     public class Conflict
     {
@@ -22,7 +25,10 @@ namespace ClassroomAssignment.Operations
         {
             ConflictingCourses = conflictingCourses;
         }
-
+        /// <summary>
+        /// Print description of the conflict courses
+        /// </summary>
+        /// <return> string value</return>
         public string Description
         {
             get
@@ -38,7 +44,7 @@ namespace ClassroomAssignment.Operations
 
                 builder.Remove(builder.Length - 2, 2);
                 builder.Append(" Are In Conflict in ");
-                builder.Append(conflictRoomNumber);
+                builder.Append(conflictRoomNumber); //print conflict roomNumber
                 return builder.ToString();
             }
         }

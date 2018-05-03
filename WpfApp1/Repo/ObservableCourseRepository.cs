@@ -20,12 +20,15 @@ namespace ClassroomAssignment.Repo
         public event NotifyCollectionChangedEventHandler CourseCollectionModified;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        /// <summary>
+        /// Create _courses object and call RegisterPropertyListeners method.
+        /// </summary>
+        /// <param name="courses"></param>
         public ObservableCourseRepository(ICollection<Course> courses)
         {
             _courses = new ObservableCollection<Course>(courses);
             _courses.CollectionChanged += _courses_CollectionChanged;
-            RegisterPropertyListeners();
+            RegisterPropertyListeners();// call the method.
         }
 
         private void RegisterPropertyListeners()

@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Model
 {
+    /// <summary>
+    /// Initilize all information in spreadsheet
+    /// </summary>
     public class DataConstants
     {
+        /// <summary>
+        /// Create constant string and initilize each variable for all headers
+        /// </summary>
         public class Headers
         {
             public const string CLASS_ID = "CLSS ID";
@@ -23,7 +29,9 @@ namespace ClassroomAssignment.Model
             public const string TITLE_SLASH_TOPIC = "Title";
 
         }
-
+        /// <summary>
+        /// Initilizing each department string to constant string values.
+        /// </summary>
         public class SubjectCode
         {
             public const string CSCI = "CSCI";
@@ -35,7 +43,10 @@ namespace ClassroomAssignment.Model
             public const string BMI = "BMI";
             public const string BIOI = "BIOI";
         }
-
+        /// <summary>
+        /// Initilize room options
+        /// <example> This is for checking the class need a room, room location</example>
+        /// </summary>
         public class RoomOptions
         {
             public const string GENERAL_ASSIGNMENT_ROOM = "General Assignment Room";
@@ -44,36 +55,50 @@ namespace ClassroomAssignment.Model
             public const string PETER_KIEWIT_INSTITUTE_REGEX = @"Peter Kiewit Institute \d+";
             public const string PKI_REGEX = @"PKI (\d+)";
         }
-
+        /// <summary>
+        /// initilize type of Class
+        /// <example> Class teaching type is it lecture,
+        /// independent study or studio</example>
+        /// </summary>
         public class SectionTypeOptions
         {
             public const string LECTURE = "Lecture";
             public const string INDEPENDENT_STUDY = "Independent Study";
             public const string STUDIO = "Studio";
         }
-
+        /// <summary>
+        /// use regex to check time and days, or does not meet which means does not need a room.
+        /// </summary>
         public class MeetingPatternOptions
         {
             public const string TIME_PATTERN = @"(S|M|T|W|Th|F|Sa)+ (\d{1,2}(?::\d{1,2})?(?:am|pm))-(\d{1,2}(?::\d{1,2})?(?:am|pm))";
             public const string DOES_NOT_MEET = "Does Not Meet";
         }
-
+        /// <summary>
+        /// Initilize off campus and in person.
+        /// </summary>
         public class InstructionMethods
         {
             public const string OFF_CAMPUS = "Off Campus";
             public const string IN_PERSON = "In Person";
         }
-
+        /// <summary>
+        /// Initilize active to constant value.
+        /// </summary>
         public class StatusOptions
         {
             public const string ACTIVE = "Active";
         }
-
+        /// <summary>
+        /// Initilize regular academic session to constant string value.
+        /// </summary>
         public class SessionOptions
         {
             public const string REGULAR_ACADEMIC_SESSION = "Regular Academic Session";
         }
-
+        /// <summary>
+        /// Campus Options, initilize UNO to constant string value.
+        /// </summary>
         public class CampusOptions
         {
             public const string UNO = "UNO";

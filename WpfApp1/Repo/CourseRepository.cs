@@ -36,7 +36,7 @@ namespace ClassroomAssignment.Repo
             return _instance;
         }
 
-        public static void initInstance(ICollection<Course> courses)
+        public static void InitInstance(ICollection<Course> courses)
         {
             if (courses == null) throw new ArgumentNullException();
 

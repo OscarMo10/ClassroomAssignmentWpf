@@ -51,7 +51,7 @@ namespace ClassroomAssignment.Windows
         private void Menu_Save(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog2 = new SaveFileDialog();
-            saveFileDialog2.Filter = "Binary File |*.bin";
+            saveFileDialog2.Filter = "Assignment File | *.agn";
 
             if (saveFileDialog2.ShowDialog() == DialogResult.OK)
             {

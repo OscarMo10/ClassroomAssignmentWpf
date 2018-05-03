@@ -12,8 +12,8 @@
     <Grid>
         <Grid>
             <StackPanel VerticalAlignment="Center" Orientation="Vertical">
-                <Button Content="Create New Project" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" Margin="0,0,0,10"/>
-                <Button Content="Existing Project" HorizontalAlignment="Center" Height="Auto" VerticalAlignment="Center" Width="106"/>
+                <Button x:Name="NewProjectButton" Content="Create New Project" HorizontalAlignment="Center" VerticalAlignment="Center" Click="NewProjectButton_Click" Margin="0,0,0,10"/>
+                <Button x:Name="ExistingProjectButton" Content="Existing Project" HorizontalAlignment="Center" Height="Auto" VerticalAlignment="Center" Width="106" Click="ExistingProjectButton_Click"/>
 
             </StackPanel>
         </Grid>

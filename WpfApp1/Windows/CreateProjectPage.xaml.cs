@@ -35,7 +35,7 @@ namespace ClassroomAssignment.Windows
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NewProjectButton_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
             var result = folderBrowser.ShowDialog();
@@ -61,7 +61,7 @@ namespace ClassroomAssignment.Windows
             formatter.Serialize(stream, courses);
             stream.Close();
 
-            CourseRepository.initInstance(courses);
+            CourseRepository.InitInstance(courses);
 
 
             if (courses.FindAll(m => m.AmbiguousState).Count > 0)
@@ -74,6 +74,40 @@ namespace ClassroomAssignment.Windows
             }
 
 
+        }
+
+        private void ExistingProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Assignment File | *.agn";
+            var result = dialog.ShowDialog();
+
+            List<Course> courses = null;
+            if (result == DialogResult.OK)
+            {
+                var pathToDoc = dialog.FileName;
+                using (var stream = File.Open(pathToDoc, FileMode.Open, FileAccess.Read))
+                {
+                    IFormatter formatter = new BinaryFormatter();
+                    courses = formatter.Deserialize(stream) as List<Course>;
+                }
+            }
+
+            if (courses == null) return;
+            else
+            {
+                CourseRepository.InitInstance(courses);
+
+                if (courses.FindAll(m => m.AmbiguousState).Count > 0)
+                {
+                    NavigationService.Navigate(new Uri(@"Windows/AmbiguityResolverPage.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    NavigationService.Navigate(new Uri(@"Windows/MainPage.xaml", UriKind.Relative));
+                }
+            }
+           
         }
 
         //private void InitCrossListedCourses(List<Course> courses)
@@ -102,7 +136,7 @@ namespace ClassroomAssignment.Windows
         //    }
         //}
 
-      
+
     }
 }
 

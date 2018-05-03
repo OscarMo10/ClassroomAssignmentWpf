@@ -75,8 +75,12 @@ namespace ClassroomAssignment.ViewModel
             OnCurrentCourseChanged();
         }
 
-        
 
+        /// <summary>
+        /// adds passed list of courses
+        /// to room search view
+        /// </summary>
+        /// <param name="courses"></param>
         public AssignmentViewModel(IList<Course> courses)
         {
             foreach (var course in courses)
@@ -99,11 +103,27 @@ namespace ClassroomAssignment.ViewModel
             AddConflictingCourses();
         }
 
+        private void AddAvailableRooms()
+        {
+            AvailableRooms.Clear();
+
+            var course = CurrentCourse;
+            int capacity = int.MaxValue;
+            bool result = int.TryParse(course.RoomCapRequest, out capacity);
+            IEnumerable<Room> rooms = RoomSearch.
+                 AvailableRooms(course.MeetingDays, course.StartTime.Value, course.EndTime.Value, capacity);
+
+            foreach (var room in rooms.OrderBy(x => x.Capacity))
+            {
+                AvailableRooms.Add(room);
+            }
+        }
+
         /// <summary>
         /// searches for available rooms and updates 
         /// list of schedule slots
         /// </summary>
-        public void UpdateAvailableSlotForCurrentRoom()
+        public void UpdateAvailableSlotsForCurrentRoom()
         {
             var searchParameters = CurrentCourse.GetSearchParameters();
 
@@ -134,35 +154,7 @@ namespace ClassroomAssignment.ViewModel
             }
         }
 
-        public ObservableCollection<Room> AvailableRooms { get; } = new ObservableCollection<Room>();
-        public ObservableCollection<Course> CoursesForSelectedRoom = new ObservableCollection<Course>();
-        public ObservableCollection<ScheduleSlot> AvailableSlots = new ObservableCollection<ScheduleSlot>();
-
-        private AvailableRoomSearch RoomSearch;
-        private CourseRepository CourseRepo = CourseRepository.GetInstance();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// adds passed list of courses
-        /// to room search view
-        /// </summary>
-        /// <param name="courses"></param>
-        public AssignmentViewModel(IList<Course> courses)
-        {
-            AvailableRooms.Clear();
-
-            var course = CurrentCourse;
-            int capacity = int.MaxValue;
-            bool result = int.TryParse(course.RoomCapRequest, out capacity);
-            IEnumerable<Room> rooms = RoomSearch.
-                 AvailableRooms(course.MeetingDays, course.StartTime.Value, course.EndTime.Value, capacity);
-
-            foreach (var room in rooms.OrderBy(x => x.Capacity))
-            {
-                AvailableRooms.Add(room);
-            }
-        }
+        
 
        /// <summary>
        /// remove uneeded rooms 

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Repo
 {
+    /// <summary>
+    /// Getter for Courses list.
+    /// </summary>
     public interface ICourseRepository
     {
         IEnumerable<Course> Courses { get; }

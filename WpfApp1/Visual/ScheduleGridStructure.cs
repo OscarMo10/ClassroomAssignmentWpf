@@ -59,6 +59,11 @@ namespace ClassroomAssignment.Visual
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <returns></returns>
         public int SpanForDurationInMinutes(int duration)
         {
             var span = duration / (int) TimeUnitInMinutes.TotalMinutes;
@@ -66,6 +71,11 @@ namespace ClassroomAssignment.Visual
             return span >= 1 ? span : 1;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public int GetRowForTime(TimeSpan time)
         {
             if (timeToRowMap.ContainsKey(time)) return timeToRowMap[time];

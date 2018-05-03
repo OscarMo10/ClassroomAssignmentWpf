@@ -18,6 +18,9 @@ using ClassroomAssignment.Repo;
 
 namespace ClassroomAssignment.Model
 {
+    /// <summary>
+    /// Status of courses. It shows courses descriptions
+    /// </summary>
     [Serializable]
     public class Course : INotifyPropertyChanged
     {

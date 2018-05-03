@@ -10,12 +10,20 @@ using System.Windows.Media;
 
 namespace ClassroomAssignment.Views.RoomSchedule
 {
+    /// <summary>
+    /// Sets label sizes for visualization of room assignment
+    /// view 
+    /// </summary>
     class CourseLabel : TextBlock
     {
         private readonly Course _boundCourse;
         public Course BoundCourse
         { get => _boundCourse; }
 
+        /// <summary>
+        /// sets margins and size for course label
+        /// </summary>
+        /// <param name="course"></param>
         public CourseLabel(Course course)
         {
             _boundCourse = course;

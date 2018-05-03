@@ -27,6 +27,10 @@ namespace ClassroomAssignment.Repo
 
         private static CourseRepository _instance;
         private AssignmentConflictDetector roomConflictDetector;
+        /// <summary>
+        /// Get instance and just return that value.
+        /// </summary>
+        /// <returns>_instance</returns>
         private List<Conflict> CachedAllConflicts;
 
         public event EventHandler<ChangeInConflictsEventArgs> ChangeInConflicts;
@@ -35,7 +39,11 @@ namespace ClassroomAssignment.Repo
         {
             return _instance;
         }
-
+        /// <summary>
+        /// Handle course list exception if it is empty, 
+        /// throw NullException.
+        /// </summary>
+        /// <param name="courses"></param>
         public static void InitInstance(ICollection<Course> courses)
         {
             if (courses == null) throw new ArgumentNullException();
@@ -92,12 +100,19 @@ namespace ClassroomAssignment.Repo
             }
             
         }
-
+        /// <summary>
+        /// Get Conflicts list.
+        /// </summary>
+        /// <returns>AllConflicts</returns>
         public List<Conflict> GetConflicts()
         {
             return new AssignmentConflictDetector(this).AllConflicts();
         }
-
+        /// <summary>
+        /// Get conflicts involving courses.
+        /// </summary>
+        /// <param name="courses"></param>
+        /// <returns> ConflictInvolvingCourses(course)</returns>
         public List<Conflict> GetConflictsInvolvingCourses(List<Course> courses)
         {
             return new AssignmentConflictDetector(this).ConflictsInvolvingCourses(courses);

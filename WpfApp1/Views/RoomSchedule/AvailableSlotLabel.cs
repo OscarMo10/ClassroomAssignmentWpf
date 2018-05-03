@@ -9,8 +9,16 @@ using System.Windows.Media;
 
 namespace ClassroomAssignment.Views.RoomSchedule
 {
+    /// <summary>
+    /// Sets visualization size for room schedule
+    /// </summary>
     public class AvailableSlotLabel : TextBlock
     {
+        /// <summary>
+        /// Sets size and margin for available slots label
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
         public AvailableSlotLabel(TimeSpan startTime, TimeSpan endTime)
         {
             var start = new DateTime().Add(startTime);

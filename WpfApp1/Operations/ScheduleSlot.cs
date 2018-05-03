@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Operations
 {
+
+    /// <summary>
+    /// Schedule Slots, create methods for RoomAvailable,
+    /// meetingDays,StartTime and EndTime.
+    /// </summary>
     public class ScheduleSlot
     {
         public Room RoomAvailable { get; set; }

@@ -9,21 +9,31 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Operations
 {
+    /// <summary>
+    /// THis file conflict detector. Check if there is room conflict at the time also day.
+    /// </summary>
     public class AssignmentConflictDetector
     {
         private ICourseRepository courseRepository;
-
+        /// <summary>
+        /// Initilize courseRepo to courseRepository.
+        /// </summary>
+        /// <param name="courseRepo"></param>
         public AssignmentConflictDetector(ICourseRepository courseRepo)
         {
             courseRepository = courseRepo;
         }
-
+        /// <summary>
+        /// This return all time conlict courses. 
+        /// Check class assign time and see if any other course use same room at that time.
+        /// </summary>
+        /// <returns>conflicts</returns>
         public List<Conflict> AllConflicts()
         {
             var courseGroupByRoom = from course in courseRepository.Courses
                                     where course.NeedsRoom && course.AlreadyAssignedRoom
                                     group course by course.RoomAssignment;
-
+            //Create conflicts list 
             List<Conflict> conflicts = new List<Conflict>();
             foreach (var roomGroup in courseGroupByRoom)
             {
@@ -42,7 +52,8 @@ namespace ClassroomAssignment.Operations
                             indicesUsed.Add(j);
                         }
                     }
-
+                    //if conflictingCourses more than 0. 
+                    //Then add this course to conflicts list.
                     if (conflictingCourses.Count != 0)
                     {
                         conflictingCourses.Add(courses[i]);
@@ -71,7 +82,7 @@ namespace ClassroomAssignment.Operations
         /// Finds conflicts involving the <paramref name="courses"/> and the rest of the courses in the CourseRepo
         /// </summary>
         /// <param name="courses"></param>
-        /// <returns></returns>
+        /// <returns>allConflicts</returns>
         public List<Conflict> ConflictsInvolvingCourses(List<Course> courses)
         {
             List<Conflict> allConflicts = AllConflicts();
@@ -83,7 +94,7 @@ namespace ClassroomAssignment.Operations
         /// Return conflicts solely among the <paramref name="courses"/>
         /// </summary>
         /// <param name="courses"></param>
-        /// <returns></returns>
+        /// <returns>new conflict list</returns>
         public List<Conflict> ConflictsAmongCourses(List<Course> courses)
         {
             return new List<Conflict>();

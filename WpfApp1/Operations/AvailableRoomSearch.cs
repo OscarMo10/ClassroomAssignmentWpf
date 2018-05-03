@@ -10,20 +10,35 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Operations
 {
+    /// <summary>
+    /// See if there is any available room for one specific time.
+    /// </summary>
     public class AvailableRoomSearch
     {
 
         private IRoomRepository roomRepository;
         private ICourseRepository courseRepository;
 
-
+        /// <summary>
+        /// initilize roomRepo and courseRepo and throw new exceptions to handle it.
+        /// </summary>
+        /// <param name="roomRepo"></param>
+        /// <param name="courseRepo"></param>
         public AvailableRoomSearch(IRoomRepository roomRepo, ICourseRepository courseRepo)
         {
             roomRepository = roomRepo ?? throw new ArgumentNullException();
             courseRepository = courseRepo ?? throw new ArgumentNullException();
         }
 
-        
+        /// <summary>
+        /// Find course meeting days, startTime, endTime, capacity.
+        /// create searchParameters list, and initilize these values.
+        /// </summary>
+        /// <param name="meetingDays"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="minCapacity"></param>
+        /// <returns>ScheduleSlotsAvailable</returns>
         public IEnumerable<Room> AvailableRooms(List<DayOfWeek> meetingDays, TimeSpan startTime, TimeSpan endTime, int minCapacity)
         {
             SearchParameters searchParameters = new SearchParameters();
@@ -35,7 +50,11 @@ namespace ClassroomAssignment.Operations
 
             return ScheduleSlotsAvailable(searchParameters).ConvertAll(x => x.RoomAvailable).Distinct();
         }
-
+        /// <summary>
+        /// ScheduleSlotsAvailable method, check any room available at course duraction.
+        /// </summary>
+        /// <param name="searchParameters"></param>
+        /// <returns>AvailableSlots</returns>
         public List<ScheduleSlot> ScheduleSlotsAvailable(SearchParameters searchParameters)
         {
 
@@ -54,7 +73,7 @@ namespace ClassroomAssignment.Operations
                     .Where(x => x.MeetingDays.Intersect(searchParameters.MeetingDays).Count(z => true) != 0 && x.StartTime.HasValue && x.StartTime.Value >= searchParameters.StartTime && x.StartTime <= searchParameters.EndTime)
                     .OrderBy(x => x.StartTime.Value)
                     .ToList();
-
+                //Check there is no courses in that slot.
                 if (courses.Count == 0)
                 {
                     availableSlots.Add(
@@ -68,7 +87,7 @@ namespace ClassroomAssignment.Operations
 
                     continue;
                 }
-
+                //Calculate duraction of the course.
                 if (courses[0].StartTime - searchParameters.StartTime >= searchParameters.Duration)
                 {
                     availableSlots.Add(
@@ -116,7 +135,7 @@ namespace ClassroomAssignment.Operations
         private bool CoursesConflictWithTime(IGrouping<string, Course> courseGroup, TimeSpan startTime, TimeSpan endTime)
         {
             bool hasConflict = true;
-
+            // Check if there is any time conflict between two courses.
             foreach (var course in courseGroup)
             {
                 if (course.EndTime < startTime)
@@ -129,7 +148,7 @@ namespace ClassroomAssignment.Operations
                 }
             }
 
-            return hasConflict;
+            return hasConflict; //if hasConflict is true then these 2 courses conflict.
         }
 
     }

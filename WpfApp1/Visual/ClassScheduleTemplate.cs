@@ -8,6 +8,10 @@ using System.Collections.Specialized;
 
 namespace ClassroomAssignment.Model
 {
+    /// <summary>
+    /// Sets template for exported schedule 
+    /// visualization
+    /// </summary>
     public static class ClassScheduleTemplate
     {
         public const string SCHEDULE_TEMPLATE_NAME = "ScheduleTemplate";
@@ -25,6 +29,12 @@ namespace ClassroomAssignment.Model
             subjectColorMap.Add(DataConstants.SubjectCode.ITIN, IndexedColors.Teal.Index);
         }
 
+        /// <summary>
+        /// Sets the style of cells for the workbook
+        /// </summary>
+        /// <param name="workbook"></param>
+        /// <param name="foregroundColor"></param>
+        /// <returns>ICellStyle</returns>
         public static ICellStyle GetCellStyle(IWorkbook workbook, short foregroundColor)
         {
             IFont font = workbook.CreateFont();
@@ -42,6 +52,12 @@ namespace ClassroomAssignment.Model
             return style;
         }
 
+        /// <summary>
+        /// Assigns different color for each department
+        /// 
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public static short Color(this Course course)
         {
             switch(course.SubjectCode)

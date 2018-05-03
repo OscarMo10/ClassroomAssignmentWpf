@@ -13,6 +13,9 @@ namespace ClassroomAssignment.Model
     [Serializable]
     public class Room
     {
+        /// <summary>
+        /// Getter and setter for RoomName and Capasity of the room.
+        /// </summary>
         public string RoomName { get; set; }
         public int Capacity { get; set; }
 
@@ -44,7 +47,7 @@ namespace ClassroomAssignment.Model
 
         public override string ToString()
         {
-            return RoomName;
+            return RoomName; // RoomNumbee.
         }
 
 

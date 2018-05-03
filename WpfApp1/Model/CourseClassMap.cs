@@ -8,11 +8,16 @@ using CsvHelper.Configuration;
 
 namespace ClassroomAssignment.Model
 {
+    /// <summary>
+    /// This class is course class map.
+    /// It puts all headers and put into one index order
+    /// </summary>
     public sealed class CourseClassMap : ClassMap<Course>
     {
         public CourseClassMap()
         {
             int i = 1;
+            // Add header in to one index order.
             Map(m => m.ClassID).Index(i++);
             Map(m => m.SIS_ID).Index(i++);
             Map(m => m.Term).Index(i++);
@@ -50,7 +55,8 @@ namespace ClassroomAssignment.Model
             Map(m => m.LinkTo).Index(i++);
             Map(m => m.Comments).Index(i++);
             Map(m => m.Notes).Index(i++);
-
+            /* Ignoring needsRoom, AlreadyAssignerRoom, RoomAssignment,
+             MeetingDays, StartTime, EndTime */
             Map(m => m.NeedsRoom).Ignore();
             Map(m => m.AlreadyAssignedRoom).Ignore();
             Map(m => m.RoomAssignment).Ignore();

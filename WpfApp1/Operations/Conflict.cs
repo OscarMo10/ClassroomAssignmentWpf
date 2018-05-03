@@ -12,6 +12,9 @@ using System.Xml.Serialization;
 
 namespace ClassroomAssignment.Operations
 {
+    /// <summary>
+    /// This file shows all conflict courses, and print them on main view window.
+    /// </summary>
     [Serializable]
     public class Conflict
     {
@@ -21,7 +24,10 @@ namespace ClassroomAssignment.Operations
         {
             ConflictingCourses = conflictingCourses;
         }
-
+        /// <summary>
+        /// Print description of the conflict courses
+        /// </summary>
+        /// <return> string value</return>
         public string Description
         {
             get

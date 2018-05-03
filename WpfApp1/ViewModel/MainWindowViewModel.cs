@@ -21,6 +21,9 @@ using System.Xml.Serialization;
 
 namespace ClassroomAssignment.ViewModel
 {
+    /// <summary>
+    /// Main Window
+    /// </summary>
     [Serializable]
     public class MainWindowViewModel : INotifyPropertyChanged
     {
@@ -43,6 +46,9 @@ namespace ClassroomAssignment.ViewModel
 
         public Course.CourseState Assigned { get; } = Course.CourseState.Assigned;
 
+        /// <summary>
+        /// initializes main window
+        /// </summary>
         public MainWindowViewModel()
         {
             CourseRepository courseRepo = CourseRepository.GetInstance();

@@ -14,6 +14,9 @@ using static ClassroomAssignment.Extension.CourseExtensions;
 
 namespace ClassroomAssignment.ViewModel
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AssignmentViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Course> CoursesBeingAssigned { get; } = new ObservableCollection<Course>();
@@ -67,6 +70,10 @@ namespace ClassroomAssignment.ViewModel
             }
         }
 
+        /// <summary>
+        /// searches for available rooms and updates 
+        /// list of schedule slots
+        /// </summary>
         public void UpdateAvailableSlotForCurrentRoom()
         {
             var searchParameters = CurrentCourse.GetSearchParameters();
@@ -79,6 +86,10 @@ namespace ClassroomAssignment.ViewModel
             }
         }
 
+        /// <summary>
+        /// if there are any changes to current room 
+        /// schedule then the changes are updated
+        /// </summary>
         public void UpdateCoursesForCurrentRoom()
         {
             if (CurrentRoom == null) return;
@@ -103,6 +114,11 @@ namespace ClassroomAssignment.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// adds passed list of courses
+        /// to room search view
+        /// </summary>
+        /// <param name="courses"></param>
         public AssignmentViewModel(IList<Course> courses)
         {
             foreach (var course in courses)
@@ -141,7 +157,9 @@ namespace ClassroomAssignment.ViewModel
             }
         }
 
-       
+       /// <summary>
+       /// remove uneeded rooms 
+       /// </summary>
         public void RemoveStaleAvailableRooms()
         {
             while (AvailableRooms.Count != 0)
@@ -152,7 +170,11 @@ namespace ClassroomAssignment.ViewModel
 
       
 
-
+        /// <summary>
+        /// When conflict is detected then
+        /// conflicting courses are added to the current
+        /// assignment view 
+        /// </summary>
         public void AddConflictingCourses()
         {
             List<Conflict> conflicts = CourseRepo.GetConflictsInvolvingCourses(CoursesBeingAssigned.ToList());

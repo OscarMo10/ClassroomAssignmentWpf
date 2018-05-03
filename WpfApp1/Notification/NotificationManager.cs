@@ -18,6 +18,7 @@ namespace ClassroomAssignment.Notification
 
         public static event EventHandler<CourseConflictEventArgs> OnCourseConflict;
 
+        
         private NotificationManager(CourseRepository courseRepository, AssignmentConflictDetector roomConflictFinder)
         {
             _courseRepository = courseRepository;
@@ -43,6 +44,10 @@ namespace ClassroomAssignment.Notification
             OnCourseConflict?.Invoke(_instance, new CourseConflictEventArgs(conflicts));
         }
 
+        /// <summary>
+        /// returns instance of notifactionManager
+        /// otherwise will throw an exception 
+        /// </summary>
         public NotificationManager Instance
         {
             get

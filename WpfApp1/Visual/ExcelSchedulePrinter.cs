@@ -13,6 +13,9 @@ using ClassroomAssignment.Extension;
 
 namespace ClassroomAssignment.Model.Visual
 {
+    /// <summary>
+    /// Helps with exported visualization 
+    /// </summary>
     class ExcelSchedulePrinter : ISchedulePrinter
     {
         static Tuple<int, int> RoomNameLocation = Tuple.Create<int, int>(2, 0);
@@ -67,7 +70,11 @@ namespace ClassroomAssignment.Model.Visual
 
         }
         
-
+        /// <summary>
+        /// Writes course schedules for each room in the excel file
+        /// </summary>
+        /// <param name="courseRepo"></param>
+        /// <param name="roomRepo"></param>
         public void Print(ICourseRepository courseRepo, IRoomRepository roomRepo)
         {
             List<Course> courses = courseRepo.Courses.ToList();

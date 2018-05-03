@@ -10,9 +10,20 @@ using ClassroomAssignment.Extension;
 
 namespace ClassroomAssignment.ViewModel
 {
-    
+    /// <summary>
+    /// Takes groups of courses and converts their type 
+    /// as either assigned, unassigned, no room needed, or ambiguous 
+    /// </summary>
     public class GroupNameConverter : IValueConverter
     {
+        /// <summary>
+        /// Assigns a state to each course
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns>object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Course.CourseState? state = value as Course.CourseState?;

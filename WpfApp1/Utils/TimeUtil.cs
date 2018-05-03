@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace ClassroomAssignment.Utils
 {
+    /// <summary>
+    /// Class to standardize time after parsing
+    /// </summary>
     public class TimeUtil
     {
-        // <summary>Converts time string to a timespan</summary>
-        // <param name="timeStr">string of format "hh:mm (am|pm)"</param>
+        /// <summary>
+        /// Uses regex pattern to standardize 
+        /// time from parsed data, also checks to see if
+        /// military time is used and converts it to standard time
+        /// </summary>
+        /// <param name="timeStr"></param>
+        /// <returns>TimeSpan</returns>
         public static TimeSpan StringToTimeSpan(string timeStr)
         {
             Regex timePattern = new Regex(@"(\d{1,2})(?::)?(\d{1,2})?(am|pm)");

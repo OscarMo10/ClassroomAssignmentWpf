@@ -83,39 +83,6 @@ namespace ClassroomAssignment.Windows
 
         }
 
-
-
-        private void Menu_Open(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Binary File |*.bin";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                var fileName = openFileDialog.FileName;
-
-                try
-                {
-                    IFormatter format = new BinaryFormatter();
-                    Stream stream = File.Open(fileName, FileMode.Open, FileAccess.ReadWrite);
-
-                    ViewModel.Courses = new ObservableCollection<Course>(format.Deserialize(stream) as List<Course>);
-                    stream.Close();
-
-                }
-                catch (SerializationException f)
-                {
-                    Console.WriteLine("Failed to deserialize. Reason: " + f.Message);
-                }
-
-
-            }
-
-        }
-
-      
-
-
         private void ConflictsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var conflict = ConflictsListView.SelectedItem as Conflict;

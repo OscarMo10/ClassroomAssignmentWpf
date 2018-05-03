@@ -78,36 +78,64 @@ namespace ClassroomAssignment.Windows
 
         private void ExistingProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Assignment File | *.agn";
-            var result = dialog.ShowDialog();
+            var filePath = GetFilePath();
+            var courses = GetCourses(filePath);
 
-            List<Course> courses = null;
-            if (result == DialogResult.OK)
+            if (courses == null)
             {
-                var pathToDoc = dialog.FileName;
-                using (var stream = File.Open(pathToDoc, FileMode.Open, FileAccess.Read))
+                OnExistingProjectError();
+            }
+            else
+            {
+                CourseRepository.InitInstance(courses);
+                NextPage(courses);
+            }
+           
+        }
+
+        private void OnExistingProjectError()
+        {
+
+        }
+
+        private void NextPage(List<Course> courses)
+        {
+            if (courses.FindAll(m => m.AmbiguousState).Count > 0)
+            {
+                NavigationService.Navigate(new Uri(@"Windows/AmbiguityResolverPage.xaml", UriKind.Relative));
+            }
+            else
+            {
+                NavigationService.Navigate(new Uri(@"Windows/MainPage.xaml", UriKind.Relative));
+            }
+        }
+
+        private List<Course> GetCourses(string filePath)
+        {
+            List<Course> courses = null;
+            try
+            {
+                using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
                 {
                     IFormatter formatter = new BinaryFormatter();
                     courses = formatter.Deserialize(stream) as List<Course>;
                 }
             }
-
-            if (courses == null) return;
-            else
+            catch (Exception e)
             {
-                CourseRepository.InitInstance(courses);
 
-                if (courses.FindAll(m => m.AmbiguousState).Count > 0)
-                {
-                    NavigationService.Navigate(new Uri(@"Windows/AmbiguityResolverPage.xaml", UriKind.Relative));
-                }
-                else
-                {
-                    NavigationService.Navigate(new Uri(@"Windows/MainPage.xaml", UriKind.Relative));
-                }
             }
-           
+
+            return courses;
+        }
+
+        private string GetFilePath()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Assignment File | *.agn";
+            var result = dialog.ShowDialog();
+
+            return result == DialogResult.OK ? dialog.FileName : null;
         }
 
         //private void InitCrossListedCourses(List<Course> courses)

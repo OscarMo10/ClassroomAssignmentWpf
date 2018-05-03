@@ -38,8 +38,6 @@
                 <MenuItem Header="Export Room Schedules" Click="Export_Click"/>
                 <MenuItem Header="Changes" Click="Menu_Changes" />
                 <MenuItem Header="_Save" Click="Menu_Save"/>
-                <MenuItem Header="_Open" Click="Menu_Open"/>
-
             </MenuItem>
         </Menu>
         

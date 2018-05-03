@@ -25,6 +25,7 @@
                     </ToolTip>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Padding" Value="5,0" />
         </Style>
         <Style x:Key="PairStyle" TargetType="{x:Type StackPanel}">
             <Setter Property="Margin" Value="0,5"/>
@@ -35,7 +36,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         
         <Label Content="Section Information" FontSize="15" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,2" Margin="0,0,0,15"/>
@@ -127,38 +129,40 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3" Margin="0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <GroupBox Header="Enrollment" BorderBrush="Black">
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical" Margin="0,0,5,0">
-                            <Label Content="Maximum" />
-                            <TextBox Text="{Binding MaximumEnrollment}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical" Margin="0,0,5,0">
-                            <Label Content="Wait Cap"/>
-                            <TextBox Text="{Binding WaitCap}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical">
-                            <Label Content="Rm Cap Request"/>
-                            <TextBox Text="{Binding RoomCapRequest}"/>
-                        </StackPanel>
-                    </StackPanel>
-                </GroupBox>
+                <Label Content="Comments" FontWeight="Bold"/>
+                <TextBox Text="{Binding Comments}" Width="300" HorizontalAlignment="Left"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1">
                 <Label Content="Notes" FontWeight="Bold"/>
-                <TextBox Text="{Binding Notes}"/>
+                <TextBox Text="{Binding Notes}"  Width="300" HorizontalAlignment="Left"/>
             </StackPanel>
         </Grid>
 
+        <GroupBox Header="Enrollment" BorderBrush="Black"  Grid.Row="4">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <Label Content="Maximum" />
+                    <TextBox Text="{Binding MaximumEnrollment}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Label Content="Wait Cap"/>
+                    <TextBox Text="{Binding WaitCap}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <Label Content="Rm Cap Request"/>
+                    <TextBox Text="{Binding RoomCapRequest}"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

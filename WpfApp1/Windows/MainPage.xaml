@@ -14,12 +14,12 @@
 
     
     <Page.Resources>
-        <CollectionViewSource x:Key="cvsCourses" Source="{Binding Courses}">
+        <CollectionViewSource x:Key="cvsCourses" Source="{Binding Courses}" IsLiveGroupingRequested="True" IsLiveSortingRequested="True">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Type"/>
+                <PropertyGroupDescription PropertyName="State"/>
             </CollectionViewSource.GroupDescriptions>
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Type" Direction="Ascending" />
+                <scm:SortDescription PropertyName="State" Direction="Ascending" />
                 <scm:SortDescription PropertyName="ClassID_AsInt" Direction="Ascending" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>

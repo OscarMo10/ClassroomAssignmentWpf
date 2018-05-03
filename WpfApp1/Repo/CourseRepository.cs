@@ -16,6 +16,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using ClassroomAssignment.Model;
+using static ClassroomAssignment.Model.Course;
 
 namespace ClassroomAssignment.Repo
 {
@@ -51,16 +52,45 @@ namespace ClassroomAssignment.Repo
             {
                 course.PropertyChanged += Course_PropertyChanged;
             }
+
+            HandleChangeInCourseStates();
         }
 
         private void Course_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var course = sender as Course;
+            if (e.PropertyName == "State") return;
+            HandleChangeInConflicts();
+            HandleChangeInCourseStates();
+        }
+
+        private void HandleChangeInConflicts()
+        {
             var conflicts = GetConflicts();
             var eventArgs = new ChangeInConflictsEventArgs();
             eventArgs.Conflicts = conflicts;
 
             ChangeInConflicts?.Invoke(this, eventArgs);
+        }
+
+        private void HandleChangeInCourseStates()
+        {
+            var conflicts = GetConflicts();
+            var coursesWithConflicts = new HashSet<Course>();
+
+            foreach (var conflict in conflicts)
+            {
+                coursesWithConflicts.UnionWith(conflict.ConflictingCourses);
+            }
+            
+            foreach (var c in Courses)
+            {
+                if (coursesWithConflicts.Contains(c)) c.State = CourseState.Conflicting;
+                else if (c.AmbiguousState) c.State = CourseState.Ambiguous;
+                else if (c.AlreadyAssignedRoom) c.State = CourseState.Assigned;
+                else if (c.NeedsRoom) c.State = CourseState.Unassigned;
+                else c.State = CourseState.NoRoomRequired;
+            }
+            
         }
 
         public List<Conflict> GetConflicts()

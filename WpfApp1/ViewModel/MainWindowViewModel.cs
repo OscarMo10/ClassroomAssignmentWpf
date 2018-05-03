@@ -27,8 +27,8 @@ namespace ClassroomAssignment.ViewModel
         public bool ContinueButtonEnabled { get; } = false;
 
 
-        private IEnumerable<Course> _courses;
-        public IEnumerable<Course> Courses
+        private ObservableCollection<Course> _courses;
+        public ObservableCollection<Course> Courses
         {
             get { return _courses; }
             set
@@ -37,7 +37,8 @@ namespace ClassroomAssignment.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
             }
         }
-        public IEnumerable<Conflict> Conflicts { get; set; }
+
+        public ObservableCollection<Conflict> Conflicts { get; } = new ObservableCollection<Conflict>();
 
         
         public event PropertyChangedEventHandler PropertyChanged;
@@ -47,15 +48,24 @@ namespace ClassroomAssignment.ViewModel
         public MainWindowViewModel()
         {
             CourseRepository courseRepo = CourseRepository.GetInstance();
-            Courses = courseRepo.Courses;
+            Courses = new ObservableCollection<Course>(courseRepo.Courses);
             
-            Conflicts = courseRepo.GetConflicts();
+            foreach (var conflict in courseRepo.GetConflicts())
+            {
+                Conflicts.Add(conflict);
+            }
+
             courseRepo.ChangeInConflicts += CourseRepo_ChangeInConflicts;
         }
 
         private void CourseRepo_ChangeInConflicts(object sender, CourseRepository.ChangeInConflictsEventArgs e)
         {
-            Conflicts = e.Conflicts;
+            Conflicts.Clear();
+            foreach (var conflict in e.Conflicts)
+            {
+                Conflicts.Add(conflict);
+            }
+            
         }
 
         

@@ -130,7 +130,7 @@ namespace ClassroomAssignment.Windows
         {
             Course selectedCourse = CoursesDataGrid.CurrentItem as Course;
 
-            if (selectedCourse == null || selectedCourse.Type == Course.CourseState.NoRoomRequired) return;
+            if (selectedCourse == null || selectedCourse.State == Course.CourseState.NoRoomRequired) return;
 
             List<Course> courses = new List<Course>();
             courses.Add(selectedCourse);
@@ -167,7 +167,7 @@ namespace ClassroomAssignment.Windows
             if (course == null) CoursesContextMenu.IsEnabled = false;
             else CoursesContextMenu.IsEnabled = true;
 
-            if (course?.Type == Course.CourseState.NoRoomRequired) AssignMenuItem.IsEnabled = false;
+            if (course?.State == Course.CourseState.NoRoomRequired) AssignMenuItem.IsEnabled = false;
             else AssignMenuItem.IsEnabled = true;
         }
 
@@ -188,6 +188,8 @@ namespace ClassroomAssignment.Windows
             {
                 course.NeedsRoom = false;
             }
+
+
         }
 
         private void RoomSearchButton_Click(object sender, RoutedEventArgs e)

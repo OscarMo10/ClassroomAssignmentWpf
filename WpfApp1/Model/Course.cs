@@ -513,7 +513,7 @@ namespace ClassroomAssignment.Model
                 {
                     _roomAssignment = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(Type));
+                    OnPropertyChanged(nameof(State));
                 }
 
             }
@@ -521,16 +521,16 @@ namespace ClassroomAssignment.Model
         public List<DayOfWeek> MeetingDays { get; set; }
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
-        public CourseState Type
+
+        private CourseState _state;
+        public CourseState State
         {
-            get
+            get => _state;
+
+            set
             {
-                var conflicts = CourseRepository.GetInstance().GetConflictsInvolvingCourses(new List<Course>() { this });
-                if (conflicts.Count != 0) return CourseState.Conflicting;
-                if (AmbiguousState) return CourseState.Ambiguous;
-                if (AlreadyAssignedRoom) return CourseState.Assigned;
-                else if (NeedsRoom) return CourseState.Unassigned;
-                else return CourseState.NoRoomRequired;
+                _state = value;
+                OnPropertyChanged();
             }
         }
 
@@ -607,6 +607,8 @@ namespace ClassroomAssignment.Model
         /// <summary>
         /// Convienence method. Sets the MeetingDays, StartTime, EndTime, NeedsRoom, and RoomAssignment, using the other properties of Course.
         /// </summary>
+        /// 
+        
         public void SetDerivedProperties()
         {
             SetMeetingProperties();

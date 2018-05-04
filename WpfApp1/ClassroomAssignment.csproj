@@ -57,7 +57,7 @@
     <StartupObject>ClassroomAssignment.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>DCD6E4BD5FFAC3C970A088409C334C6BF2BE7253</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2443C4CCB6393B898EEF8C867833D5C307EED87B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>certificate.pfx</ManifestKeyFile>
@@ -269,9 +269,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="certificate.pfx" />
-    <None Include="ClassroomAssignment_1_TemporaryKey.pfx" />
-    <None Include="ClassroomAssignment_2_TemporaryKey.pfx" />
-    <None Include="ClassroomAssignment_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

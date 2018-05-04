@@ -31,7 +31,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Menu Height="Auto" Width="Auto" Grid.Row="0">
             <MenuItem Header="_File">
@@ -127,15 +127,13 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <ScrollViewer Grid.Row="3">
-            <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick">
+            <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick" Grid.Row="3" MinHeight="90">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="ConflictTemplate">
                         <Label Content="{Binding Description}"></Label>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </ScrollViewer>
 
     </Grid>
 

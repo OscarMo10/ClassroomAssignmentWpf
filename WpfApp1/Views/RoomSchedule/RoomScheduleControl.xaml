@@ -37,8 +37,8 @@
             <TextBlock x:Name="RoomCapacityTextBlock" FontSize="30"  />
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
-            <Grid x:Name="ScheduleGrid"  >
+        <ScrollViewer Grid.Row="1" Grid.Column="0">
+            <Grid x:Name="ScheduleGrid"  ScrollViewer.CanContentScroll="True">
 
             </Grid>
         </ScrollViewer>

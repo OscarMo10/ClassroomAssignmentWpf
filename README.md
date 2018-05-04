@@ -23,7 +23,7 @@ This project provides semi-automated support for PKI classroom assignment.
  - SSD: 256 GB
  - RAM: 8 GB
  
- Microsoft Excel 2017
+ Microsoft Excel 2017 and
  Microsoft Visual Studio 2017
  
 ## License

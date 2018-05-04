@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xrml="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <assemblyIdentity name="ClassroomAssignmentWpf.application" version="1.0.0.3" publicKeyToken="4375f791b9b85776" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <description asmv2:publisher="ClassroomAssignmentWpf" asmv2:product="ClassroomAssignmentWpf" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <deployment install="true" mapFileExtensions="true">
+    <subscription>
+      <update>
+        <beforeApplicationStartup />
+      </update>
+    </subscription>
+    <deploymentProvider codebase="https://oscarmo10.github.io/ClassroomAssignmentWpf/ClassroomAssignmentWpf.application" />
+  </deployment>
+  <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
+    <framework targetVersion="4.6.1" profile="Full" supportedRuntime="4.0.30319" />
+  </compatibleFrameworks>
+  <dependency>
+    <dependentAssembly dependencyType="install" codebase="Application Files\ClassroomAssignmentWpf_1_0_0_3\ClassroomAssignmentWpf.exe.manifest" size="18693">
+      <assemblyIdentity name="ClassroomAssignmentWpf.exe" version="1.0.0.3" publicKeyToken="4375f791b9b85776" language="neutral" processorArchitecture="msil" type="win32" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>OehMUudrx+vAH04+V+M1oa6jCqDMzfCOUxE/vLi+X/s=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+<publisherIdentity name="CN=Group 11, O=Classroom Assignment, C=US" issuerKeyHash="c2b29f71d4098c1208f90ff4edfb327c5d535158" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>HgtMo87lcb10ZaCKCWm04SHZIyXUmHap0MKqdzyQPg0=</DigestValue></Reference></SignedInfo><SignatureValue>olLZBTaRSKtjKLU7VjH3L/8ENLoTcGVtTSTw01oIKn3DSxYVR1vULwUHelP6UU/MmGQSF8yihmulr1esuTwYJIJ/rhmbhGhPOeyql4HYx9Uzn0i998jy6X9mvax8Gy5/k1jcKSHC/jwQoa97U79BZfhWv5i1pR6hUITEGkzZi9BfK3lHqbIbqfqyPsFAewU6wyLaHm7N1TUD7UnvX1Buo9kHvg8lYmM6edIU6PM+rN0H8B0CKTCr2ebiDUADlvP5lbU1Xl021usTCWHduOlZSm7VOTM5uwLFlhjM3QRMWFnJffKGxW7apDsOqdrCX3QvtW2mL8eQBrE/8cFLdBjqcA==</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>s3D0hlmBrF1aawXjqgfKhOKGSC7q3TdJ7IX1ehbULaq1gnrMeVLiXTbaBhzsnQmqio4LeHSJvitEES5opzQwpw46GR9BS9BuCDZX9LfHSb/BViD6T7Wr0dbtY22fAp+venY/CS6UvU++BFoFli43CdnRUBdu7BV+U0bu/ndSkJR+KGRqlTZBoYgpbf/Gra46tvOC6huiDyrm674wL7sU8A/v9UEukO2GiP+Q5Yz88241d7El1Yu4yezzYPQKhrzkCfgmkdF1LOdfDI9l06HPVxv+3hn6CE5w2yUZnYEfayIVzBhs7UA6uvJb1mlMr09tBwMXC2XKMDoLufEf9KgV7Q==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="0d3e903c77aac2d0a97698d42523d921e1b469098aa06574bd71e5cea34c0b1e" Description="" Url=""><as:assemblyIdentity name="ClassroomAssignmentWpf.application" version="1.0.0.3" publicKeyToken="4375f791b9b85776" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=Group 11, O=Classroom Assignment, C=US</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>Xu8qNDnpQuN4fPrbUy5R6bOGikCN7+f4b3HRiVf4BOE=</DigestValue></Reference></SignedInfo><SignatureValue>Yf0Ndnnzz5kkgR5JXm8U52gQSiGQTg6piyfTDN01cjp3bI7QOhE38R3M0yme+eO9jsdStr19186U4jE17ZFzM6hbZsRCA1QNquP4PDs9r8cXXjOCVbFzbqJlR6vNbLaMqwAgM+F1Hg9xcpb5ugiER6BT8CilBM3RkzS0M1NWiy2kFmv9zJUjrLCsmGJWOq4q8MDDdLJWuvVAImjZXBDLbGFdO6Sy7UPiAu+KEu41Jc1vpVpaC65AMA5zu2gzzxACHL5l9HBHpRUXiADFmnbAQ1Fhmpk1SIFrVo9OhIdGEgetadUBHBOdki2OS0DZfv8ffngk8VVFt5ph4+AH+/dYOg==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>s3D0hlmBrF1aawXjqgfKhOKGSC7q3TdJ7IX1ehbULaq1gnrMeVLiXTbaBhzsnQmqio4LeHSJvitEES5opzQwpw46GR9BS9BuCDZX9LfHSb/BViD6T7Wr0dbtY22fAp+venY/CS6UvU++BFoFli43CdnRUBdu7BV+U0bu/ndSkJR+KGRqlTZBoYgpbf/Gra46tvOC6huiDyrm674wL7sU8A/v9UEukO2GiP+Q5Yz88241d7El1Yu4yezzYPQKhrzkCfgmkdF1LOdfDI9l06HPVxv+3hn6CE5w2yUZnYEfayIVzBhs7UA6uvJb1mlMr09tBwMXC2XKMDoLufEf9KgV7Q==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIDOTCCAiGgAwIBAgIQVXtLnUC8iZlDNOb2TaYUmzANBgkqhkiG9w0BAQsFADA/MQswCQYDVQQGEwJVUzEdMBsGA1UECgwUQ2xhc3Nyb29tIEFzc2lnbm1lbnQxETAPBgNVBAMMCEdyb3VwIDExMB4XDTE4MDUwNDE0MTg0OFoXDTE5MDUwNDE0Mzg0OFowPzELMAkGA1UEBhMCVVMxHTAbBgNVBAoMFENsYXNzcm9vbSBBc3NpZ25tZW50MREwDwYDVQQDDAhHcm91cCAxMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALNw9IZZgaxdWmsF46oHyoTihkgu6t03SeyF9XoW1C2qtYJ6zHlS4l022gYc7J0JqoqOC3h0ib4rRBEuaKc0MKcOOhkfQUvQbgg2V/S3x0m/wVYg+k+1q9HW7WNtnwKfr3p2PwkulL1PvgRaBZYuNwnZ0VAXbuwVflNG7v53UpCUfihkapU2QaGIKW3/xq2uOrbzguobog8q5uu+MC+7FPAP7/VBLpDthoj/kOWM/PNuNXexJdWLuMns82D0Coa85An4JpHRdSznXwyPZdOhz1cb/t4Z+ghOcNslGZ2BH2siFcwYbO1AOrryW9ZpTK9PbQcDFwtlyjA6C7nxH/SoFe0CAwEAAaMxMC8wDgYDVR0PAQH/BAQDAgeAMB0GA1UdDgQWBBTCsp9x1AmMEgj5D/Tt+zJ8XVNRWDANBgkqhkiG9w0BAQsFAAOCAQEAhVePr5kA2apm41x/9OjQuxoOTI4DgZSIZOmWUFilXmVIe+0xUzSD3kM/nx63KQN+ySaXirfjlVMnmAiqnlNcAK1ga+JdOlX8mSQ3dzaEf2kYbqZ95Ys8OBjxYRBTY29eLZep1tq3uGw/Kp2fdfRb1MqWznahwj/FnEeTePWJ7Tx9UFUjfM/6PavYj0TdoloSMXSJUPVX0rUAoIySnOowZaoFnC05K/YARbOt5HxjkC+V7MbXdKiPhO7nVS6BScwevFMeMt+g6ETsV37aAjMdfet/r1BQqu1BUP34Z/N9urQqJ+TGyTBIfxULVT44iKQ1IqnwRP5mGmmZSF2ffKSs0g==</X509Certificate></X509Data></KeyInfo><Object><as:Timestamp>MIIQfQYJKoZIhvcNAQcCoIIQbjCCEGoCAQExCzAJBgUrDgMCGgUAMIIBEwYJKoZI
+hvcNAQcBoIIBBASCAQBh/Q12efPPmSSBHklebxTnaBBKIZBODqmLJ9MM3TVyOnds
+jtA6ETfxHczTKZ75472Ox1K2vX3XzpTiMTXtkXMzqFtmxEIDVA2q4/g8Oz2vxxde
+M4JVsXNuomVHq81stoyrACAz4XUeD3Fylvm6CIRHoFPwKKUEzdGTNLQzU1aLLaQW
+a/3MlSOssKyYYlY6rirwwMN0sla69UAiaNlcEMtsYV07pLLtQ+IC74oS7jUlzW+l
+WloLrkAwDnO7aDPPEAIcvmX0cEelFReIAMWadsBDUWGamTVIgWtWj06Eh0YSB61p
+1QEcE52SLY5LQNl+/x9+eCTxVUW3mmHj4Af791g6oIINPzCCBmowggVSoAMCAQIC
+EAMBmgI6/1ixa9bV6uYX8GYwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCVVMx
+FTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQd3d3LmRpZ2ljZXJ0LmNv
+bTEhMB8GA1UEAxMYRGlnaUNlcnQgQXNzdXJlZCBJRCBDQS0xMB4XDTE0MTAyMjAw
+MDAwMFoXDTI0MTAyMjAwMDAwMFowRzELMAkGA1UEBhMCVVMxETAPBgNVBAoTCERp
+Z2lDZXJ0MSUwIwYDVQQDExxEaWdpQ2VydCBUaW1lc3RhbXAgUmVzcG9uZGVyMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo2Rd/Hyz4II14OD2xirmSXU7
+zG7gU6mfH2RZ5nxrf2uMnVX4kuOe1VpjWwJJUNmDzm9m7t3LhelfpfnUh3SIRDsZ
+yeX1kZ/GFDmsJOqoSyyRicxeKPRktlC39RKzc5YKZ6O+YZ+u8/0SeHUOplsU/UUj
+joZEVX0YhgWMVYd5SEb3yg6Np95OX+Koti1ZAmGIYXIYaLm4fO7m5zQvMXeBMB+7
+NgGN7yfj95rwTDFkjePr+hmHqH7P7IwMNlt6wXq4eMfJBi5GEMiN6ARg27xzdPpO
+2P6qQPGyznBGg+naQKFZOtkVCVeZVjCT88lhzNAIzGvsYkKRrALA76TwiRGPdwID
+AQABo4IDNTCCAzEwDgYDVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwFgYDVR0l
+AQH/BAwwCgYIKwYBBQUHAwgwggG/BgNVHSAEggG2MIIBsjCCAaEGCWCGSAGG/WwH
+ATCCAZIwKAYIKwYBBQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMw
+ggFkBggrBgEFBQcCAjCCAVYeggFSAEEAbgB5ACAAdQBzAGUAIABvAGYAIAB0AGgA
+aQBzACAAQwBlAHIAdABpAGYAaQBjAGEAdABlACAAYwBvAG4AcwB0AGkAdAB1AHQA
+ZQBzACAAYQBjAGMAZQBwAHQAYQBuAGMAZQAgAG8AZgAgAHQAaABlACAARABpAGcA
+aQBDAGUAcgB0ACAAQwBQAC8AQwBQAFMAIABhAG4AZAAgAHQAaABlACAAUgBlAGwA
+eQBpAG4AZwAgAFAAYQByAHQAeQAgAEEAZwByAGUAZQBtAGUAbgB0ACAAdwBoAGkA
+YwBoACAAbABpAG0AaQB0ACAAbABpAGEAYgBpAGwAaQB0AHkAIABhAG4AZAAgAGEA
+cgBlACAAaQBuAGMAbwByAHAAbwByAGEAdABlAGQAIABoAGUAcgBlAGkAbgAgAGIA
+eQAgAHIAZQBmAGUAcgBlAG4AYwBlAC4wCwYJYIZIAYb9bAMVMB8GA1UdIwQYMBaA
+FBUAEisTmLKZB+0e36K+Vw0rZwLNMB0GA1UdDgQWBBRhWk0ktkkynUoqeRqDS/Qe
+icHKfTB9BgNVHR8EdjB0MDigNqA0hjJodHRwOi8vY3JsMy5kaWdpY2VydC5jb20v
+RGlnaUNlcnRBc3N1cmVkSURDQS0xLmNybDA4oDagNIYyaHR0cDovL2NybDQuZGln
+aWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZElEQ0EtMS5jcmwwdwYIKwYBBQUHAQEE
+azBpMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQQYIKwYB
+BQUHMAKGNWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3Vy
+ZWRJRENBLTEuY3J0MA0GCSqGSIb3DQEBBQUAA4IBAQCdJX4bM02yJoFcm4bOIyAP
+gIfliP//sdRqLDHtOhcZcRfNqRu8WhY5AJ3jbITkWkD73gYBjDf6m7GdJH7+IKRX
+rVu3mrBgJuppVyFdNC8fcbCDlBkFazWQEKB7l8f2P+fiEUGmvWLZ8Cc9OB0obzpS
+CfDscGLTYkuw4HOmksDTjjHYL+NtFxMG7uQDthSr849Dp3GdId0UyhVdkkHa+Q+B
+0Zl0DSbEDn8btfWg8cZ3BigV6diT5VUW8LsKqxzbXEgnZsijiwoc5ZXarsQuWaBh
+3drzbaJh6YoLbewSGL33VVRAA5Ira8JRwgpIr7DUbuD0FAo6G+OPPcqvao173NhE
+MIIGzTCCBbWgAwIBAgIQBv35A5YDreoACus/J7u6GzANBgkqhkiG9w0BAQUFADBl
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+d3cuZGlnaWNlcnQuY29tMSQwIgYDVQQDExtEaWdpQ2VydCBBc3N1cmVkIElEIFJv
+b3QgQ0EwHhcNMDYxMTEwMDAwMDAwWhcNMjExMTEwMDAwMDAwWjBiMQswCQYDVQQG
+EwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGlnaWNl
+cnQuY29tMSEwHwYDVQQDExhEaWdpQ2VydCBBc3N1cmVkIElEIENBLTEwggEiMA0G
+CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDogi2Z+crCQpWlgHNAcNKeVlRcqcTS
+QQaPyTP8TUWRXIGf7Syc+BZZ3561JBXCmLm0d0ncicQK2q/LXmvtrbBxMevPOkAM
+Rk2T7It6NggDqww0/hhJgv7HxzFIgHweog+SDlDJxofrNj/YMMP/pvf7os1vcyP+
+rFYFkPAyIRaJxnCI+QWXfaPHQ90C6Ds97bFBo+0/vtuVSMTuHrPyvAwrmdDGXRJC
+geGDboJzPyZLFJCuWWYKxI2+0s4Grq2Eb0iEm09AufFM8q+Y+/bOQF1c9qjxL6/s
+iSLyaxhlscFzrdfx2M8eCnRcQrhofrfVdwonVnwPYqQ/MhRglf0HBKIJAgMBAAGj
+ggN6MIIDdjAOBgNVHQ8BAf8EBAMCAYYwOwYDVR0lBDQwMgYIKwYBBQUHAwEGCCsG
+AQUFBwMCBggrBgEFBQcDAwYIKwYBBQUHAwQGCCsGAQUFBwMIMIIB0gYDVR0gBIIB
+yTCCAcUwggG0BgpghkgBhv1sAAEEMIIBpDA6BggrBgEFBQcCARYuaHR0cDovL3d3
+dy5kaWdpY2VydC5jb20vc3NsLWNwcy1yZXBvc2l0b3J5Lmh0bTCCAWQGCCsGAQUF
+BwICMIIBVh6CAVIAQQBuAHkAIAB1AHMAZQAgAG8AZgAgAHQAaABpAHMAIABDAGUA
+cgB0AGkAZgBpAGMAYQB0AGUAIABjAG8AbgBzAHQAaQB0AHUAdABlAHMAIABhAGMA
+YwBlAHAAdABhAG4AYwBlACAAbwBmACAAdABoAGUAIABEAGkAZwBpAEMAZQByAHQA
+IABDAFAALwBDAFAAUwAgAGEAbgBkACAAdABoAGUAIABSAGUAbAB5AGkAbgBnACAA
+UABhAHIAdAB5ACAAQQBnAHIAZQBlAG0AZQBuAHQAIAB3AGgAaQBjAGgAIABsAGkA
+bQBpAHQAIABsAGkAYQBiAGkAbABpAHQAeQAgAGEAbgBkACAAYQByAGUAIABpAG4A
+YwBvAHIAcABvAHIAYQB0AGUAZAAgAGgAZQByAGUAaQBuACAAYgB5ACAAcgBlAGYA
+ZQByAGUAbgBjAGUALjALBglghkgBhv1sAxUwEgYDVR0TAQH/BAgwBgEB/wIBADB5
+BggrBgEFBQcBAQRtMGswJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0
+LmNvbTBDBggrBgEFBQcwAoY3aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL0Rp
+Z2lDZXJ0QXNzdXJlZElEUm9vdENBLmNydDCBgQYDVR0fBHoweDA6oDigNoY0aHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZElEUm9vdENBLmNy
+bDA6oDigNoY0aHR0cDovL2NybDQuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJl
+ZElEUm9vdENBLmNybDAdBgNVHQ4EFgQUFQASKxOYspkH7R7for5XDStnAs0wHwYD
+VR0jBBgwFoAUReuir/SSy4IxLVGLp6chnfNtyA8wDQYJKoZIhvcNAQEFBQADggEB
+AEZQPsm3KCSnOB22WymvUs9S6TFHq1Zce9UNC0Gz7+x1H3Q48rJcYaKclcNQ5IK5
+I9G6OoZyrTh4rHVdFxc0ckeFlFbR67s2hHfMJKXzBBlVqefj56tizfuLLZDCwNK1
+lL1eT7EF0g49GqkUW6aGMWKoqDPkmzmnxPXOHXh2lCVz5Cqrz5x2S+1fwksW5Etw
+TACJHvzFebxMElf+X+EevAJdqP77BzhPDcZdkbkPZ0XN1oPt55INjbFpjE/7WeAj
+D9KqrgB87pxCDs+R1ye3Fu4Pw718CqDuLAhVhSK46xgaTfwqIa1JMYNHlXdx3LEb
+S0scEJx3FMGdTy9alQgpECYxggH8MIIB+AIBATB2MGIxCzAJBgNVBAYTAlVTMRUw
+EwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20x
+ITAfBgNVBAMTGERpZ2lDZXJ0IEFzc3VyZWQgSUQgQ0EtMQIQAwGaAjr/WLFr1tXq
+5hfwZjAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkq
+hkiG9w0BCQUxDxcNMTgwNTA0MTQ0MDE5WjAjBgkqhkiG9w0BCQQxFgQUqI/zWRbV
+TYrE+9PfDOs+8ihjD2wwDQYJKoZIhvcNAQEBBQAEggEAUIH3DcYDhc2tOuh89Lgy
+3GFGeBoscjfDyzkwJbb/mncso4p0m0wB3Q2Uw/01/RljMuE0icyd6FzAzUb475CK
+jCsoKMGRdWwjU+f8eMl0yBojV1d2Q7J8PI+l7ToKUcSKc1Vz5WPb6yK83bWF5ucv
+f04tkM5d8KVVDwMaHXqNst61DpKda0E9vfdKOUT/+P4qt1rdHOP1sT04cQE1caPC
+V1n7AiXq1UCnu+k8cGWvuVvu8j4ajfWVz1XFsA9XDBGZRu3TRTScbghSVhLyogS6
+gMsG2C8AcW40l9oitSeRmMNFKuwO9DMHLlJVETE+69kaRdnTqVu1mF6gPggYn5PB
+Ig==
+</as:Timestamp></Object></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

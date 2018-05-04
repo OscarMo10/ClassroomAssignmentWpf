@@ -56,16 +56,19 @@
     <StartupObject>ClassroomAssignment.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>28C033DAE8C151CAFF5BC2BDD53477E08223E10D</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A2C641967C16F56EE4308D77ADC3A294D29A5DF6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ClassroomAssignment_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ClassroomAssignment_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CsvHelper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
@@ -261,6 +264,7 @@
     <Content Include="ClassroomGridTemplate.xls">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="ClassroomAssignment_1_TemporaryKey.pfx" />
     <None Include="ClassroomAssignment_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

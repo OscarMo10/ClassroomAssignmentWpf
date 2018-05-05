@@ -95,7 +95,7 @@ namespace ClassroomAssignment.Windows
 
         private void AssignMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var selectedCourse = CoursesDataGrid.SelectedItem as Course;
+            var selectedCourse = CoursesDataGrid.CurrentItem as Course;
             if (selectedCourse == null || selectedCourse.State == Course.CourseState.NoRoomRequired) return;
 
 

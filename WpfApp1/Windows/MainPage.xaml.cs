@@ -77,9 +77,6 @@ namespace ClassroomAssignment.Windows
             }
         }
 
-
-       
-
         private void Menu_Changes(object sender, EventArgs e)
         {
             NavigationService.Navigate(new ChangesPage());
@@ -158,8 +155,6 @@ namespace ClassroomAssignment.Windows
             {
                 course.NeedsRoom = false;
             }
-
-
         }
 
         private void RoomSearchButton_Click(object sender, RoutedEventArgs e)

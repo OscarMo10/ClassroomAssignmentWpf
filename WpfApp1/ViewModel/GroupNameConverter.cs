@@ -40,6 +40,8 @@ namespace ClassroomAssignment.ViewModel
                     return Course.CourseState.Unassigned.GetDescription();
                 case Course.CourseState.NoRoomRequired:
                     return Course.CourseState.NoRoomRequired.GetDescription();
+                case Course.CourseState.Conflicting:
+                    return Course.CourseState.Conflicting.GetDescription();
                 default:
                     return string.Empty;
             }

@@ -53,27 +53,27 @@
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Title/Topic"  Style="{StaticResource LabelStyle}" />
-                    <TextBox Text="{Binding CourseTitle}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding CourseTitle, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Section #" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding SectionNumber}"  Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding SectionNumber, Mode=TwoWay}"  Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Credit Hrs" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding CreditHrs}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding CreditHrs, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Status" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding Status}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding Status, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}" >
                     <Label Content="Grade Mode" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding GradeMode}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding GradeMode, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
             </StackPanel>
 
@@ -81,27 +81,27 @@
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Session" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding Session}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding Session, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Campus" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding Campus}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding Campus, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,10" Style="{StaticResource PairStyle}">
                     <Label Content="Instr. Method" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding InstructionMethod}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding InstructionMethod, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Section Type" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding SectionType}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding SectionType, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
                     <Label Content="Grade Mode" Style="{StaticResource LabelStyle}"/>
-                    <TextBox Text="{Binding GradeMode}" Style="{StaticResource ValueStyle}"/>
+                    <TextBox Text="{Binding GradeMode, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -115,17 +115,17 @@
 
             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                 <Label Content="Instructor" FontWeight="Bold"/>
-                <TextBox Text="{Binding Instructor}"/>
+                <TextBox Text="{Binding Instructor, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1"  Margin="0,0,10,0">
                 <Label Content="Room" FontWeight="Bold"/>
-                <TextBox Text="{Binding Room}"/>
+                <TextBox Text="{Binding Room, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2">
                 <Label Content="Schedule" FontWeight="Bold"/>
-                <TextBox Text="{Binding MeetingPattern}"/>
+                <TextBox Text="{Binding MeetingPattern, Mode=TwoWay}"/>
             </StackPanel>
         </Grid>
 
@@ -137,30 +137,30 @@
 
             <StackPanel Grid.Column="0">
                 <Label Content="Comments" FontWeight="Bold"/>
-                <TextBox Text="{Binding Comments}" Width="300" HorizontalAlignment="Left"/>
+                <TextBox Text="{Binding Comments, Mode=TwoWay}" Width="300" HorizontalAlignment="Left"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1">
                 <Label Content="Notes" FontWeight="Bold"/>
-                <TextBox Text="{Binding Notes}"  Width="300" HorizontalAlignment="Left"/>
+                <TextBox Text="{Binding Notes, Mode=TwoWay}"  Width="300" HorizontalAlignment="Left"/>
             </StackPanel>
         </Grid>
 
-        <GroupBox Header="Enrollment" BorderBrush="Black"  Grid.Row="4">
+        <GroupBox Header="Enrollment" BorderBrush="Black"  Grid.Row="4" Margin="0,20">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
                     <Label Content="Maximum" />
-                    <TextBox Text="{Binding MaximumEnrollment}"/>
+                    <TextBox Text="{Binding MaximumEnrollment, Mode=TwoWay}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="0,0,10,0">
                     <Label Content="Wait Cap"/>
-                    <TextBox Text="{Binding WaitCap}"/>
+                    <TextBox Text="{Binding WaitCap, Mode=TwoWay}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical">
                     <Label Content="Rm Cap Request"/>
-                    <TextBox Text="{Binding RoomCapRequest}"/>
+                    <TextBox Text="{Binding RoomCapRequest, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

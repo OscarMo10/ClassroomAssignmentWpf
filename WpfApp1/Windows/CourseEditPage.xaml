@@ -10,7 +10,8 @@
       Title="CourseEditPage">
 
     <StackPanel>
-        <views:CourseDetailControl x:Name="CourseDetail"/>
+        <views:CourseDetailControl x:Name="CourseDetail" IsEnabled="True" CourseShown="{Binding}"/>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 40">
             <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click" Margin="20,0" Width="50"/>
             <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"  Width="50"/>

@@ -10,12 +10,14 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AssignmentPage"
       ShowsNavigationUI="True">
+    
+    
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid  Grid.Column="0">
@@ -24,7 +26,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             
-            <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}" MouseDoubleClick="AssignCoursesListView_MouseDoubleClick" Grid.Row="1" SelectedItem="{Binding CurrentCourse}">
+            <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}"  Grid.Row="1" SelectedValue="{Binding CurrentCourse}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -37,16 +39,16 @@
                                             <DataTrigger Binding="{Binding Type}" Value="0">
                                                 <Setter Property="Fill" Value="Purple" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding Type}" Value="1">
+                                            <DataTrigger Binding="{Binding State}" Value="1">
                                                 <Setter Property="Fill" Value="Yellow" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding Type}" Value="2">
+                                            <DataTrigger Binding="{Binding State}" Value="2">
                                                 <Setter Property="Fill" Value="Green" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding Type}" Value="3">
+                                            <DataTrigger Binding="{Binding State}" Value="3">
                                                 <Setter Property="Fill" Value="Black" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding Type}" Value="4">
+                                            <DataTrigger Binding="{Binding State}" Value="4">
                                                 <Setter Property="Fill" Value="Red" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -64,7 +66,7 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
-            <views:CourseDetailControl x:Name="CourseDetailControl" IsEnabled="False"/>
+            <views:CourseDetailControl x:Name="CourseDetailControl" IsEnabled="False" DataContext="{Binding CurrentCourse, Mode=TwoWay}"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -109,8 +111,8 @@
             </Grid>
         </StackPanel>
 
-        <Expander  IsExpanded="True" ExpandDirection="Right" Grid.Column="2" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}">
-            <scheduleView:RoomScheduleControl x:Name="RoomSchedule" RoomScheduled="{Binding CurrentRoom, Mode=TwoWay}"   />
+        <Expander IsExpanded="True" ExpandDirection="Right" Grid.Column="2" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}" Padding="0,0,0,100">
+            <scheduleView:RoomScheduleControl x:Name="RoomSchedule" RoomScheduled="{Binding CurrentRoom, Mode=TwoWay}"  />
         </Expander>
     </Grid>
 </Page>

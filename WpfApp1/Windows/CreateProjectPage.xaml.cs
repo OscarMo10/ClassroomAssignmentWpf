@@ -31,28 +31,22 @@ namespace ClassroomAssignment.Windows
         public CreateProjectPage()
         {
             InitializeComponent();
-            
+            RoomRepository.InitInstance();
+
         }
 
 
         private void NewProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-            var result = folderBrowser.ShowDialog();
 
-            string[] docLocations;
-            if (result == DialogResult.OK)
+            string[] docLocations = GetSheetPaths();
+            List<Course> courses = SheetParser.Parse(docLocations, RoomRepository.GetInstance());
+            if (courses.Count == 0)
             {
-                var pathToDocs = folderBrowser.SelectedPath;
-                docLocations = Directory.GetFiles(pathToDocs);
-            }
-            else
-            {
+                OnNewProjectCreationError();
                 return;
             }
 
-            RoomRepository.InitInstance();
-            List<Course> courses = SheetParser.Parse(docLocations, RoomRepository.GetInstance());
             var fileName = "original.bin";
 
             IFormatter formatter = new BinaryFormatter();
@@ -64,16 +58,28 @@ namespace ClassroomAssignment.Windows
             CourseRepository.InitInstance(courses);
 
 
-            if (courses.FindAll(m => m.AmbiguousState).Count > 0)
+            NextPage(courses);
+
+        }
+
+        private void OnNewProjectCreationError()
+        {
+            ProjectCreationErrorTextBlock.Text = "Unable able to use selected folder to create new project.";
+        }
+
+        private string[] GetSheetPaths()
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            var result = folderBrowser.ShowDialog();
+
+            string[] docLocations = null;
+            if (result == DialogResult.OK)
             {
-                NavigationService.Navigate(new Uri(@"Windows/AmbiguityResolverPage.xaml", UriKind.Relative));
-            }
-            else
-            {
-                NavigationService.Navigate(new Uri(@"Windows/MainPage.xaml", UriKind.Relative));
+                var pathToDocs = folderBrowser.SelectedPath;
+                docLocations = Directory.GetFiles(pathToDocs);
             }
 
-
+            return docLocations;
         }
 
         private void ExistingProjectButton_Click(object sender, RoutedEventArgs e)
@@ -95,7 +101,7 @@ namespace ClassroomAssignment.Windows
 
         private void OnExistingProjectError()
         {
-
+            ProjectCreationErrorTextBlock.Text = "Selected file was not valid.";
         }
 
         private void NextPage(List<Course> courses)

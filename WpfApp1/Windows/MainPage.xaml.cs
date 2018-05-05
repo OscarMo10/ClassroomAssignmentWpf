@@ -44,7 +44,10 @@ namespace ClassroomAssignment.Windows
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            NavigationService.RemoveBackEntry();
+            while (NavigationService.RemoveBackEntry() != null)
+            {
+
+            }
         }
 
 
@@ -95,9 +98,9 @@ namespace ClassroomAssignment.Windows
 
         private void AssignMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Course selectedCourse = CoursesDataGrid.CurrentItem as Course;
-
+            var selectedCourse = CoursesDataGrid.SelectedItem as Course;
             if (selectedCourse == null || selectedCourse.State == Course.CourseState.NoRoomRequired) return;
+
 
             List<Course> courses = new List<Course>();
             courses.Add(selectedCourse);

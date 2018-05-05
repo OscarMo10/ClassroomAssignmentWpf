@@ -21,14 +21,28 @@ namespace ClassroomAssignment.Views
     /// </summary>
     public partial class CourseDetailControl : UserControl
     {
+        public static readonly DependencyProperty CourseShownProperty = DependencyProperty.Register("CourseShown", typeof(Course), typeof(CourseDetailControl));
+
+       
+
+        public Course CourseShown
+        {
+            get
+            {
+                return (Course)GetValue(CourseShownProperty);
+            }
+
+            set
+            {
+                SetValue(CourseShownProperty, value);
+            }
+        }
+        
+
         public CourseDetailControl()
         {
             InitializeComponent();
         }
 
-        public void SetCourse(Course course)
-        {
-            DataContext = course;
-        }
     }
 }

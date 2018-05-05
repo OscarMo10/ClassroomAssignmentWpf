@@ -1,6 +1,7 @@
 ﻿using ClassroomAssignment.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -23,11 +24,25 @@ namespace ClassroomAssignment.Windows
     /// <summary>
     /// Interaction logic for CourseEditPage.xaml
     /// </summary>
-    public partial class CourseEditPage : Page
+    public partial class CourseEditPage : Page, INotifyPropertyChanged
     {
         private Course originalCourse;
-        private Course copyCourse;
+
+        private Course _copyCourse;
+        public Course CopyCourse
+        {
+            get => _copyCourse;
+            set
+            {
+                _copyCourse = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CopyCourse)));
+            }
+        }
+
         private List<PropertyInfo> propertiesChanged = new List<PropertyInfo>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public CourseEditPage(Course course)
         {
             InitializeComponent();
@@ -37,11 +52,12 @@ namespace ClassroomAssignment.Windows
             IFormatter f = new BinaryFormatter();
             f.Serialize(stream, course);
             stream.Seek(0, SeekOrigin.Begin);
-            copyCourse = f.Deserialize(stream) as Course;
+            CopyCourse = f.Deserialize(stream) as Course;
             stream.Close();
 
-            copyCourse.PropertyChanged += CopyCourse_PropertyChanged;
-            CourseDetail.DataContext = copyCourse;
+            CopyCourse.PropertyChanged += CopyCourse_PropertyChanged;
+
+            DataContext = CopyCourse;
         }
 
         private void CopyCourse_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -58,7 +74,7 @@ namespace ClassroomAssignment.Windows
         {
             foreach (var property in propertiesChanged)
             {
-                var newValue = property.GetValue(copyCourse);
+                var newValue = property.GetValue(CopyCourse);
                 property.SetValue(originalCourse, newValue);
             }
 

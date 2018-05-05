@@ -32,24 +32,13 @@ namespace ClassroomAssignment.Windows
 
             DataContext = viewModel;
 
-            CourseDetailControl.SetCourse(viewModel.CurrentCourse);
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
             RoomSchedule.RoomScheduled = viewModel.CurrentRoom;
             RoomSchedule.CoursesForRoom = viewModel.CoursesForSelectedRoom;
             RoomSchedule.AvailableScheduleSlots = viewModel.AvailableSlots;
         }
 
-
-
-        private void AssignCoursesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Course course = AssignCoursesListView.SelectedItem as Course;
-
-            CourseDetailControl.SetCourse(course);
-
-        }
-
-        
     }
+
 }
 

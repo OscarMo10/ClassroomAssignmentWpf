@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Windows
+namespace ClassroomAssignment.UI.Ambiguity
 {
     /// <summary>
     /// Interaction logic for AmbiguityResolverPage.xaml

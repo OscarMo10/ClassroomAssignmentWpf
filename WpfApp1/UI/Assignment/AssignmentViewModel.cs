@@ -13,7 +13,7 @@ using static ClassroomAssignment.Model.Course;
 using static ClassroomAssignment.Extension.CourseExtensions;
 using System.Windows.Input;
 
-namespace ClassroomAssignment.ViewModel
+namespace ClassroomAssignment.UI.Assignment
 {
     /// <summary>
     /// 

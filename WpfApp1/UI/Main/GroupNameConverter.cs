@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using ClassroomAssignment.Extension;
 
-namespace ClassroomAssignment.ViewModel
+namespace ClassroomAssignment.UI.Main
 {
     /// <summary>
     /// Takes groups of courses and converts their type 

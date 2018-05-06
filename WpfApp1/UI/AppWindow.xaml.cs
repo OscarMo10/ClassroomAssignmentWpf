@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Windows
+namespace ClassroomAssignment.UI
 {
     /// <summary>
-    /// Interaction logic for CourseDetailWindow.xaml
+    /// Interaction logic for AppWindow.xaml
     /// </summary>
-    public partial class CourseDetailWindow : Window
+    public partial class AppWindow : NavigationWindow
     {
-        public CourseDetailWindow()
+        public AppWindow()
         {
             InitializeComponent();
         }

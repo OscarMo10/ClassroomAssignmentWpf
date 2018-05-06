@@ -125,7 +125,7 @@
     <Compile Include="Operations\AssignmentConflictDetector.cs" />
     <Compile Include="Operations\ScheduleSlot.cs" />
     <Compile Include="Operations\SearchParameters.cs" />
-    <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="UI\SearchViewModel.cs" />
     <Compile Include="Views\RoomSearch\AvailableRoomSearchControl.xaml.cs">
       <DependentUpon>AvailableRoomSearchControl.xaml</DependentUpon>
     </Compile>
@@ -137,11 +137,9 @@
     <Compile Include="Views\RoomSchedule\RoomScheduleControl.xaml.cs">
       <DependentUpon>RoomScheduleControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AssignmentViewModel.cs" />
-    <Compile Include="ViewModel\CourseDetailViewModel.cs" />
-    <Compile Include="ViewModel\CustomCommands.cs" />
-    <Compile Include="ViewModel\GroupNameConverter.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="UI\Assignment\AssignmentViewModel.cs" />
+    <Compile Include="UI\Main\GroupNameConverter.cs" />
+    <Compile Include="UI\Main\MainWindowViewModel.cs" />
     <Compile Include="Model\SheetParser.cs" />
     <Compile Include="Repo\ICourseRepository.cs" />
     <Compile Include="Repo\CourseRepository.cs" />
@@ -151,13 +149,13 @@
     <Compile Include="Utils\TimeUtil.cs" />
     <Compile Include="Views\RoomSearch\StringToTimeSpanValidationRule.cs" />
     <Compile Include="Visual\ScheduleGridStructure.cs" />
-    <Compile Include="Windows\AmbiguityResolverPage.xaml.cs">
+    <Compile Include="UI\Ambiguity\AmbiguityResolverPage.xaml.cs">
       <DependentUpon>AmbiguityResolverPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AppWindow.xaml.cs">
+    <Compile Include="UI\AppWindow.xaml.cs">
       <DependentUpon>AppWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AssignmentPage.xaml.cs">
+    <Compile Include="UI\Assignment\AssignmentPage.xaml.cs">
       <DependentUpon>AssignmentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Changes\CourseChangesWindow.xaml.cs">
@@ -166,24 +164,21 @@
     <Compile Include="Changes\ChangesPage.xaml.cs">
       <DependentUpon>ChangesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CourseDetailWindow.xaml.cs">
-      <DependentUpon>CourseDetailWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Visual\ExcelSchedulePrinter.cs" />
     <Compile Include="Visual\ISchedulePrinter.cs" />
     <Compile Include="Visual\ScheduleVisualization.cs" />
     <Compile Include="Changes\CourseDifference.cs" />
     <Compile Include="Changes\CourseDifferenceToBorderBrushConverter.cs" />
-    <Compile Include="Windows\CourseEditPage.xaml.cs">
+    <Compile Include="UI\Edit\CourseEditPage.xaml.cs">
       <DependentUpon>CourseEditPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CreateProjectPage.xaml.cs">
+    <Compile Include="UI\Create\CreateProjectPage.xaml.cs">
       <DependentUpon>CreateProjectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MainPage.xaml.cs">
+    <Compile Include="UI\Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RoomSearchPage.xaml.cs">
+    <Compile Include="UI\RoomSearchPage.xaml.cs">
       <DependentUpon>RoomSearchPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\RoomSearch\AvailableRoomSearchControl.xaml">
@@ -198,15 +193,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AmbiguityResolverPage.xaml">
+    <Page Include="UI\Ambiguity\AmbiguityResolverPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AppWindow.xaml">
+    <Page Include="UI\AppWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AssignmentPage.xaml">
+    <Page Include="UI\Assignment\AssignmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,15 +213,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\CourseDetailWindow.xaml">
+    <Page Include="UI\Edit\CourseEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\CourseEditPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\CreateProjectPage.xaml">
+    <Page Include="UI\Create\CreateProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,11 +229,11 @@
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\CourseClassMap.cs" />
     <Compile Include="Model\DataConstants.cs" />
-    <Page Include="Windows\MainPage.xaml">
+    <Page Include="UI\Main\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\RoomSearchPage.xaml">
+    <Page Include="UI\RoomSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

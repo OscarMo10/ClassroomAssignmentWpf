@@ -21,7 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Windows
+namespace ClassroomAssignment.UI.Create
 {
     /// <summary>
     /// Interaction logic for CreateProjectPage.xaml

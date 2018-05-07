@@ -74,31 +74,7 @@ namespace ClassroomAssignment.UI.Main
             
         }
 
-        
-        private int CompareCourses(Course c1, Course c2)
-        {
-            var value1 = CourseValue(c1);
-            var value2 = CourseValue(c2);
-            if (value1 == value2)
-            {
-                var val1 = int.Parse(c1.ClassID);
-                var val2 = int.Parse(c2.ClassID);
-                return val1 - val2;
-            }
-            else return value2 - value1;
-        }
-
-        private static int CourseValue(Course course)
-        {
-            if (course.NeedsRoom)
-            {
-                if (!course.AlreadyAssignedRoom) return 4;
-                else return 3;
-            }
-            else return 2;
-        }
-
-       
+              
     }
     
 }

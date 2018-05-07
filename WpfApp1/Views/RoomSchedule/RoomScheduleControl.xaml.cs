@@ -341,7 +341,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
                     var textBlock = GetCourseLabel(day, course);
                     textBlock.Background = GetBackgroundColorForCourse(course);
                     textBlock.TextAlignment = TextAlignment.Center;
-                    textBlock.Text = course.CourseDescription;
+                    textBlock.Text = course.ToString();
                     Grid.SetRowSpan(textBlock, RowSpanForCourse(course));
                 }
             }

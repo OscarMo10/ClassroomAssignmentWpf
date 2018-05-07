@@ -144,7 +144,7 @@ namespace ClassroomAssignment.UI.Assignment
             if (CurrentRoom == null) return;
             var room = CurrentRoom;
             var courses = from course in CourseRepo.Courses
-                          where course.RoomAssignment == room
+                          where course.RoomAssignment == room.RoomName
                           select course;
 
             CoursesForSelectedRoom.Clear();

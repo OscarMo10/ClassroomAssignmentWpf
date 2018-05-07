@@ -27,11 +27,7 @@ namespace ClassroomAssignment.Repo
 
         private static CourseRepository _instance;
         private AssignmentConflictDetector roomConflictDetector;
-        /// <summary>
-        /// Get instance and just return that value.
-        /// </summary>
-        /// <returns>_instance</returns>
-        private List<Conflict> CachedAllConflicts;
+        
 
         public event EventHandler<ChangeInConflictsEventArgs> ChangeInConflicts;
 
@@ -39,6 +35,7 @@ namespace ClassroomAssignment.Repo
         {
             return _instance;
         }
+
         /// <summary>
         /// Handle course list exception if it is empty, 
         /// throw NullException.
@@ -63,6 +60,8 @@ namespace ClassroomAssignment.Repo
 
             HandleChangeInCourseStates();
         }
+
+        
 
         private void Course_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -93,8 +92,7 @@ namespace ClassroomAssignment.Repo
             foreach (var c in Courses)
             {
                 if (coursesWithConflicts.Contains(c)) c.State = CourseState.Conflicting;
-                else if (c.AmbiguousState) c.State = CourseState.Ambiguous;
-                else if (c.AlreadyAssignedRoom) c.State = CourseState.Assigned;
+                else if (c.HasRoomAssignment) c.State = CourseState.Assigned;
                 else if (c.NeedsRoom) c.State = CourseState.Unassigned;
                 else c.State = CourseState.NoRoomRequired;
             }
@@ -108,6 +106,7 @@ namespace ClassroomAssignment.Repo
         {
             return new AssignmentConflictDetector(this).AllConflicts();
         }
+
         /// <summary>
         /// Get conflicts involving courses.
         /// </summary>

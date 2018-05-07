@@ -6,5 +6,5 @@
         xmlns:local="clr-namespace:ClassroomAssignment.Windows"
         mc:Ignorable="d"
         Title="AppWindow" MinHeight="450" MinWidth="800"
-        Source="CreateProjectPage.xaml"
+        Source="Create/CreateProjectPage.xaml"
         SizeToContent="WidthAndHeight" />

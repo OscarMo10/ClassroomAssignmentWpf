@@ -27,10 +27,10 @@
                     <Style TargetType="{x:Type DataGridRowHeader}">
                         <Setter Property="Width" Value="25" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding AmbiguousState}" Value="True">
+                            <DataTrigger Binding="{Binding HasAmbiguousAssignment}" Value="True">
                                 <Setter Property="Background" Value="Red"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding AmbiguousState}" Value="False">
+                            <DataTrigger Binding="{Binding HasAmbiguousAssignment}" Value="False">
                                 <Setter Property="Background" Value="Green"/>
                             </DataTrigger>
                         </Style.Triggers>

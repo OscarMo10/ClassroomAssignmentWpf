@@ -15,6 +15,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <HockeyAppResourceId>0c2b4e750f324e1f891f65cbe3cbc503</HockeyAppResourceId>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>C:\Users\omont\Desktop\ClassroomAssignmentWpf\docs\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -57,10 +59,10 @@
     <StartupObject>ClassroomAssignment.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>2443C4CCB6393B898EEF8C867833D5C307EED87B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E55EAA65F40D150616DAE58C628ED8EBD09CA602</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>certificate.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ClassroomAssignment_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -93,6 +95,9 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="PropertyChanged, Version=2.5.5.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.2.5.5\lib\net452\PropertyChanged.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -117,6 +122,9 @@
     <Compile Include="Extension\CourseExtensions.cs" />
     <Compile Include="Extension\EnumExtensions.cs" />
     <Compile Include="Extension\WorkbookExtension.cs" />
+    <Compile Include="Model\Course.cs" />
+    <Compile Include="Model\ParsedCourse.cs" />
+    <Compile Include="Model\CourseQueryRules.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Operations\AvailableRoomSearch.cs" />
     <Compile Include="Operations\Conflict.cs" />
@@ -226,7 +234,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Visual\ClassScheduleTemplate.cs" />
-    <Compile Include="Model\Course.cs" />
     <Compile Include="Model\CourseClassMap.cs" />
     <Compile Include="Model\DataConstants.cs" />
     <Page Include="UI\Main\MainPage.xaml">
@@ -260,6 +267,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="certificate.pfx" />
+    <None Include="ClassroomAssignment_2_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -283,7 +291,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="SignOutput" AfterTargets="CoreCompile">
-    <Exec Command="&quot;C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe&quot; sign /f &quot;$(ProjectDir)certificate.pfx&quot; /p ClassroomAssignment2018 &quot;$(ProjectDir)obj\$(ConfigurationName)\ClassroomAssignmentWpf.exe&quot;" />
+  <Import Project="..\packages\Fody.3.0.3\build\Fody.targets" Condition="Exists('..\packages\Fody.3.0.3\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.3.0.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.0.3\build\Fody.targets'))" />
   </Target>
 </Project>

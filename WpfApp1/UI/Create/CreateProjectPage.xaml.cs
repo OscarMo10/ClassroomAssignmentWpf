@@ -32,7 +32,6 @@ namespace ClassroomAssignment.UI.Create
         {
             InitializeComponent();
             RoomRepository.InitInstance();
-
         }
 
 
@@ -106,13 +105,13 @@ namespace ClassroomAssignment.UI.Create
 
         private void NextPage(List<Course> courses)
         {
-            if (courses.FindAll(m => m.AmbiguousState).Count > 0)
+            if (courses.FindAll(m => m.QueryHasAmbiguousAssignment()).Count > 0)
             {
-                NavigationService.Navigate(new Uri(@"Windows/AmbiguityResolverPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri(@"UI/Ambiguity/AmbiguityResolverPage.xaml", UriKind.Relative));
             }
             else
             {
-                NavigationService.Navigate(new Uri(@"Windows/MainPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri(@"UI/Main/MainPage.xaml", UriKind.Relative));
             }
         }
 

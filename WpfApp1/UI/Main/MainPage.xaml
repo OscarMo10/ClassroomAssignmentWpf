@@ -3,8 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ClassroomAssignment.Windows"
-      xmlns:vm="clr-namespace:ClassroomAssignment.ViewModel"
+      xmlns:local="clr-namespace:ClassroomAssignment.UI.Main"
       xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
 
       mc:Ignorable="d" 
@@ -23,7 +22,7 @@
                 <scm:SortDescription PropertyName="ClassID_AsInt" Direction="Ascending" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <vm:GroupNameConverter x:Key="converter"/>
+        <local:GroupNameConverter x:Key="converter"/>
     </Page.Resources>
 
     <Grid>

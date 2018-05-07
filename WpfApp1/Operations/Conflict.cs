@@ -41,7 +41,7 @@ namespace ClassroomAssignment.Operations
 
                 builder.Remove(builder.Length - 2, 2);
                 builder.Append(" Are In Conflict in ");
-                builder.Append(ConflictingCourses.First().RoomAssignment.RoomName);
+                builder.Append(ConflictingCourses.First().RoomAssignment);
                 return builder.ToString();
             }
         }

@@ -86,12 +86,14 @@ namespace ClassroomAssignment.Model
             while((fileHasMoreRecords = reader.Read()) && courseHasMoreRecords(reader))
             {
                 Course course = reader.GetRecord<Course>();
-                course.SetDerivedProperties();
+                course.SetAllDerivedProperties();
                 courseList.Add(course); //add course to course list.
             }
 
             return courseList;
         }
+
+        
 
 
         static bool courseHasMoreRecords(CsvHelper.CsvReader reader)

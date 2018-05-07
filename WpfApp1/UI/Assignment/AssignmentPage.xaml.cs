@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Windows
+namespace ClassroomAssignment.UI.Assignment
 {
     /// <summary>
     /// Interaction logic for AssignmentPage.xaml

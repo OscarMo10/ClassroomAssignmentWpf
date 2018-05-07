@@ -32,33 +32,17 @@ namespace ClassroomAssignment.UI.Ambiguity
 
             var allCourses = CourseRepository.GetInstance().Courses;
 
-            _ambiguousCourses = allCourses.ToList().FindAll(m => m.AmbiguousState);
+            _ambiguousCourses = allCourses.ToList().FindAll(m => m.QueryHasAmbiguousAssignment());
 
             CoursesDataGrid.ItemsSource = _ambiguousCourses;
 
-            this.Loaded += new RoutedEventHandler(Window_OnLoaded);
-            this.Unloaded += new RoutedEventHandler(Window_OnClosed);
-        }
-
-        private void Window_OnLoaded(object sender, RoutedEventArgs e)
-        {
             _ambiguousCourses.ForEach(RegisterNotificationListener);
-
         }
 
-        private void Window_OnClosed(object sender, EventArgs e)
-        {
-            _ambiguousCourses.ForEach(UnsubscribeListener);
-        }
 
         private void RegisterNotificationListener(Course course)
         {
             course.PropertyChanged += new PropertyChangedEventHandler(OnCoursesStateChanged);
-        }
-
-        private void UnsubscribeListener(Course course)
-        {
-            course.PropertyChanged -= OnCoursesStateChanged;
         }
 
         public void OnCoursesStateChanged(object sender, PropertyChangedEventArgs e)
@@ -75,13 +59,13 @@ namespace ClassroomAssignment.UI.Ambiguity
 
         private bool AmbiguousCoursesExists()
         {
-            return _ambiguousCourses.FindAll(m => m.AmbiguousState).Count > 0;
+            return _ambiguousCourses.FindAll(m => m.HasAmbiguousAssignment).Count > 0;
         }
 
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri(@"Windows/MainPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri(@"UI/Main/MainPage.xaml", UriKind.Relative));
         }
     }
 

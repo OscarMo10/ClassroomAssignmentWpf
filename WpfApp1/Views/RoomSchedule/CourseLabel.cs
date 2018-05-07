@@ -29,7 +29,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
             _boundCourse = course;
             TextWrapping = TextWrapping.Wrap;
             Margin = new Thickness(5, 0, 5, 0);
-            Text = course.CourseDescription;
+            Text = course.ToString();
         }
 
        

@@ -57,8 +57,6 @@ namespace ClassroomAssignment.Model
             Map(m => m.Notes).Index(i++);
             /* Ignoring needsRoom, AlreadyAssignerRoom, RoomAssignment,
              MeetingDays, StartTime, EndTime */
-            Map(m => m.NeedsRoom).Ignore();
-            Map(m => m.AlreadyAssignedRoom).Ignore();
             Map(m => m.RoomAssignment).Ignore();
             Map(m => m.MeetingDays).Ignore();
             Map(m => m.StartTime).Ignore();

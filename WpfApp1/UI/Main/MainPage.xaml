@@ -111,16 +111,20 @@
                             </DataGrid.RowHeaderStyle>
 
                             <DataGrid.Columns>
+                                <!--
                                 <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True" Width="Auto"/>
                                 <DataGridTextColumn Header="SIS ID" Binding="{Binding SIS_ID}" IsReadOnly="True" Width="Auto" />
                                 <DataGridTextColumn Header="Course ID" Binding="{Binding CatalogNumber}" IsReadOnly="True" Width="Auto"/>
-                                <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" IsReadOnly="True" Width="Auto"/>
-                                <DataGridTextColumn Header="Instruction Method" Binding="{Binding InstructionMethod}" IsReadOnly="True" Width="Auto" />
-                                <DataGridTextColumn Header="Meeting Pattern" Binding="{Binding MeetingPattern}" IsReadOnly="True" Width="Auto" />
-                                <DataGridTextColumn Header="Room" Binding="{Binding Room}" IsReadOnly="True" Width="Auto"/>
-                                <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" IsReadOnly="True" Width="Auto" />
-                                <DataGridTextColumn Header="Room Assignment" Binding="{Binding RoomAssignment}" IsReadOnly="True" Width="Auto"/>
-                            </DataGrid.Columns>
+                                -->
+                            <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Section" Binding="{Binding SectionNumber}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Instruction Method" Binding="{Binding InstructionMethod}" IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Meeting Pattern" Binding="{Binding MeetingPattern}" IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Room" Binding="{Binding Room}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" IsReadOnly="True" Width="Auto" />
+                            <DataGridTextColumn Header="Room Assignment" Binding="{Binding RoomAssignment}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTextColumn Header="CrossListings" Binding="{Binding CrossListings}" IsReadOnly="True" Width="Auto"/>
+                        </DataGrid.Columns>
                         </DataGrid>
 
                         <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick" Grid.Row="3" MinHeight="90">

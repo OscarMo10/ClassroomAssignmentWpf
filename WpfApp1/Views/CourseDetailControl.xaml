@@ -85,7 +85,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PairStyle}">
-                    <Label Content="Campus" Style="{StaticResource LabelStyle}"/>
+                    <Label Content="Campus*" Style="{StaticResource LabelStyle}"/>
                     <TextBox Text="{Binding Campus, Mode=TwoWay}" Style="{StaticResource ValueStyle}"/>
                 </StackPanel>
 
@@ -124,7 +124,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2">
-                <Label Content="Schedule" FontWeight="Bold"/>
+                <Label Content="Schedule*" FontWeight="Bold"/>
                 <TextBox Text="{Binding MeetingPattern, Mode=TwoWay}"/>
             </StackPanel>
         </Grid>
@@ -159,7 +159,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical">
-                    <Label Content="Rm Cap Request"/>
+                    <Label Content="Rm Cap Request *"/>
                     <TextBox Text="{Binding RoomCapRequest, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>

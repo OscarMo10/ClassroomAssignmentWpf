@@ -31,7 +31,7 @@ namespace ClassroomAssignment.Operations
         public List<Conflict> AllConflicts()
         {
             var courseGroupByRoom = from course in courseRepository.Courses
-                                    where course.HasRoomAssignment
+                                    where course.NeedsRoom && course.HasRoomAssignment
                                     group course by course.RoomAssignment;
             //Create conflicts list 
             List<Conflict> conflicts = new List<Conflict>();

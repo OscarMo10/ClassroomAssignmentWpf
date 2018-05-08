@@ -22,7 +22,7 @@ namespace ClassroomAssignment.UI.Assignment
     {
         public ObservableCollection<Course> CoursesBeingAssigned { get; } = new ObservableCollection<Course>();
         public ObservableCollection<Room> AvailableRooms { get; } = new ObservableCollection<Room>();
-        public ObservableCollection<Course> CoursesForSelectedRoom = new ObservableCollection<Course>();
+        public ObservableCollection<Course> CoursesForSelectedRoom { get; } = new ObservableCollection<Course>();
         public ObservableCollection<ScheduleSlot> AvailableSlots = new ObservableCollection<ScheduleSlot>();
 
 

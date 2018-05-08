@@ -36,20 +36,14 @@
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Type}" Value="0">
-                                                <Setter Property="Fill" Value="Purple" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding State}" Value="1">
-                                                <Setter Property="Fill" Value="Yellow" />
+                                            <DataTrigger Binding="{Binding State}" Value="0">
+                                                <Setter Property="Fill" Value="Red" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding State}" Value="2">
-                                                <Setter Property="Fill" Value="Green" />
+                                                <Setter Property="Fill" Value="Yellow" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding State}" Value="3">
-                                                <Setter Property="Fill" Value="Black" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding State}" Value="4">
-                                                <Setter Property="Fill" Value="Red" />
+                                                <Setter Property="Fill" Value="Green" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -81,7 +75,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Content="Available Rooms" HorizontalAlignment="Center" Grid.Row="0"/>
-                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" Grid.Row="1" SelectedItem="{Binding CurrentRoom, Mode=OneWayToSource}">
+                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" Grid.Row="1" SelectedItem="{Binding CurrentRoom, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -96,7 +90,7 @@
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
                     <TextBlock Text="Room Assignment: " Margin="0,0,5,0" LineHeight="10" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectedItem="{Binding CurrentCourse.RoomAssignment}">
+                    <ComboBox x:Name="RoomOptionsComboBox" ItemsSource="{Binding AllRooms}" Text="Rooms" IsReadOnly="True" IsEditable="True" Height="20" SelectedValue="{Binding CurrentCourse.RoomAssignment, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -112,7 +106,7 @@
         </StackPanel>
 
         <Expander IsExpanded="True" ExpandDirection="Right" Grid.Column="2" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}" Padding="0,0,0,100">
-            <scheduleView:RoomScheduleControl x:Name="RoomSchedule" RoomScheduled="{Binding CurrentRoom, Mode=TwoWay}"  />
+            <scheduleView:RoomScheduleControl x:Name="RoomSchedule" RoomScheduled="{Binding CurrentRoom, Mode=OneWay}"  CoursesForRoom="{Binding CoursesForSelectedRoom, Mode=OneWay}"/>
         </Expander>
     </Grid>
 </Page>

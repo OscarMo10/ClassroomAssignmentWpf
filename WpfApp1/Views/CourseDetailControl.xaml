@@ -148,7 +148,7 @@
 
         <GroupBox Header="Enrollment" BorderBrush="Black"  Grid.Row="4" Margin="0,20">
             <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
                     <Label Content="Maximum" />
                     <TextBox Text="{Binding MaximumEnrollment, Mode=TwoWay}"/>
                 </StackPanel>

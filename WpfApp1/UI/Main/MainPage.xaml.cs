@@ -10,6 +10,7 @@ using ClassroomAssignment.Windows;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -95,12 +96,14 @@ namespace ClassroomAssignment.UI.Main
 
         private void AssignMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var selectedCourse = CoursesDataGrid.CurrentItem as Course;
-            if (selectedCourse == null || selectedCourse.State == Course.CourseState.NoRoomRequired) return;
-
-
             List<Course> courses = new List<Course>();
-            courses.Add(selectedCourse);
+
+            IList selectedItems = CoursesDataGrid.SelectedItems;
+            foreach (Course c in selectedItems)
+            {
+                courses.Add(c);
+            }
+
             var assignmentPage = new AssignmentPage(courses);
             NavigationService.Navigate(assignmentPage);
         }

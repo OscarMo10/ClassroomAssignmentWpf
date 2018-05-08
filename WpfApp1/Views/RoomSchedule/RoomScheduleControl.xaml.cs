@@ -42,13 +42,8 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         #region Dependency Properties
         // private readonly DependencyProperty _roomScheduledProperty;
-        public static readonly DependencyProperty RoomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl), new PropertyMetadata(new PropertyChangedCallback(OnRoomChanged)));
+        public static readonly DependencyProperty RoomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl));
 
-        private static void OnRoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var currentRoom = e.NewValue as Room;
-            ((RoomScheduleControl)d).SetRoom(currentRoom);
-        }
 
         [Bindable(true)]
         public Room RoomScheduled
@@ -58,19 +53,18 @@ namespace ClassroomAssignment.Views.RoomSchedule
             set { SetValue(RoomScheduledProperty, value); }
         }
 
+
         private ObservableCollection<Course> _coursesForRoom;
         public ObservableCollection<Course> CoursesForRoom
         {
-            get => _coursesForRoom;
+            get => (ObservableCollection<Course>)GetValue(CoursesForRoomProperty);
             set
             {
-                _coursesForRoom = value;
-               
-                value.CollectionChanged += CoursesForRoom_CollectionChanged;
+                SetValue(CoursesForRoomProperty, value);
             }
         }
 
-        public static readonly DependencyProperty CoursesForRoomProperty = DependencyProperty.Register("CoursesForRoom", typeof(ObservableCollection<Course>), typeof(RoomScheduleControl), new PropertyMetadata(new PropertyChangedCallback(CoursesForRoomChanged)));
+        public static readonly DependencyProperty CoursesForRoomProperty = DependencyProperty.Register("CoursesForRoom", typeof(ObservableCollection<Course>), typeof(RoomScheduleControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure, new PropertyChangedCallback(CoursesForRoomChanged)));
 
         private static void CoursesForRoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -94,17 +88,24 @@ namespace ClassroomAssignment.Views.RoomSchedule
             }
         }
 
-        private ObservableCollection<ScheduleSlot> _availableScheduleSlots;
-        public ObservableCollection<ScheduleSlot> AvailableScheduleSlots
+        public static readonly DependencyProperty AvailableSlotsProperty = DependencyProperty.Register(nameof(AvailableSlots), typeof(ObservableCollection<ScheduleSlot>), typeof(RoomScheduleControl), new PropertyMetadata(OnAvailableSlotChange));
+
+        private ObservableCollection<ScheduleSlot> _availableSlots;
+        public ObservableCollection<ScheduleSlot> AvailableSlots
         {
-            get => _availableScheduleSlots;
+            get => _availableSlots;
             set
             {
-                _availableScheduleSlots = value;
-                value.CollectionChanged += AvailableSlots_CollectionChanged;
+                _availableSlots = value;
             }
         }
+        private static void OnAvailableSlotChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var roomScheduleControl = (RoomScheduleControl)d;
+            roomScheduleControl.AvailableSlots.CollectionChanged += roomScheduleControl.AvailableSlots_CollectionChanged;
+        }
 
+       
         private void AvailableSlots_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -114,13 +115,10 @@ namespace ClassroomAssignment.Views.RoomSchedule
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
             {
                 RemoveStaleAvailableItems();
-
             }
         }
 
         #endregion
-
-
 
         static RoomScheduleControl()
         {
@@ -148,7 +146,6 @@ namespace ClassroomAssignment.Views.RoomSchedule
         {
             InitializeComponent();
 
-
             gridLayout = new ScheduleGridLayout(
                 FIRST_TIME_SLOT,
                 LAST_TIME_SLOT,
@@ -156,14 +153,9 @@ namespace ClassroomAssignment.Views.RoomSchedule
                 LAST_DAY_OF_SCHEDULE,
                 TIME_DURATION_UNIT_IN_MINUTES
                 );
-            SetupScheduleGrid();
 
-            
+            SetupScheduleGrid();            
         }
-
-
-        
-
 
         #region Setup
 
@@ -320,18 +312,12 @@ namespace ClassroomAssignment.Views.RoomSchedule
         #endregion
 
 
-        #region Public Methods
-
-        private void SetRoom(Room room)
-        {
-            if (room == null) return;
-
-            RoomNameTextBlock.Text = room.RoomName;
-            RoomCapacityTextBlock.Text = string.Format("Capacity: {0}",  room.Capacity);
-        }
+        #region Private Methods
 
         private void SetCoursesForRoom(IEnumerable<Course> courses)
         {
+            if (courses == null) return;
+
             RemoveStaleCourseLabels();
 
             foreach (var course in courses)
@@ -362,7 +348,9 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         private void ShowAvailableSlots()
         {
-            foreach (var slot in AvailableScheduleSlots)
+            if (AvailableSlots == null) return;
+
+            foreach (var slot in AvailableSlots)
             {
                 foreach (var day in slot.MeetingDays)
                 {

@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using ClassroomAssignment.Model.Repo;
 
 namespace ClassroomAssignment.UI.Main
 {
@@ -25,11 +26,9 @@ namespace ClassroomAssignment.UI.Main
     /// Main Window
     /// </summary>
     [Serializable]
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel: INotifyPropertyChanged
     {
-        public bool ContinueButtonEnabled { get; } = false;
-
-
+        // Assign tab
         private ObservableCollection<Course> _courses;
         public ObservableCollection<Course> Courses
         {
@@ -37,31 +36,53 @@ namespace ClassroomAssignment.UI.Main
             set
             {
                 _courses = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
+            }
+        }
+        public ObservableCollection<Conflict> Conflicts { get; } = new ObservableCollection<Conflict>();
+
+
+        // Info tab
+        private Room _currentRoom;
+        public Room CurrentRoom
+        {
+            get => _currentRoom;
+            set
+            {
+                _currentRoom = value;
+                SetCoursesForCurrentRoom();
             }
         }
 
-        public ObservableCollection<Conflict> Conflicts { get; } = new ObservableCollection<Conflict>();
-
         
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        public Course.CourseState Assigned { get; } = Course.CourseState.Assigned;
+        public IEnumerable<Room> AllRooms { get; set; }
+        public ObservableCollection<Course> CoursesForCurrentRoom { get; private set; }
+
+        private CourseRepository CourseRepo;
+        private RoomRepository RoomRepo;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// initializes main window
         /// </summary>
         public MainWindowViewModel()
         {
-            CourseRepository courseRepo = CourseRepository.GetInstance();
-            Courses = new ObservableCollection<Course>(courseRepo.Courses);
+            CourseRepo = CourseRepository.GetInstance();
+            RoomRepo = RoomRepository.GetInstance();
+
+            Courses = new ObservableCollection<Course>(CourseRepo.Courses);
             
-            foreach (var conflict in courseRepo.GetConflicts())
+            foreach (var conflict in CourseRepo.GetConflicts())
             {
                 Conflicts.Add(conflict);
             }
 
-            courseRepo.ChangeInConflicts += CourseRepo_ChangeInConflicts;
+            CourseRepo.ChangeInConflicts += CourseRepo_ChangeInConflicts;
+
+            AllRooms = RoomRepo.Rooms;
+            CurrentRoom = AllRooms.FirstOrDefault();
         }
 
         private void CourseRepo_ChangeInConflicts(object sender, CourseRepository.ChangeInConflictsEventArgs e)
@@ -74,7 +95,11 @@ namespace ClassroomAssignment.UI.Main
             
         }
 
-              
+        private void SetCoursesForCurrentRoom()
+        {
+            CoursesForCurrentRoom = new ObservableCollection<Course>(CourseRepo.Courses.Where(x => x.RoomAssignment?.Equals(CurrentRoom.RoomName) == true));
+        }
+
     }
     
 }

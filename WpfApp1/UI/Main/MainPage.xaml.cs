@@ -47,10 +47,7 @@ namespace ClassroomAssignment.UI.Main
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            while (NavigationService.RemoveBackEntry() != null)
-            {
-
-            }
+            while (NavigationService.RemoveBackEntry() != null);
         }
 
 
@@ -160,10 +157,7 @@ namespace ClassroomAssignment.UI.Main
             }
         }
 
-        private void RoomSearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new RoomSearchPage());
-        }
+       
     }
 }
 

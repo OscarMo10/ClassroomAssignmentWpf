@@ -69,9 +69,9 @@ namespace ClassroomAssignment.Model
             Match match = regex.Match(course.MeetingPattern);
 
             List<DayOfWeek> MeetingDays = new List<DayOfWeek>();
-            foreach (Group group in match.Groups)
+            foreach (Capture capture in match.Groups[1].Captures)
             {
-                DayOfWeek day = DateUtil.AbbreviationToDayOfWeek(group.Value);
+                DayOfWeek day = DateUtil.AbbreviationToDayOfWeek(capture.Value);
                 MeetingDays.Add(day);
             }
 
@@ -82,12 +82,16 @@ namespace ClassroomAssignment.Model
         {
             Regex regex = new Regex(MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(course.MeetingPattern);
-            var startTimeStr = match.Groups[2].Value;
 
-            TimeSpan timeSpan = new TimeSpan();
-            if (TimeSpan.TryParse(startTimeStr, out timeSpan))
+            if (match.Success)
             {
-                return timeSpan;
+                var startTimeStr = match.Groups[2].Value;
+
+                DateTime dateTime = new DateTime();
+                if (DateTime.TryParse(startTimeStr, out dateTime))
+                {
+                    return dateTime.TimeOfDay;
+                }
             }
 
             return null;            
@@ -97,12 +101,16 @@ namespace ClassroomAssignment.Model
         {
             Regex regex = new Regex(MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(course.MeetingPattern);
-            var endTimeStr = match.Groups[3].Value;
 
-            TimeSpan timeSpan = new TimeSpan();
-            if (TimeSpan.TryParse(endTimeStr, out timeSpan))
+            if (match.Success)
             {
-                return timeSpan;
+                var endTimeStr = match.Groups[3].Value;
+
+                DateTime dateTime = new DateTime();
+                if (DateTime.TryParse(endTimeStr, out dateTime))
+                {
+                    return dateTime.TimeOfDay;
+                }
             }
 
             return null;

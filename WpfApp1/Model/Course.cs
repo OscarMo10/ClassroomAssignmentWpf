@@ -16,6 +16,8 @@ namespace ClassroomAssignment.Model
 
         public enum CourseState
         {
+            [Description("Conflicting")]
+            Conflicting,
             [Description("Ambigious Assignment Courses")]
             Ambiguous,
             [Description("Unassigned Courses")]
@@ -23,9 +25,7 @@ namespace ClassroomAssignment.Model
             [Description("Assigned Courses")]
             Assigned,
             [Description("No Room Required")]
-            NoRoomRequired,
-            [Description("Conflicting")]
-            Conflicting
+            NoRoomRequired
         };
 
         #region Query Properties
@@ -47,6 +47,10 @@ namespace ClassroomAssignment.Model
         public void SetAllDerivedProperties()
         {
             RoomAssignment = this.QueryRoomAssignment().FirstOrDefault();
+            NeedsRoom = this.QueryNeedsRoom();
+            MeetingDays = this.QueryMeetingDays();
+            StartTime = this.QueryStartTime();
+            EndTime = this.QueryEndTime();
         }
 
         public override string ToString()

@@ -35,7 +35,7 @@ namespace ClassroomAssignment.UI.Assignment
             AvailableRoomsListView.ItemsSource = viewModel.AvailableRooms;
             RoomSchedule.RoomScheduled = viewModel.CurrentRoom;
             RoomSchedule.CoursesForRoom = viewModel.CoursesForSelectedRoom;
-            RoomSchedule.AvailableScheduleSlots = viewModel.AvailableSlots;
+            RoomSchedule.AvailableSlots = viewModel.AvailableSlots;
         }
 
     }

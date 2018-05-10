@@ -111,6 +111,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         private static void OnAvailableSlotChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var roomScheduleControl = (RoomScheduleControl)d;
+            if (roomScheduleControl.AvailableSlots == null) return;
             roomScheduleControl.AvailableSlots.CollectionChanged += roomScheduleControl.AvailableSlots_CollectionChanged;
         }
 

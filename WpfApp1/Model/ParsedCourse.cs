@@ -159,48 +159,7 @@ namespace ClassroomAssignment.Model
                    Notes == course.Notes;
         }
 
-        public override int GetHashCode()
-        {
-            var hashCode = 1589016066;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ClassID);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SIS_ID);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Term);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(TermCode);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(DepartmentCode);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SubjectCode);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CatalogNumber);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CourseName);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SectionNumber);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CourseTitle);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SectionType);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Topic);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MeetingPattern);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Instructor);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Room);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Status);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Session);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Campus);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(InstructionMethod);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(IntegerPartner);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Schedule);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Consent);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CreditHrsMin);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CreditHrs);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(GradeMode);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Attributes);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(RoomAttributes);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Enrollment);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MaximumEnrollment);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PriorEnrollment);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ProjectedEnrollment);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(WaitCap);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(RoomCapRequest);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CrossListings);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LinkTo);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Comments);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Notes);
-            return hashCode;
-        }
+        
 
         public static bool operator ==(ParsedCourse course1, ParsedCourse course2)
         {

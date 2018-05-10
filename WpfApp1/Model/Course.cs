@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassroomAssignment.Model.Repo;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -43,11 +44,12 @@ namespace ClassroomAssignment.Model
         #region Query Properties
 
         public bool HasRoomAssignment => RoomAssignment != null;
-        public bool HasAmbiguousAssignment => string.IsNullOrEmpty(RoomAssignment) && this.QueryHasAmbiguousAssignment();
+        public bool HasAmbiguousAssignment => RoomAssignment != null && this.QueryHasAmbiguousAssignment();
 
         #endregion
 
-        public string RoomAssignment { get; set; }
+        public Room RoomAssignment { get; set; }
+
         public bool NeedsRoom { get; set; }
         public List<DayOfWeek> MeetingDays { get; set; }
         public TimeSpan? StartTime { get; set; }
@@ -67,7 +69,8 @@ namespace ClassroomAssignment.Model
 
         public void SetAllDerivedProperties()
         {
-            RoomAssignment = this.QueryRoomAssignment().FirstOrDefault();
+            var roomName = this.QueryRoomAssignment().FirstOrDefault();
+            RoomAssignment = RoomRepository.GetInstance().GetRoomWithName(roomName);
             NeedsRoom = this.QueryNeedsRoom();
             MeetingDays = this.QueryMeetingDays();
             StartTime = this.QueryStartTime();
@@ -99,16 +102,16 @@ namespace ClassroomAssignment.Model
             var course = obj as Course;
             return course != null &&
                    base.Equals(obj) &&
-                   RoomAssignment == course.RoomAssignment;
+                   HasRoomAssignment == course.HasRoomAssignment &&
+                   EqualityComparer<Room>.Default.Equals(RoomAssignment, course.RoomAssignment) &&
+                   NeedsRoom == course.NeedsRoom &&
+                   EqualityComparer<List<DayOfWeek>>.Default.Equals(MeetingDays, course.MeetingDays) &&
+                   EqualityComparer<TimeSpan?>.Default.Equals(StartTime, course.StartTime) &&
+                   EqualityComparer<TimeSpan?>.Default.Equals(EndTime, course.EndTime) &&
+                   State == course.State;
         }
 
-        public override int GetHashCode()
-        {
-            var hashCode = -1983881849;
-            hashCode = hashCode * -1521134295 + base.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(RoomAssignment);
-            return hashCode;
-        }
+       
 
         public static bool operator ==(Course course1, Course course2)
         {

@@ -9,21 +9,24 @@
       xmlns:views ="clr-namespace:ClassroomAssignment.Views"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AssignmentPage"
-      ShowsNavigationUI="True">
-    
-    
+      ShowsNavigationUI="True" >
 
-    <Grid>
+
+
+<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
         <Grid  Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
             <ListView x:Name="AssignCoursesListView" ItemsSource="{Binding CoursesBeingAssigned}"  Grid.Row="1" SelectedValue="{Binding CurrentCourse}">
@@ -75,7 +78,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Content="Available Rooms" HorizontalAlignment="Center" Grid.Row="0"/>
-                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" Grid.Row="1" SelectedItem="{Binding CurrentRoom, Mode=TwoWay}">
+                    <ListView x:Name="AvailableRoomsListView" Height="100" Width="Auto" BorderThickness="1" BorderBrush="Black" Grid.Row="1" SelectedItem="{Binding CurrentRoom, Mode=OneWayToSource}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -105,8 +108,11 @@
             </Grid>
         </StackPanel>
 
-        <Expander IsExpanded="True" ExpandDirection="Right" Grid.Column="2" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}" Padding="0,0,0,100">
-            <scheduleView:RoomScheduleControl x:Name="RoomSchedule" RoomScheduled="{Binding CurrentRoom, Mode=OneWay}"  CoursesForRoom="{Binding CoursesForSelectedRoom, Mode=OneWay}"/>
+        <Expander IsExpanded="True" ExpandDirection="Right" Grid.Column="2" Padding="0,0,0,100" Expanded="Expander_Expanded">
+            <ScrollViewer MinWidth="600">
+                <scheduleView:RoomScheduleControl x:Name="RoomSchedule" RoomScheduled="{Binding CurrentRoom, Mode=OneWay}"  CoursesForRoom="{Binding CoursesForSelectedRoom, Mode=OneWay}" AvailableSlots="{Binding AvailableSlots, Mode=OneWay}"/>
+            </ScrollViewer>
         </Expander>
     </Grid>
+    
 </Page>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,17 @@ namespace ClassroomAssignment.Model
     [Serializable]
     public class Course : ParsedCourse, INotifyPropertyChanged
     {
+        public Course()
+        {
+            _crossListedCourses = new ObservableCollection<Course>();
+            _crossListedCourses.CollectionChanged += _crossListedCourses_CollectionChanged;
+        }
+
+        private void _crossListedCourses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CrossListedCourses)));
+        }
+
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,6 +54,15 @@ namespace ClassroomAssignment.Model
         public TimeSpan? EndTime { get; set; }
         public CourseState State { get; set; }
 
+        public void AddCrossListedCourse(Course course) => _crossListedCourses.Add(course);
+
+        private ObservableCollection<Course> _crossListedCourses;
+        public List<Course> CrossListedCourses
+        {
+            get => _crossListedCourses.ToList();
+            private set { }
+        }
+
         public int ClassID_AsInt => int.Parse(ClassID);
 
         public void SetAllDerivedProperties()
@@ -71,6 +92,32 @@ namespace ClassroomAssignment.Model
             stringBuilder.Append(MeetingPattern);
 
             return stringBuilder.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var course = obj as Course;
+            return course != null &&
+                   base.Equals(obj) &&
+                   RoomAssignment == course.RoomAssignment;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1983881849;
+            hashCode = hashCode * -1521134295 + base.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(RoomAssignment);
+            return hashCode;
+        }
+
+        public static bool operator ==(Course course1, Course course2)
+        {
+            return EqualityComparer<Course>.Default.Equals(course1, course2);
+        }
+
+        public static bool operator !=(Course course1, Course course2)
+        {
+            return !(course1 == course2);
         }
     }
 }

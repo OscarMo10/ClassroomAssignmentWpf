@@ -38,6 +38,13 @@ namespace ClassroomAssignment.UI.Assignment
             RoomSchedule.AvailableSlots = viewModel.AvailableSlots;
         }
 
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            if (window == null) return;
+            window.SizeToContent = SizeToContent.Width;
+        }
+
     }
 
 }

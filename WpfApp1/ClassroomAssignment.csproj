@@ -59,10 +59,10 @@
     <StartupObject>ClassroomAssignment.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E55EAA65F40D150616DAE58C628ED8EBD09CA602</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2443C4CCB6393B898EEF8C867833D5C307EED87B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ClassroomAssignment_2_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>certificate.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -166,17 +166,17 @@
     <Compile Include="UI\Assignment\AssignmentPage.xaml.cs">
       <DependentUpon>AssignmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Changes\CourseChangesWindow.xaml.cs">
+    <Compile Include="UI\Changes\CourseChangesWindow.xaml.cs">
       <DependentUpon>CourseChangesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Changes\ChangesPage.xaml.cs">
+    <Compile Include="UI\Changes\ChangesPage.xaml.cs">
       <DependentUpon>ChangesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Visual\ExcelSchedulePrinter.cs" />
     <Compile Include="Visual\ISchedulePrinter.cs" />
     <Compile Include="Visual\ScheduleVisualization.cs" />
-    <Compile Include="Changes\CourseDifference.cs" />
-    <Compile Include="Changes\CourseDifferenceToBorderBrushConverter.cs" />
+    <Compile Include="UI\Changes\CourseDifference.cs" />
+    <Compile Include="UI\Changes\CourseDifferenceToBorderBrushConverter.cs" />
     <Compile Include="UI\Edit\CourseEditPage.xaml.cs">
       <DependentUpon>CourseEditPage.xaml</DependentUpon>
     </Compile>
@@ -213,11 +213,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Changes\CourseChangesWindow.xaml">
+    <Page Include="UI\Changes\CourseChangesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Changes\ChangesPage.xaml">
+    <Page Include="UI\Changes\ChangesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

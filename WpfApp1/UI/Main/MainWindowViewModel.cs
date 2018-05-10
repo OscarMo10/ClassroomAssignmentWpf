@@ -54,6 +54,9 @@ namespace ClassroomAssignment.UI.Main
             }
         }
 
+
+        
+
         
 
         public IEnumerable<Room> AllRooms { get; set; }
@@ -64,11 +67,14 @@ namespace ClassroomAssignment.UI.Main
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private MainPage Page;
+
         /// <summary>
         /// initializes main window
         /// </summary>
-        public MainWindowViewModel()
+        public MainWindowViewModel(MainPage page)
         {
+            Page = page;
             CourseRepo = CourseRepository.GetInstance();
             RoomRepo = RoomRepository.GetInstance();
 

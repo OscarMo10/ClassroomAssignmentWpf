@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassroomAssignment.Changes
+namespace ClassroomAssignment.UI.Changes
 {
     public class CourseDifference
     {

@@ -28,7 +28,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
     public partial class RoomScheduleControl : UserControl
     {
 
-        private const int COLUMN_WIDTH = 50;
+        private const int COLUMN_WIDTH = 60;
         private const int TIME_DURATION_UNIT_IN_MINUTES = 15;
         private static readonly TimeSpan FIRST_TIME_SLOT = new TimeSpan(7, 0, 0);
         private static readonly TimeSpan LAST_TIME_SLOT = new TimeSpan(22, 0, 0);
@@ -42,8 +42,14 @@ namespace ClassroomAssignment.Views.RoomSchedule
 
         #region Dependency Properties
         // private readonly DependencyProperty _roomScheduledProperty;
-        public static readonly DependencyProperty RoomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl));
+        public static readonly DependencyProperty RoomScheduledProperty = DependencyProperty.Register("RoomScheduled", typeof(Room), typeof(RoomScheduleControl), new PropertyMetadata(new PropertyChangedCallback(OnRoomScheduledChange)));
 
+        private static void OnRoomScheduledChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as RoomScheduleControl;
+            control.RoomNameTextBlock.Text = control.RoomScheduled.RoomName;
+            control.RoomCapacityTextBlock.Text = string.Format("Capacity: {0}", control.RoomScheduled.Capacity.ToString());
+        }
 
         [Bindable(true)]
         public Room RoomScheduled
@@ -72,6 +78,9 @@ namespace ClassroomAssignment.Views.RoomSchedule
             control.RemoveStaleAvailableItems();
             control.ShowAvailableSlots();
             control.SetCoursesForRoom(control.CoursesForRoom);
+
+            if (e.OldValue != null) (e.OldValue as ObservableCollection<Course>).CollectionChanged -= control.CoursesForRoom_CollectionChanged;
+            if (e.NewValue != null) (e.NewValue as ObservableCollection<Course>).CollectionChanged += control.CoursesForRoom_CollectionChanged;
         }
 
         private void CoursesForRoom_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

@@ -1,12 +1,11 @@
-﻿using ClassroomAssignment.Changes;
-using ClassroomAssignment.Model;
+﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Operations;
 using ClassroomAssignment.Repo;
 using ClassroomAssignment.UI.Assignment;
+using ClassroomAssignment.UI.Changes;
 using ClassroomAssignment.UI.Edit;
 using ClassroomAssignment.ViewModel;
 using ClassroomAssignment.Visual;
-using ClassroomAssignment.Windows;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System;
@@ -37,11 +36,12 @@ namespace ClassroomAssignment.UI.Main
     /// </summary>
     public partial class MainPage : Page
     {
-        public MainWindowViewModel ViewModel { get; set; } = new MainWindowViewModel();
+        public MainWindowViewModel ViewModel { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
+            ViewModel = new MainWindowViewModel(this);
             DataContext = ViewModel;
             this.Loaded += MainPage_Loaded;
         }
@@ -110,6 +110,18 @@ namespace ClassroomAssignment.UI.Main
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
+            if (ViewModel.Conflicts.Count != 0)
+            {
+                string message = "Exporting to Excel while there are conflicts may result in incorrect output. Do you wish to continue with the export?";
+                string caption = "Export to Excel";
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBoxButton button = MessageBoxButton.YesNo;
+                MessageBoxResult result = System.Windows.MessageBox.Show(message, caption, button, icon);
+
+                if (result == MessageBoxResult.No) return;
+            }
+            
+
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.Filter = "Excel Worksheets|*.xls";
             if (saveFileDialog.ShowDialog() == true)
@@ -161,6 +173,19 @@ namespace ClassroomAssignment.UI.Main
         }
 
        
+
+        private void GoToCourseMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var contextMenu = (sender as System.Windows.Controls.MenuItem).Parent as System.Windows.Controls.ContextMenu;
+            var course = (contextMenu.PlacementTarget as System.Windows.Controls.ComboBox).SelectedItem as Course;
+
+            if (course != null)
+            {
+                CoursesDataGrid.SelectedItem = course;
+                CoursesDataGrid.ScrollIntoView(course);
+                CoursesDataGrid.Focus();
+            }
+        }
     }
 }
 

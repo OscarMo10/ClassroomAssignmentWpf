@@ -10,7 +10,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage"
       KeepAlive="True"
-      x:Name="_this">
+      x:Name="_this"
+      Height="800">
 
 
     <Page.Resources>
@@ -32,7 +33,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,30" Grid.Row="0" Grid.Column="0">
+        <Border BorderBrush="White" BorderThickness="0,0,0,2">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
                 <Menu Height="Auto" Width="Auto" Grid.Row="0" Padding="0,5" BorderThickness="1" HorizontalAlignment="Left">
                     <MenuItem Header="_File">
                         <MenuItem Header="Export Room Schedules" Click="Export_Click"/>
@@ -41,8 +43,9 @@
                     </MenuItem>
                 </Menu>
             </StackPanel>
+        </Border>
 
-            <TabControl Grid.Row="1" Grid.Column="0">
+        <TabControl Grid.Row="1" Grid.Column="0">
                 <TabItem Header="Assign">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -58,7 +61,6 @@
                                 <ContextMenu x:Name="CoursesContextMenu" Opened="CoursesContextMenu_Opened">
                                     <MenuItem x:Name="AssignMenuItem" Header="Assign" Click="AssignMenuItem_Click" />
                                     <MenuItem x:Name="CoursesMenuItem" Header="Edit" Click="CoursesMenuItem_Click" />
-                                    <MenuItem x:Name="IgnoreMenuItem" Header="Ignore" Click="IgnoreMenuItem_Click" />
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                             <DataGrid.GroupStyle>
@@ -68,7 +70,7 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                        <Expander IsExpanded="True">
+                                                        <Expander IsExpanded="True" >
                                                             <Expander.Header>
                                                                 <DockPanel>
                                                                     <TextBlock FontWeight="DemiBold" Text="{Binding Path=Name, Converter={StaticResource converter}}" Margin="0,0,10,0" >
@@ -91,16 +93,13 @@
                                 <Style TargetType="{x:Type DataGridRowHeader}">
                                     <Setter Property="Width" Value="25" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding State}" Value="0">
-                                            <Setter Property="Background" Value="DarkKhaki"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding State}" Value="1">
+                                        <DataTrigger Binding="{Binding State}" Value="2">
                                             <Setter Property="Background" Value="Yellow"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding State}" Value="2">
+                                        <DataTrigger Binding="{Binding State}" Value="3">
                                             <Setter Property="Background" Value="Green"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding State}" Value="3">
+                                        <DataTrigger Binding="{Binding State}" Value="4">
                                             <Setter Property="Background" Value="DimGray"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding State}" Value="0">
@@ -124,6 +123,48 @@
                             <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" IsReadOnly="True" Width="Auto" />
                             <DataGridTextColumn Header="Room Assignment" Binding="{Binding RoomAssignment}" IsReadOnly="True" Width="Auto"/>
                             <DataGridTextColumn Header="CrossListings" Binding="{Binding CrossListings}" IsReadOnly="True" Width="Auto"/>
+                            <DataGridTemplateColumn Header="Linked CrossListed Courses">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Orientation="Vertical">
+                                            <ComboBox x:Name="CrossListedComboBox" ItemsSource="{Binding CrossListedCourses, Mode=OneWay}" DisplayMemberPath="CourseName" Background="White" SelectedIndex="0">
+                                                <ComboBox.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem x:Name="GoToCourseMenuItem" Header="Go To Course" Click="GoToCourseMenuItem_Click"/>
+                                                    </ContextMenu>
+                                                </ComboBox.ContextMenu>
+                                                <ComboBox.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ComboBoxItem}">
+                                                        <Setter Property="Background" Value="White" />
+                                                    </Style>
+                                                </ComboBox.ItemContainerStyle>
+                                                <ComboBox.Style>
+                                                    <Style TargetType="{x:Type ComboBox}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=HasItems, RelativeSource={RelativeSource Self}}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ComboBox.Style>
+                                            </ComboBox>
+                                            <TextBlock Text="None">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=HasItems, ElementName=CrossListedComboBox}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
                         </DataGrid.Columns>
                         </DataGrid>
 
@@ -139,7 +180,10 @@
                 </TabItem>
 
                 <TabItem Header="Info">
-                <Grid>
+                <Grid HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition />

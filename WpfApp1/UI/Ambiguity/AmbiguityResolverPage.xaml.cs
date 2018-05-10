@@ -36,31 +36,31 @@ namespace ClassroomAssignment.UI.Ambiguity
 
             CoursesDataGrid.ItemsSource = _ambiguousCourses;
 
-            _ambiguousCourses.ForEach(RegisterNotificationListener);
+            //_ambiguousCourses.ForEach(RegisterNotificationListener);
         }
 
 
-        private void RegisterNotificationListener(Course course)
-        {
-            course.PropertyChanged += new PropertyChangedEventHandler(OnCoursesStateChanged);
-        }
+        //private void RegisterNotificationListener(Course course)
+        //{
+        //    course.PropertyChanged += new PropertyChangedEventHandler(OnCoursesStateChanged);
+        //}
 
-        public void OnCoursesStateChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (!AmbiguousCoursesExists())
-            {
-                ContinueButton.IsEnabled = true;
-            }
-            else
-            {
-                ContinueButton.IsEnabled = false;
-            }
-        }
+        //public void OnCoursesStateChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    if (!AmbiguousCoursesExists())
+        //    {
+        //        ContinueButton.IsEnabled = true;
+        //    }
+        //    else
+        //    {
+        //        ContinueButton.IsEnabled = false;
+        //    }
+        //}
 
-        private bool AmbiguousCoursesExists()
-        {
-            return _ambiguousCourses.FindAll(m => m.HasAmbiguousAssignment).Count > 0;
-        }
+        //private bool AmbiguousCoursesExists()
+        //{
+        //    return _ambiguousCourses.FindAll(m => m.HasAmbiguousAssignment).Count > 0;
+        //}
 
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)

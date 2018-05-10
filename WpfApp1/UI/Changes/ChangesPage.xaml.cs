@@ -1,9 +1,7 @@
 ﻿using ClassroomAssignment.Model;
-using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -17,16 +15,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Changes
+namespace ClassroomAssignment.UI.Changes
 {
     /// <summary>
-    /// Interaction logic for CourseChangesWindow.xaml
+    /// Interaction logic for ChangesPage.xaml
     /// </summary>
-    public partial class CourseChangesWindow : Window
+    public partial class ChangesPage : Page
     {
-        public CourseChangesWindow()
+        public ChangesPage()
         {
             InitializeComponent();
             List<Course> originalCourses = GetOriginalCourses();
@@ -62,7 +61,7 @@ namespace ClassroomAssignment.Changes
                 {
                     if (originalCourses[i].ClassID_AsInt == newCourses[j].ClassID_AsInt)
                     {
-                        if (!CoursesAreSame(originalCourses[i], newCourses[j]))
+                        if (originalCourses[i] != newCourses[j])
                         {
                             var difference = new CourseDifference();
 
@@ -73,7 +72,7 @@ namespace ClassroomAssignment.Changes
                         }
                     }
 
-                   // TODO: Finish Implementing differences
+                    // TODO: Finish Implementing differences
                 }
             }
 
@@ -86,7 +85,8 @@ namespace ClassroomAssignment.Changes
             else return a.RoomAssignment.Equals(b.RoomAssignment);
         }
 
-       
-        
+
+
     }
 }
+

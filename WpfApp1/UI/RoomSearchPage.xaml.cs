@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassroomAssignment.Windows
+namespace ClassroomAssignment.UI
 {
     /// <summary>
     /// Interaction logic for RoomSearchPage.xaml

@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace ClassroomAssignment.Changes
+namespace ClassroomAssignment.UI.Changes
 {
     public class CourseDifferenceToBorderBrushConverter : IMultiValueConverter
     {

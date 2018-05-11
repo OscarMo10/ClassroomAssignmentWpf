@@ -50,6 +50,7 @@ namespace ClassroomAssignment.UI.Main
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            
             while (NavigationService.RemoveBackEntry() != null);
         }
 
@@ -96,12 +97,12 @@ namespace ClassroomAssignment.UI.Main
 
         private void ConflictsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var conflict = ConflictsListView.SelectedItem as Conflict;
-            if (conflict != null)
-            {
-                var assignmentPage = new AssignmentPage(conflict.ConflictingCourses);
-                NavigationService.Navigate(assignmentPage);
-            }
+            //var conflict = ConflictsListView.SelectedItem as Conflict;
+            //if (conflict != null)
+            //{
+            //    var assignmentPage = new AssignmentPage(conflict.ConflictingCourses);
+            //    NavigationService.Navigate(assignmentPage);
+            //}
         }
 
         private void AssignMenuItem_Click(object sender, RoutedEventArgs e)

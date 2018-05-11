@@ -37,7 +37,7 @@ namespace ClassroomAssignment.Model
             Unassigned,
             [Description("Assigned Courses")]
             Assigned,
-            [Description("No Room Required")]
+            [Description("No Assignment Required")]
             NoRoomRequired
         };
 

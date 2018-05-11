@@ -39,8 +39,16 @@ namespace ClassroomAssignment.UI.Create
         {
 
             string[] docLocations = GetSheetPaths();
-            List<Course> courses = SheetParser.Parse(docLocations, RoomRepository.GetInstance());
-            if (courses.Count == 0)
+            if (docLocations == null) return;
+
+            List<Course> courses = null;
+            try
+            {
+                courses = SheetParser.Parse(docLocations, RoomRepository.GetInstance());
+            }
+            catch { }
+
+            if (courses == null || courses.Count == 0)
             {
                 OnNewProjectCreationError();
                 return;
@@ -86,6 +94,7 @@ namespace ClassroomAssignment.UI.Create
         private void ExistingProjectButton_Click(object sender, RoutedEventArgs e)
         {
             var filePath = GetFilePath();
+            if (filePath == null) return;
             var appState = GetAppState(filePath);
 
             if (appState.CurrentCourses == null || appState.OriginalCourses == null)

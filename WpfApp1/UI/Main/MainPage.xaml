@@ -10,8 +10,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage"
       KeepAlive="True"
-      x:Name="_this"
-      Height="800">
+      x:Name="_this">
 
 
     <Page.Resources>
@@ -30,14 +29,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition />
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <Border x:Name="Bord" BorderBrush="White" BorderThickness="0,0,0,10" Grid.Row="0" Grid.Column="0">
-            <StackPanel Orientation="Horizontal">
+       <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <Menu>
                     <MenuItem Header="_File">
                         <MenuItem Header="Export Room Schedules" Click="Export_Click"/>
@@ -45,23 +40,18 @@
                         <MenuItem Header="_Save" Click="Menu_Save"/>
                     </MenuItem>
                 </Menu>
-                
-            </StackPanel>
-        </Border>
 
-        <Border Grid.Column="0" Grid.Row="1">
+            </StackPanel>
+
+        <Border Grid.Row="1">
             <TabControl>
-                <TabItem Header="Assign">
+                <TabItem x:Name="AssignTabItem" Header="Assign">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
-
-                        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="2" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
+                        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" >
                             <DataGrid.ContextMenu>
                                 <ContextMenu x:Name="CoursesContextMenu" Opened="CoursesContextMenu_Opened">
                                     <MenuItem x:Name="AssignMenuItem" Header="Assign" Click="AssignMenuItem_Click" />
@@ -175,14 +165,6 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick" Grid.Row="3" MinHeight="90">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:Name="ConflictTemplate">
-                                    <Label Content="{Binding Description}"></Label>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-
                     </Grid>
                 </TabItem>
 
@@ -207,6 +189,27 @@
                 </TabItem>
             </TabControl>
         </Border>
+
+        <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick"  MinHeight="90" Grid.Row="2">
+            <ListView.Style>
+                <Style TargetType="{x:Type ListView}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsSelected, ElementName=AssignTabItem, Mode=OneWay}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=IsSelected, ElementName=AssignTabItem, Mode=OneWay}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Style>
+            <ListView.ItemTemplate>
+                <DataTemplate x:Name="ConflictTemplate">
+                    <Label Content="{Binding Description}"></Label>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
+
 
 </Page>

@@ -45,11 +45,7 @@
                         <MenuItem Header="_Save" Click="Menu_Save"/>
                     </MenuItem>
                 </Menu>
-                <Menu>
-                    <MenuItem Header="Edit">
-                        <MenuItem x:Name="NewCourseMenuItem" Header="Add New Course" Click="NewCourseMenuItem_Click" />
-                    </MenuItem>
-                </Menu>
+                
             </StackPanel>
         </Border>
 

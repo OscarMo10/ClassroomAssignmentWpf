@@ -59,6 +59,7 @@
                                     <MenuItem x:Name="CoursesMenuItem" Header="Edit" Click="CoursesMenuItem_Click" />
                                     <MenuItem x:Name="NoAssignmentNeededMenuItem" Header="No Assignment Needed" Click="NoAssignmentNeededMenuItem_Click"/>
                                     <MenuItem x:Name="CrossListMenuItem" Header="CrossList" Click="CrossListMenuItem_Click"/>
+                                    <MenuItem x:Name="AssignmentNeeded" Header="Assignment Needed" Click="AssignmentNeeded_Click"/>
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                             <DataGrid.GroupStyle>

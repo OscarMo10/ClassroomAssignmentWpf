@@ -177,6 +177,10 @@ namespace ClassroomAssignment.UI.Main
 
             if (CoursesDataGrid.SelectedItems.Count > 1) CoursesMenuItem.IsEnabled = false;
             else CoursesMenuItem.IsEnabled = true;
+
+
+            if (!course.NeedsRoom && course.QueryNeedsRoom()) AssignmentNeeded.Visibility = Visibility.Visible;
+            else AssignmentNeeded.Visibility = Visibility.Collapsed;
         }
 
         private void CoursesMenuItem_Click(object sender, RoutedEventArgs e)
@@ -240,6 +244,14 @@ namespace ClassroomAssignment.UI.Main
         {
             var dialog = new AddCourseDialogBox();
             dialog.Show();
+        }
+
+        private void AssignmentNeeded_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Course course in CoursesDataGrid.SelectedItems)
+            {
+                course.NeedsRoom = true;
+            }
         }
     }
 }

@@ -63,8 +63,7 @@ namespace ClassroomAssignment.Visual
             }
 
             // initialize DayMap: Maps days to column locations
-            int i = 1;
-            DayMap.Add(DayOfWeek.Sunday, i++);
+            int i = 2;
             DayMap.Add(DayOfWeek.Monday, i++);
             DayMap.Add(DayOfWeek.Tuesday, i++);
             DayMap.Add(DayOfWeek.Wednesday, i++);
@@ -155,6 +154,7 @@ namespace ClassroomAssignment.Visual
             {
                 foreach (DayOfWeek meetingDay in course.MeetingDays)
                 {
+                    if (meetingDay == DayOfWeek.Sunday) continue;
                     int column = DayMap[meetingDay];
                     int startRow = GetRowForTime(course.StartTime.Value);
                     int endRow = GetRowForTime(course.EndTime.Value);

@@ -200,11 +200,11 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel x:Name="ScheduleHeader" Orientation="Horizontal" Grid.Row="0" Margin="0,30,0,0" Grid.Column="0" HorizontalAlignment="Left">
+                        <StackPanel x:Name="ScheduleHeader" Orientation="Horizontal" Grid.Row="0" Margin="0,30,0,0" Grid.Column="0" HorizontalAlignment="Center">
                             <Label Content="Room: "/>
                             <ComboBox ItemsSource="{Binding AllRooms, Mode=OneTime}" SelectedItem="{Binding CurrentRoom, Mode=TwoWay}"  MinWidth="40"/>
                         </StackPanel>
-                        <ScrollViewer x:Name="ScrollViewContainer" Grid.Row="1" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Height="500">
+                        <ScrollViewer x:Name="ScrollViewContainer" Grid.Row="1" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Height="500" HorizontalAlignment="Center">
                             <rs:RoomScheduleControl RoomScheduled="{Binding CurrentRoom, Mode=OneWay}" CoursesForRoom="{Binding CoursesForCurrentRoom, Mode=OneWay}" />
                         </ScrollViewer>
                     </Grid>

@@ -74,12 +74,20 @@ namespace ClassroomAssignment.Views
             var meetingPattern = string.Format("{0} {1}-{2}", GetMeetingDays(), StartTimeOptions.SelectedItem, EndTimeOptions.SelectedItem);
             ScheduleTextBox.Text = meetingPattern;
             (DataContext as Course).MeetingPattern = meetingPattern;
+            ValidateMeetingPattern();
+        }
+
+        private void ValidateMeetingPattern()
+        {
             if (string.IsNullOrEmpty(GetMeetingDays()) || StartTimeOptions.SelectedItem == null || EndTimeOptions.SelectedItem == null)
             {
                 ValidMeetingPattern = false;
+                return;
             }
-            else ValidMeetingPattern = true;
+
+            ValidMeetingPattern = DateTime.Parse(StartTimeOptions.SelectedItem as String) < DateTime.Parse(EndTimeOptions.SelectedItem as String);
         }
+
 
         private string GetMeetingDays()
         {
@@ -100,11 +108,7 @@ namespace ClassroomAssignment.Views
             var meetingPattern = string.Format("{0} {1}-{2}", GetMeetingDays(), StartTimeOptions.SelectedItem, EndTimeOptions.SelectedItem);
             ScheduleTextBox.Text = meetingPattern;
             (DataContext as Course).MeetingPattern = meetingPattern;
-            if (string.IsNullOrEmpty(GetMeetingDays()) || StartTimeOptions.SelectedItem == null || EndTimeOptions.SelectedItem == null)
-            {
-                ValidMeetingPattern = false;
-            }
-            else ValidMeetingPattern = true;
+            ValidateMeetingPattern();
         }
 
         private void RmCapRequestTextBox_TextChanged(object sender, TextChangedEventArgs e)

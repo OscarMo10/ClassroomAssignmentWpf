@@ -1,4 +1,5 @@
 ﻿using ClassroomAssignment.Model;
+using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.Repo;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace ClassroomAssignment.UI.Ambiguity
     public partial class AmbiguityResolverPage : Page
     {
         private List<Course> _ambiguousCourses;
-
+        public List<Room> RoomOptions { get; } = RoomRepository.GetInstance().Rooms;
 
         public AmbiguityResolverPage()
         {

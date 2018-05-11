@@ -70,7 +70,7 @@ namespace ClassroomAssignment.Operations
             {
 
                 List<Course> courses = courseGroup.Courses
-                    .Where(x => x.MeetingDays.Intersect(searchParameters.MeetingDays).Count(z => true) != 0 && x.StartTime.HasValue && x.StartTime.Value >= searchParameters.StartTime && x.StartTime <= searchParameters.EndTime)
+                    .Where(x => x.NeedsRoom  && x.MeetingDays.Intersect(searchParameters.MeetingDays).Count(z => true) != 0 && x.StartTime.HasValue && !(x.StartTime.Value >= searchParameters.EndTime || x.EndTime <= searchParameters.StartTime))
                     .OrderBy(x => x.StartTime.Value)
                     .ToList();
                 //Check there is no courses in that slot.

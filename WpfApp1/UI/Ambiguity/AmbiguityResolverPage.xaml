@@ -7,7 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AmbiguityResolverPage"
-      ShowsNavigationUI="False">
+      ShowsNavigationUI="False"
+      x:Name="_this">
 
     <Page.Resources>
         <Style x:Key="ReadOnlyCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
@@ -32,24 +33,31 @@
                     <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Comments" Binding="{Binding Comments}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" IsReadOnly="True"/>
+                 
                     <DataGridCheckBoxColumn x:Name="NeedsRoomCheckBox" Header="Needs Room" Binding="{Binding NeedsRoom, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
-                    <DataGridTextColumn Header="Room Assignment" Binding="{Binding RoomAssignment}" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NeedsRoom, Mode=TwoWay}" Value="False">
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                        <Setter Property="Background" Value="LightGray"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding NeedsRoom, Mode=TwoWay}" Value="True">
-                                        <Setter Property="IsEnabled" Value="True" />
-                                        <Setter Property="Background" Value="Transparent"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-
-                    </DataGridTextColumn>
+                   
+                    <DataGridTemplateColumn Header="Room Assignment">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding RoomOptions, ElementName=_this, Mode=OneTime}" SelectedItem="{Binding RoomAssignment, Mode=TwoWay}">
+                                    <ComboBox.Style>
+                                        <Style TargetType="{x:Type ComboBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding NeedsRoom, Mode=TwoWay}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                    <Setter Property="Background" Value="LightGray"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding NeedsRoom, Mode=TwoWay}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.Style>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 

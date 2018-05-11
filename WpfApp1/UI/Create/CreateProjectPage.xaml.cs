@@ -48,13 +48,13 @@ namespace ClassroomAssignment.UI.Create
 
             InitCrossListedCourses(courses);
 
-            var fileName = "original.bin";
-
+            MemoryStream stream = new MemoryStream();
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = File.Open(fileName, FileMode.Create, FileAccess.Write);
-
             formatter.Serialize(stream, courses);
-            stream.Close();
+            stream.Seek(0, SeekOrigin.Begin);
+
+            var copy = formatter.Deserialize(stream) as List<Course>;
+            App.Current.Resources["originalCourses"] = copy;
 
             CourseRepository.InitInstance(courses);
 
@@ -86,16 +86,17 @@ namespace ClassroomAssignment.UI.Create
         private void ExistingProjectButton_Click(object sender, RoutedEventArgs e)
         {
             var filePath = GetFilePath();
-            var courses = GetCourses(filePath);
+            var appState = GetAppState(filePath);
 
-            if (courses == null)
+            if (appState.CurrentCourses == null || appState.OriginalCourses == null)
             {
                 OnExistingProjectError();
             }
             else
             {
-                CourseRepository.InitInstance(courses);
-                NextPage(courses);
+                App.Current.Resources["originalCourses"] = appState.OriginalCourses;
+                CourseRepository.InitInstance(appState.CurrentCourses);
+                NextPage(appState.CurrentCourses);
             }
            
         }
@@ -107,7 +108,7 @@ namespace ClassroomAssignment.UI.Create
 
         private void NextPage(List<Course> courses)
         {
-            if (courses.FindAll(m => m.QueryHasAmbiguousAssignment()).Count > 0)
+            if (courses.FindAll(m => m.HasAmbiguousAssignment).Count > 0)
             {
                 NavigationService.Navigate(new Uri(@"UI/Ambiguity/AmbiguityResolverPage.xaml", UriKind.Relative));
             }
@@ -117,15 +118,15 @@ namespace ClassroomAssignment.UI.Create
             }
         }
 
-        private List<Course> GetCourses(string filePath)
+        private AppState GetAppState(string filePath)
         {
-            List<Course> courses = null;
+            AppState appState = null;
             try
             {
                 using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
                 {
                     IFormatter formatter = new BinaryFormatter();
-                    courses = formatter.Deserialize(stream) as List<Course>;
+                    appState = formatter.Deserialize(stream) as AppState;
                 }
             }
             catch (Exception e)
@@ -133,7 +134,7 @@ namespace ClassroomAssignment.UI.Create
 
             }
 
-            return courses;
+            return appState;
         }
 
         private string GetFilePath()

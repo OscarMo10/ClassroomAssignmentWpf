@@ -62,7 +62,7 @@ namespace ClassroomAssignment.Views
             TimeSpan diff = new TimeSpan(0, 15, 0);
             while (currentTime <= lastTime)
             {
-                validTimes.Add((new DateTime()).Add(currentTime).ToString("hh:mm tt"));
+                validTimes.Add((new DateTime()).Add(currentTime).ToString("hh:mmtt"));
                 currentTime += diff;
             }
 
@@ -99,7 +99,7 @@ namespace ClassroomAssignment.Views
         {
             var meetingPattern = string.Format("{0} {1}-{2}", GetMeetingDays(), StartTimeOptions.SelectedItem, EndTimeOptions.SelectedItem);
             ScheduleTextBox.Text = meetingPattern;
-            (DataContext as Course).InstructionMethod = meetingPattern;
+            (DataContext as Course).MeetingPattern = meetingPattern;
             if (string.IsNullOrEmpty(GetMeetingDays()) || StartTimeOptions.SelectedItem == null || EndTimeOptions.SelectedItem == null)
             {
                 ValidMeetingPattern = false;

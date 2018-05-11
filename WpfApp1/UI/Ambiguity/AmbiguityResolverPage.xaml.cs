@@ -32,7 +32,7 @@ namespace ClassroomAssignment.UI.Ambiguity
 
             var allCourses = CourseRepository.GetInstance().Courses;
 
-            _ambiguousCourses = allCourses.ToList().FindAll(m => m.QueryHasAmbiguousAssignment());
+            _ambiguousCourses = allCourses.ToList().FindAll(m => m.HasAmbiguousAssignment);
 
             CoursesDataGrid.ItemsSource = _ambiguousCourses;
 
@@ -65,6 +65,11 @@ namespace ClassroomAssignment.UI.Ambiguity
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var course in _ambiguousCourses)
+            {
+                course.HasAmbiguousAssignment = false;
+            }
+
             NavigationService.Navigate(new Uri(@"UI/Main/MainPage.xaml", UriKind.Relative));
         }
     }

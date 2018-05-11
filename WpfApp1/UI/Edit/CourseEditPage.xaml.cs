@@ -46,10 +46,10 @@ namespace ClassroomAssignment.UI.Edit
         public CourseEditPage(Course course)
         {
             InitializeComponent();
-
-
-            course.PropertyChanged += CopyCourse_PropertyChanged;
-            DataContext = course;
+            originalCourse = course;
+            CopyCourse = course.ShallowCopy();
+            CopyCourse.PropertyChanged += CopyCourse_PropertyChanged;
+            DataContext = CopyCourse;
         }
 
         private void CopyCourse_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -83,6 +83,10 @@ namespace ClassroomAssignment.UI.Edit
                 var newValue = property.GetValue(CopyCourse);
                 property.SetValue(originalCourse, newValue);
             }
+
+            originalCourse.MeetingDays = CopyCourse.QueryMeetingDays();
+            originalCourse.StartTime = CopyCourse.QueryStartTime();
+            originalCourse.EndTime = CopyCourse.QueryEndTime();
 
             NavigationService.GoBack();
         }

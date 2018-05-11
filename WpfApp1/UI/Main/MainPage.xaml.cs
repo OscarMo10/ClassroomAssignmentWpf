@@ -46,6 +46,8 @@ namespace ClassroomAssignment.UI.Main
             this.Loaded += MainPage_Loaded;
         }
 
+      
+
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             while (NavigationService.RemoveBackEntry() != null);
@@ -63,10 +65,13 @@ namespace ClassroomAssignment.UI.Main
 
                 try
                 {
+                    List<Course> originalCourses = GetOriginalCourses();
+                    AppState appState = new AppState(originalCourses, ViewModel.Courses.ToList());
+
                     IFormatter formatter = new BinaryFormatter();
                     Stream stream = File.Open(fileName, FileMode.Create, FileAccess.Write);
 
-                    formatter.Serialize(stream, ViewModel.Courses.ToList());
+                    formatter.Serialize(stream, appState);
                     stream.Close();
 
                 }
@@ -76,6 +81,11 @@ namespace ClassroomAssignment.UI.Main
                 }
 
             }
+        }
+
+        private List<Course> GetOriginalCourses()
+        {
+            return App.Current.Resources["originalCourses"] as List<Course>;
         }
 
         private void Menu_Changes(object sender, EventArgs e)

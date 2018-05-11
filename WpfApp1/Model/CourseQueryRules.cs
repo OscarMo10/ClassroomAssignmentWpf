@@ -12,7 +12,7 @@ namespace ClassroomAssignment.Model
 {
     public static class CourseQueryRules
     {
-        public static bool QueryNeedsRoom(this ParsedCourse course)
+        public static bool QueryNeedsRoom(this Course course)
         {
             bool needsRoom = true;
             if (course.InstructionMethod?.Contains(InstructionMethods.OFF_CAMPUS) == true)
@@ -31,12 +31,12 @@ namespace ClassroomAssignment.Model
             return needsRoom;
         }
 
-        public static bool QueryHasAmbiguousAssignment(this ParsedCourse course)
+        public static bool QueryHasAmbiguousAssignment(this Course course)
         {
             return HasMultipleRoomAssignments(course);
         }
 
-        private static bool HasMultipleRoomAssignments(this ParsedCourse course)
+        private static bool HasMultipleRoomAssignments(this Course course)
         {
             bool multipleAssignments = false;
 
@@ -63,7 +63,7 @@ namespace ClassroomAssignment.Model
         }
 
 
-        public static List<DayOfWeek> QueryMeetingDays(this ParsedCourse course)
+        public static List<DayOfWeek> QueryMeetingDays(this Course course)
         {
             Regex regex = new Regex(DataConstants.MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(course.MeetingPattern);
@@ -78,7 +78,7 @@ namespace ClassroomAssignment.Model
             return MeetingDays;
         }
 
-        public static TimeSpan? QueryStartTime(this ParsedCourse course)
+        public static TimeSpan? QueryStartTime(this Course course)
         {
             Regex regex = new Regex(MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(course.MeetingPattern);
@@ -97,7 +97,7 @@ namespace ClassroomAssignment.Model
             return null;            
         }
 
-        public static TimeSpan? QueryEndTime(this ParsedCourse course)
+        public static TimeSpan? QueryEndTime(this Course course)
         {
             Regex regex = new Regex(MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(course.MeetingPattern);
@@ -122,7 +122,7 @@ namespace ClassroomAssignment.Model
         /// <param name="course"></param>
         /// <returns>List of rooms assignments. Multiple rooms if course has ambiguous assignment or
         ///  an empty list if course has none.</returns>
-        public static List<string> QueryRoomAssignment(this ParsedCourse course)
+        public static List<string> QueryRoomAssignment(this Course course)
         {
             List<string> roomAssignments = new List<string>();
 

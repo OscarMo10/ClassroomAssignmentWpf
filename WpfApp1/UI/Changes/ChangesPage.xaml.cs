@@ -36,15 +36,7 @@ namespace ClassroomAssignment.UI.Changes
 
         private List<Course> GetOriginalCourses()
         {
-            string fileName = "original.bin";
-            IFormatter formatter = new BinaryFormatter();
-            Stream stream = File.OpenRead(fileName);
-
-            List<Course> originalCourses = formatter.Deserialize(stream) as List<Course>;
-            originalCourses = originalCourses.OrderBy(x => x.ClassID_AsInt).ToList();
-            stream.Close();
-
-            return originalCourses;
+            return App.Current.Resources["originalCourses"] as List<Course>;
         }
 
         private List<Course> GetUpToDateCourses()

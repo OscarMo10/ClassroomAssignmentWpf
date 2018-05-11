@@ -71,7 +71,7 @@ namespace ClassroomAssignment.Model
         /// </summary>
         public class MeetingPatternOptions
         {
-            public const string TIME_PATTERN = @"(S|M|T|W|Th|F|Sa)+ (\d{1,2}(?::\d{1,2})?(?:am|pm))-(\d{1,2}(?::\d{1,2})?(?:am|pm))";
+            public const string TIME_PATTERN = @"(S|M|T|W|Th|F|Sa)+ (\d{1,2}(?::\d{1,2})?(?:am|pm|AM|PM))-(\d{1,2}(?::\d{1,2})?(?:am|pm|AM|PM))";
             public const string DOES_NOT_MEET = "Does Not Meet";
         }
         /// <summary>

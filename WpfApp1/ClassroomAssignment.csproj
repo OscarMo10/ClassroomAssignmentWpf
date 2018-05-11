@@ -119,11 +119,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppState.cs" />
     <Compile Include="Extension\CourseExtensions.cs" />
     <Compile Include="Extension\EnumExtensions.cs" />
     <Compile Include="Extension\WorkbookExtension.cs" />
     <Compile Include="Model\Course.cs" />
-    <Compile Include="Model\ParsedCourse.cs" />
     <Compile Include="Model\CourseQueryRules.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Operations\AvailableRoomSearch.cs" />

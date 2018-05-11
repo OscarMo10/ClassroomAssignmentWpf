@@ -134,7 +134,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         {
             var colors = new List<SolidColorBrush>()
             {
-                Brushes.Aqua,
+                Brushes.YellowGreen,
                 Brushes.LightBlue,
                 Brushes.Beige,
                 Brushes.Honeydew,

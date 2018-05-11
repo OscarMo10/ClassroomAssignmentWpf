@@ -74,7 +74,6 @@ namespace ClassroomAssignment.UI.Main
         /// </summary>
         public MainWindowViewModel(MainPage page)
         {
-            Page = page;
             CourseRepo = CourseRepository.GetInstance();
             RoomRepo = RoomRepository.GetInstance();
 
@@ -103,7 +102,7 @@ namespace ClassroomAssignment.UI.Main
 
         private void SetCoursesForCurrentRoom()
         {
-            CoursesForCurrentRoom = new ObservableCollection<Course>(CourseRepo.Courses.Where(x => x.RoomAssignment?.Equals(CurrentRoom.RoomName) == true));
+            CoursesForCurrentRoom = new ObservableCollection<Course>(CourseRepo.Courses.Where(x => x.NeedsRoom && x.RoomAssignment?.Equals(CurrentRoom) == true));
         }
 
     }

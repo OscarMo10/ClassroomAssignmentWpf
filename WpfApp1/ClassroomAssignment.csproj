@@ -133,6 +133,9 @@
     <Compile Include="Operations\AssignmentConflictDetector.cs" />
     <Compile Include="Operations\ScheduleSlot.cs" />
     <Compile Include="Operations\SearchParameters.cs" />
+    <Compile Include="UI\AddCourseDialogBox.xaml.cs">
+      <DependentUpon>AddCourseDialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SearchViewModel.cs" />
     <Compile Include="Views\RoomSearch\AvailableRoomSearchControl.xaml.cs">
       <DependentUpon>AvailableRoomSearchControl.xaml</DependentUpon>
@@ -189,6 +192,10 @@
     <Compile Include="UI\RoomSearchPage.xaml.cs">
       <DependentUpon>RoomSearchPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="UI\AddCourseDialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RoomSearch\AvailableRoomSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

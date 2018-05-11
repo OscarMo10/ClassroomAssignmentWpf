@@ -41,7 +41,7 @@ namespace ClassroomAssignment.UI.Changes
             Stream stream = File.OpenRead(fileName);
 
             List<Course> originalCourses = formatter.Deserialize(stream) as List<Course>;
-            originalCourses = originalCourses.OrderBy(x => int.Parse(x.ClassID)).ToList();
+            originalCourses = originalCourses.OrderBy(x => x.ClassID_AsInt).ToList();
             stream.Close();
 
             return originalCourses;

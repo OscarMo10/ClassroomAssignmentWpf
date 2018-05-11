@@ -92,7 +92,7 @@ namespace ClassroomAssignment.Repo
             foreach (var c in Courses)
             {
                 if (coursesWithConflicts.Contains(c)) c.State = CourseState.Conflicting;
-                else if (c.HasRoomAssignment) c.State = CourseState.Assigned;
+                else if (c.NeedsRoom && c.HasRoomAssignment) c.State = CourseState.Assigned;
                 else if (c.NeedsRoom) c.State = CourseState.Unassigned;
                 else c.State = CourseState.NoRoomRequired;
             }

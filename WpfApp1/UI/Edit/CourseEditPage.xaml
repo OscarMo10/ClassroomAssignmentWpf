@@ -10,8 +10,11 @@
       Title="CourseEditPage">
 
     <StackPanel>
-        <views:CourseDetailControl x:Name="CourseDetail" IsEnabled="True" CourseShown="{Binding}"/>
-        
+        <views:CourseDetailControl x:Name="CourseDetail" IsEnabled="True" DataContext="{Binding}"/>
+
+        <TextBlock x:Name="MeetingPatternWarningTextBlock" Text="You have a malformed meeting pattern. Fix to save course." Visibility="Hidden" HorizontalAlignment="Center" Foreground="Red" />
+        <TextBlock x:Name="RoomCapWarningTextBlock" Text="The Room Cap Request field invalid. Fix to save course." Visibility="Hidden" HorizontalAlignment="Center" Foreground="Red"/>
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 40">
             <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click" Margin="20,0" Width="50"/>
             <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"  Width="50"/>

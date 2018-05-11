@@ -146,11 +146,26 @@ namespace ClassroomAssignment.UI.Main
         {
             var course = CoursesDataGrid.SelectedItem as Course;
 
+            bool containNoRoomNeeded = false;
+            foreach (Course c in CoursesDataGrid.SelectedItems)
+            {
+                if (!c.NeedsRoom) containNoRoomNeeded = true;
+            }
+
             if (course == null) CoursesContextMenu.IsEnabled = false;
             else CoursesContextMenu.IsEnabled = true;
 
-            if (course?.State == Course.CourseState.NoRoomRequired) AssignMenuItem.IsEnabled = false;
+            if (containNoRoomNeeded) AssignMenuItem.IsEnabled = false;
             else AssignMenuItem.IsEnabled = true;
+
+            if (containNoRoomNeeded) NoAssignmentNeededMenuItem.IsEnabled = false;
+            else NoAssignmentNeededMenuItem.IsEnabled = true;
+
+            if (CoursesDataGrid.SelectedItems.Count < 2) CrossListMenuItem.IsEnabled = false;
+            else CrossListMenuItem.IsEnabled = true;
+
+            if (CoursesDataGrid.SelectedItems.Count > 1) CoursesMenuItem.IsEnabled = false;
+            else CoursesMenuItem.IsEnabled = true;
         }
 
         private void CoursesMenuItem_Click(object sender, RoutedEventArgs e)
@@ -160,19 +175,7 @@ namespace ClassroomAssignment.UI.Main
 
             var editPage = new CourseEditPage(course);
             NavigationService.Navigate(editPage);
-        }
-
-        private void IgnoreMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var courses = CoursesDataGrid.SelectedItems;
-
-            foreach (Course course in courses)
-            {
-                course.NeedsRoom = false;
-            }
-        }
-
-       
+        }       
 
         private void GoToCourseMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -185,6 +188,47 @@ namespace ClassroomAssignment.UI.Main
                 CoursesDataGrid.ScrollIntoView(course);
                 CoursesDataGrid.Focus();
             }
+        }
+
+        private void NoAssignmentNeededMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var courses = CoursesDataGrid.SelectedItems;
+
+            foreach (Course course in courses)
+            {
+                course.NeedsRoom = false;
+            }
+        }
+
+        private void CrossListMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var courses = CoursesDataGrid.SelectedItems;
+
+            var mainCourse = courses[0] as Course;
+            foreach (Course course in courses)
+            {
+                if (course.NeedsRoom)
+                {
+                    mainCourse = course;
+                    break;
+                }
+            }
+
+            foreach (Course course in courses)
+            {
+                if (course == mainCourse) continue;
+
+                course.NeedsRoom = false;
+                mainCourse.AddCrossListedCourse(course);
+            }
+        }
+
+
+
+        private void NewCourseMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new AddCourseDialogBox();
+            dialog.Show();
         }
     }
 }

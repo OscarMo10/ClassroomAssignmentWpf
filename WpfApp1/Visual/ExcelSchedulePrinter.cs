@@ -39,6 +39,8 @@ namespace ClassroomAssignment.Visual
 
         private ISheet _scheduleTemplate;
 
+        private ClassScheduleTemplate Template = new ClassScheduleTemplate();
+
         public ExcelSchedulePrinter(string outputFile, IWorkbook workbook)
         {
             _outputFile = outputFile;
@@ -97,6 +99,9 @@ namespace ClassroomAssignment.Visual
                 ICell cell = sheet.GetRow(RoomNameLocation.Item1).GetCell(RoomNameLocation.Item2);
                 cell.SetCellValue(room.RoomName);
 
+                cell = sheet.GetRow(RoomCapacityLocation.Item1).GetCell(RoomCapacityLocation.Item2);
+                cell.SetCellValue(string.Format("Cap: {0}", room.Capacity));
+
                 PrintCourses(sheet, courseGroup.ToList());
                 printLegend(sheet);
             }
@@ -113,12 +118,12 @@ namespace ClassroomAssignment.Visual
             int rowIndex = cellReference.Row;
             int cellIndex = cellReference.Col;
 
-            OrderedDictionary subjectColorMap =  ClassScheduleTemplate.GetSubjectColorMap();
-            foreach(DictionaryEntry entry in subjectColorMap)
+            Dictionary<string, short> subjectColorMap =  Template.GetSubjectColorMap();
+            foreach(var entry in subjectColorMap)
             {
                 IRow row = sheet.GetRow(rowIndex);
                 ICell cell = row.GetCell(cellIndex);
-                cell.CellStyle = ClassScheduleTemplate.GetCellStyle(_workbook, (short) entry.Value);
+                cell.CellStyle = Template.GetCellStyle(_workbook, (string) entry.Key);
                 cell.SetCellValue((string) entry.Key);
                 rowIndex++;
             }
@@ -160,7 +165,7 @@ namespace ClassroomAssignment.Visual
                     var cell = row.GetCell(column);
 
                     // Style cell
-                    cell.CellStyle = ClassScheduleTemplate.GetCellStyle(_workbook, course.Color());
+                    cell.CellStyle = Template.GetCellStyle(_workbook, course.SubjectCode);
 
                     var cellValue = getCourseLabel(course);
                     cell.SetCellValue(cellValue);

@@ -135,12 +135,15 @@ namespace ClassroomAssignment.Views.RoomSchedule
             var colors = new List<SolidColorBrush>()
             {
                 Brushes.Aqua,
-                Brushes.Azure,
+                Brushes.LightBlue,
                 Brushes.Beige,
-                Brushes.BurlyWood,
+                Brushes.Honeydew,
                 Brushes.Cornsilk,
-                Brushes.Coral,
-                Brushes.FloralWhite
+                Brushes.Blue,
+                Brushes.Crimson,
+                Brushes.Yellow,
+                Brushes.Pink,
+                Brushes.Purple
             };
 
             BackgroundColors = colors.ConvertAll(x =>
@@ -393,8 +396,8 @@ namespace ClassroomAssignment.Views.RoomSchedule
             }
             else
             {
-                currentColorIndex++;
                 colorMap[course.SubjectCode] = BackgroundColors[currentColorIndex];
+                currentColorIndex++;
                 return colorMap[course.SubjectCode];
             }
         }
@@ -420,9 +423,7 @@ namespace ClassroomAssignment.Views.RoomSchedule
         private CourseLabel GetCourseLabel(DayOfWeek day, Course course)
         {
             var courseLabel = new CourseLabel(course);
-            var brush = BackgroundColors[0];
-            courseLabel.Background = brush;
-
+            
             ScheduleGrid.Children.Add(courseLabel);
             Grid.SetRow(courseLabel, gridLayout.GetRowForTime(course.StartTime.Value));
             Grid.SetColumn(courseLabel, gridLayout.GetColumnForDay(day));

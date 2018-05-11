@@ -12,22 +12,29 @@ namespace ClassroomAssignment.Model
     /// Sets template for exported schedule 
     /// visualization
     /// </summary>
-    public static class ClassScheduleTemplate
+    public class ClassScheduleTemplate
     {
         public const string SCHEDULE_TEMPLATE_NAME = "ScheduleTemplate";
-        private static OrderedDictionary subjectColorMap = new OrderedDictionary();
+        private List<short> AvailableColors;
+        private int CurrentColorIndex = 0;
+        private Dictionary<string, short> SubjectCodeToColor = new Dictionary<string, short>();
 
-        static ClassScheduleTemplate()
+        public ClassScheduleTemplate()
         {
-            subjectColorMap.Add(DataConstants.SubjectCode.BIOI, IndexedColors.LightTurquoise.Index);
-            subjectColorMap.Add(DataConstants.SubjectCode.BMI, IndexedColors.LightGreen.Index);
-            subjectColorMap.Add(DataConstants.SubjectCode.CIST, IndexedColors.LightBlue.Index);
-            subjectColorMap.Add(DataConstants.SubjectCode.CSCI, IndexedColors.LightOrange.Index);
-            subjectColorMap.Add(DataConstants.SubjectCode.CSTE, IndexedColors.LightYellow.Index);
-            subjectColorMap.Add(DataConstants.SubjectCode.EMIT, IndexedColors.Lime.Index);
-            subjectColorMap.Add(DataConstants.SubjectCode.ISQA, IndexedColors.Rose.Index);
-            subjectColorMap.Add(DataConstants.SubjectCode.ITIN, IndexedColors.Teal.Index);
+            AvailableColors = new List<short>()
+            {
+                IndexedColors.LightTurquoise.Index,
+                IndexedColors.LightGreen.Index,
+                IndexedColors.LightBlue.Index,
+                IndexedColors.LightOrange.Index,
+                IndexedColors.LightYellow.Index,
+                IndexedColors.Lime.Index,
+                IndexedColors.Rose.Index,
+                IndexedColors.Teal.Index,
+            };
         }
+
+       
 
         /// <summary>
         /// Sets the style of cells for the workbook
@@ -35,8 +42,9 @@ namespace ClassroomAssignment.Model
         /// <param name="workbook"></param>
         /// <param name="foregroundColor"></param>
         /// <returns>ICellStyle</returns>
-        public static ICellStyle GetCellStyle(IWorkbook workbook, short foregroundColor)
+        public ICellStyle GetCellStyle(IWorkbook workbook, string subjectCode)
         {
+            short foregroundColor = GetColorForSubjectCode(subjectCode);
             IFont font = workbook.CreateFont();
             font.Boldweight = 550;
             font.FontName = "Calibri";
@@ -52,40 +60,30 @@ namespace ClassroomAssignment.Model
             return style;
         }
 
-        /// <summary>
-        /// Assigns different color for each department
-        /// 
-        /// </summary>
-        /// <param name="course"></param>
-        /// <returns></returns>
-        public static short Color(this Course course)
+        private short GetColorForSubjectCode(string subjectCode)
         {
-            switch(course.SubjectCode)
+            if (SubjectCodeToColor.ContainsKey(subjectCode))
             {
-                case DataConstants.SubjectCode.BIOI:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.BIOI];
-                case DataConstants.SubjectCode.BMI:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.BMI];
-                case DataConstants.SubjectCode.CIST:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.CIST];
-                case DataConstants.SubjectCode.CSCI:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.CSCI];
-                case DataConstants.SubjectCode.CSTE:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.CSTE];
-                case DataConstants.SubjectCode.EMIT:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.EMIT];
-                case DataConstants.SubjectCode.ISQA:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.ISQA];
-                case DataConstants.SubjectCode.ITIN:
-                    return (short)subjectColorMap[DataConstants.SubjectCode.ITIN];
-                default:
-                    return (short)IndexedColors.SeaGreen.Index;
+                return SubjectCodeToColor[subjectCode];
+            }
+            else
+            {
+                if (CurrentColorIndex < AvailableColors.Count)
+                {
+                    short color = AvailableColors[CurrentColorIndex++];
+                    SubjectCodeToColor[subjectCode] = color;
+                    return color;
+                }
+
+                return AvailableColors.Last();
             }
         }
 
-        public static OrderedDictionary GetSubjectColorMap()
+        
+
+        public Dictionary<string, short> GetSubjectColorMap()
         {
-            return subjectColorMap;
+            return SubjectCodeToColor;
         }
     }
 }

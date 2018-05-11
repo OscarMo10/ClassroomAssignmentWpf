@@ -119,7 +119,7 @@ namespace ClassroomAssignment.Model
         public override bool Equals(object obj)
         {
             var course = obj as ParsedCourse;
-            return course != null &&
+            var result = course != null &&
                    ClassID == course.ClassID &&
                    SIS_ID == course.SIS_ID &&
                    Term == course.Term &&
@@ -157,13 +157,18 @@ namespace ClassroomAssignment.Model
                    LinkTo == course.LinkTo &&
                    Comments == course.Comments &&
                    Notes == course.Notes;
+
+            return result;
         }
 
-        
+        public override int GetHashCode()
+        {
+            return ClassID.GetHashCode();
+        }
 
         public static bool operator ==(ParsedCourse course1, ParsedCourse course2)
         {
-            return EqualityComparer<ParsedCourse>.Default.Equals(course1, course2);
+            return course1.Equals(course2);
         }
 
         public static bool operator !=(ParsedCourse course1, ParsedCourse course2)

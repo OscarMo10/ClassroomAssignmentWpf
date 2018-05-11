@@ -22,9 +22,11 @@ namespace ClassroomAssignment.Model
         public override bool Equals(object obj)
         {
             var room = obj as Room;
-            return room != null &&
+            var result = room != null &&
                    RoomName == room.RoomName &&
                    Capacity == room.Capacity;
+
+            return result;
         }
 
         public override int GetHashCode()
@@ -35,21 +37,19 @@ namespace ClassroomAssignment.Model
             return hashCode;
         }
 
-        public static bool operator==(Room a, Room b)
-        {
-            return  (a?.RoomName == b?.RoomName) && (a?.Capacity == b?.Capacity);
-        }
-
-        public static bool operator!=(Room a, Room b)
-        {
-            return !(a == b);
-        }
-
         public override string ToString()
         {
             return RoomName; // RoomNumbee.
         }
 
+        public static bool operator ==(Room room1, Room room2)
+        {
+            return EqualityComparer<Room>.Default.Equals(room1, room2);
+        }
 
+        public static bool operator !=(Room room1, Room room2)
+        {
+            return !(room1 == room2);
+        }
     }
 }

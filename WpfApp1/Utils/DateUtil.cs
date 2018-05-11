@@ -14,6 +14,7 @@ namespace ClassroomAssignment.Model.Utils
     {
         private static Dictionary<string, DayOfWeek> DayNameMatcher = new Dictionary<string, DayOfWeek>();
 
+
         /// <summary>
         /// Adds abbreviations for
         /// each day of the week
@@ -27,6 +28,8 @@ namespace ClassroomAssignment.Model.Utils
             DayNameMatcher.Add("Th", DayOfWeek.Thursday);
             DayNameMatcher.Add("F", DayOfWeek.Friday);
             DayNameMatcher.Add("Sa", DayOfWeek.Saturday);
+
+           
         }
 
 
@@ -48,6 +51,8 @@ namespace ClassroomAssignment.Model.Utils
                 return null;
             }
         }
+
+  
 
         /// <summary>
         /// returns match of day to abbreviation 

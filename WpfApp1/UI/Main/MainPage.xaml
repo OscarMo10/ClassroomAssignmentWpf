@@ -27,90 +27,97 @@
         <local:GroupNameConverter x:Key="converter"/>
     </Page.Resources>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-        <Border BorderBrush="White" BorderThickness="0,0,0,2">
+        <Border BorderBrush="White" BorderThickness="0,0,0,10">
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-                <Menu Height="Auto" Width="Auto" Grid.Row="0" Padding="0,5" BorderThickness="1" HorizontalAlignment="Left">
+                <Menu>
                     <MenuItem Header="_File">
                         <MenuItem Header="Export Room Schedules" Click="Export_Click"/>
                         <MenuItem Header="Changes" Click="Menu_Changes" />
                         <MenuItem Header="_Save" Click="Menu_Save"/>
                     </MenuItem>
                 </Menu>
+                <Menu>
+                    <MenuItem Header="Edit">
+                        <MenuItem x:Name="NewCourseMenuItem" Header="Add New Course" Click="NewCourseMenuItem_Click" />
+                    </MenuItem>
+                </Menu>
             </StackPanel>
         </Border>
 
         <TabControl Grid.Row="1" Grid.Column="0">
-                <TabItem Header="Assign">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+            <TabItem Header="Assign">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
 
-                        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="2" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
-                            <DataGrid.ContextMenu>
-                                <ContextMenu x:Name="CoursesContextMenu" Opened="CoursesContextMenu_Opened">
-                                    <MenuItem x:Name="AssignMenuItem" Header="Assign" Click="AssignMenuItem_Click" />
-                                    <MenuItem x:Name="CoursesMenuItem" Header="Edit" Click="CoursesMenuItem_Click" />
-                                </ContextMenu>
-                            </DataGrid.ContextMenu>
-                            <DataGrid.GroupStyle>
-                                <GroupStyle>
-                                    <GroupStyle.ContainerStyle>
-                                        <Style TargetType="{x:Type GroupItem}">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                        <Expander IsExpanded="True" >
-                                                            <Expander.Header>
-                                                                <DockPanel>
-                                                                    <TextBlock FontWeight="DemiBold" Text="{Binding Path=Name, Converter={StaticResource converter}}" Margin="0,0,10,0" >
-                                                                    </TextBlock>
-                                                                    <TextBlock Text="{Binding Path=ItemCount}" />
-                                                                </DockPanel>
-                                                            </Expander.Header>
-                                                            <Expander.Content>
-                                                                <ItemsPresenter/>
-                                                            </Expander.Content>
-                                                        </Expander>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </GroupStyle.ContainerStyle>
-                                </GroupStyle>
-                            </DataGrid.GroupStyle>
-                            <DataGrid.RowHeaderStyle>
-                                <Style TargetType="{x:Type DataGridRowHeader}">
-                                    <Setter Property="Width" Value="25" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding State}" Value="2">
-                                            <Setter Property="Background" Value="Yellow"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding State}" Value="3">
-                                            <Setter Property="Background" Value="Green"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding State}" Value="4">
-                                            <Setter Property="Background" Value="DimGray"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding State}" Value="0">
-                                            <Setter Property="Background" Value="Red"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.RowHeaderStyle>
+                    <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding Source={StaticResource cvsCourses}}" Grid.Row="2" AutoGenerateColumns="False" Height="Auto" CanUserSortColumns="False" CanUserAddRows="False">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu x:Name="CoursesContextMenu" Opened="CoursesContextMenu_Opened">
+                                <MenuItem x:Name="AssignMenuItem" Header="Assign" Click="AssignMenuItem_Click" />
+                                <MenuItem x:Name="CoursesMenuItem" Header="Edit" Click="CoursesMenuItem_Click" />
+                                <MenuItem x:Name="NoAssignmentNeededMenuItem" Header="No Assignment Needed" Click="NoAssignmentNeededMenuItem_Click"/>
+                                <MenuItem x:Name="CrossListMenuItem" Header="CrossList" Click="CrossListMenuItem_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                    <Expander IsExpanded="True" >
+                                                        <Expander.Header>
+                                                            <DockPanel>
+                                                                <TextBlock FontWeight="DemiBold" Text="{Binding Path=Name, Converter={StaticResource converter}}" Margin="0,0,10,0" >
+                                                                </TextBlock>
+                                                                <TextBlock Text="{Binding Path=ItemCount}" />
+                                                            </DockPanel>
+                                                        </Expander.Header>
+                                                        <Expander.Content>
+                                                            <ItemsPresenter/>
+                                                        </Expander.Content>
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                        </DataGrid.GroupStyle>
+                        <DataGrid.RowHeaderStyle>
+                            <Style TargetType="{x:Type DataGridRowHeader}">
+                                <Setter Property="Width" Value="25" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding State}" Value="2">
+                                        <Setter Property="Background" Value="Yellow"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="3">
+                                        <Setter Property="Background" Value="Green"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="4">
+                                        <Setter Property="Background" Value="DimGray"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="0">
+                                        <Setter Property="Background" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowHeaderStyle>
 
-                            <DataGrid.Columns>
-                                <!--
+                        <DataGrid.Columns>
+                            <!--
                                 <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True" Width="Auto"/>
                                 <DataGridTextColumn Header="SIS ID" Binding="{Binding SIS_ID}" IsReadOnly="True" Width="Auto" />
                                 <DataGridTextColumn Header="Course ID" Binding="{Binding CatalogNumber}" IsReadOnly="True" Width="Auto"/>
@@ -164,41 +171,41 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
+
                         </DataGrid.Columns>
-                        </DataGrid>
+                    </DataGrid>
 
-                        <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick" Grid.Row="3" MinHeight="90">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:Name="ConflictTemplate">
-                                    <Label Content="{Binding Description}"></Label>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                    <ListView x:Name="ConflictsListView" ItemsSource="{Binding Conflicts}" MouseDoubleClick="ConflictsListView_MouseDoubleClick" Grid.Row="3" MinHeight="90">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:Name="ConflictTemplate">
+                                <Label Content="{Binding Description}"></Label>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-                    </Grid>
-                </TabItem>
+                </Grid>
+            </TabItem>
 
-                <TabItem Header="Info">
+            <TabItem Header="Room Schedules">
                 <Grid HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,30">
                         <Label Content="Room: "/>
                         <ComboBox ItemsSource="{Binding AllRooms, Mode=OneTime}" SelectedItem="{Binding CurrentRoom, Mode=TwoWay}"  HorizontalAlignment="Left" MinWidth="40"/>
                     </StackPanel>
                     <ScrollViewer Grid.Row="1">
-                            <rs:RoomScheduleControl RoomScheduled="{Binding CurrentRoom, Mode=OneWay}" CoursesForRoom="{Binding CoursesForCurrentRoom, Mode=OneWay}" />
-                        </ScrollViewer>
-                    </Grid>
-                </TabItem>
-            </TabControl>
-        </Grid>
+                        <rs:RoomScheduleControl RoomScheduled="{Binding CurrentRoom, Mode=OneWay}" CoursesForRoom="{Binding CoursesForCurrentRoom, Mode=OneWay}" />
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
 
 </Page>

@@ -47,17 +47,9 @@ namespace ClassroomAssignment.UI.Edit
         {
             InitializeComponent();
 
-            originalCourse = course;
-            var stream = new MemoryStream();
-            IFormatter f = new BinaryFormatter();
-            f.Serialize(stream, course);
-            stream.Seek(0, SeekOrigin.Begin);
-            CopyCourse = f.Deserialize(stream) as Course;
-            stream.Close();
 
-            CopyCourse.PropertyChanged += CopyCourse_PropertyChanged;
-
-            DataContext = CopyCourse;
+            course.PropertyChanged += CopyCourse_PropertyChanged;
+            DataContext = course;
         }
 
         private void CopyCourse_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -72,6 +64,20 @@ namespace ClassroomAssignment.UI.Edit
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            bool hasError = false;
+            if (!CourseDetail.ValidMeetingPattern)
+            {
+                MeetingPatternWarningTextBlock.Visibility = Visibility.Visible;
+                hasError = true;
+            }
+            if(!CourseDetail.ValidRoomCapRequest)
+            {
+                RoomCapWarningTextBlock.Visibility = Visibility.Visible;
+                hasError = true;
+            }
+
+            if (hasError) return;
+
             foreach (var property in propertiesChanged)
             {
                 var newValue = property.GetValue(CopyCourse);

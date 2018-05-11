@@ -24,7 +24,7 @@ namespace ClassroomAssignment.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CrossListedCourses)));
         }
 
-        [field: NonSerializedAttribute()]
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public enum CourseState
@@ -48,7 +48,20 @@ namespace ClassroomAssignment.Model
 
         #endregion
 
-        public Room RoomAssignment { get; set; }
+        private Room _roomAssignment;
+        public Room RoomAssignment
+        {
+            get => _roomAssignment;
+            set
+            {
+                _roomAssignment = value;
+                
+                foreach (var course in CrossListedCourses)
+                {
+                    course.RoomAssignment = _roomAssignment;
+                }
+            }
+        }
 
         public bool NeedsRoom { get; set; }
         public List<DayOfWeek> MeetingDays { get; set; }
@@ -77,6 +90,11 @@ namespace ClassroomAssignment.Model
             EndTime = this.QueryEndTime();
         }
 
+        public Course ShallowCopy()
+        {
+            return (Course)this.MemberwiseClone();
+        }
+
         public override string ToString()
         {
             var stringBuilder = new StringBuilder()
@@ -100,18 +118,21 @@ namespace ClassroomAssignment.Model
         public override bool Equals(object obj)
         {
             var course = obj as Course;
-            return course != null &&
+            var result =  course != null &&
                    base.Equals(obj) &&
-                   HasRoomAssignment == course.HasRoomAssignment &&
                    EqualityComparer<Room>.Default.Equals(RoomAssignment, course.RoomAssignment) &&
-                   NeedsRoom == course.NeedsRoom &&
-                   EqualityComparer<List<DayOfWeek>>.Default.Equals(MeetingDays, course.MeetingDays) &&
                    EqualityComparer<TimeSpan?>.Default.Equals(StartTime, course.StartTime) &&
-                   EqualityComparer<TimeSpan?>.Default.Equals(EndTime, course.EndTime) &&
-                   State == course.State;
+                   EqualityComparer<TimeSpan?>.Default.Equals(EndTime, course.EndTime);
+
+            return result;
         }
 
-       
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+
 
         public static bool operator ==(Course course1, Course course2)
         {

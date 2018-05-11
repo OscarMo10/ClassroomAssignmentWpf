@@ -13,6 +13,8 @@ namespace ClassroomAssignment.Model.Repo
     {
         private static RoomRepository instance;
 
+        public static Room NoRoom = new Room() { RoomName = "None", Capacity = 0 };
+
         private List<Room> _rooms;
         //Get Rooms
         public List<Room> Rooms { get; private set; }

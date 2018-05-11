@@ -22,14 +22,19 @@ namespace ClassroomAssignment.UI.Ambiguity
     /// <summary>
     /// Interaction logic for AmbiguityResolverPage.xaml
     /// </summary>
-    public partial class AmbiguityResolverPage : Page
+    public partial class AmbiguityResolverPage : Page, INotifyPropertyChanged
     {
         private List<Course> _ambiguousCourses;
-        public List<Room> RoomOptions { get; } = RoomRepository.GetInstance().Rooms;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public List<Room> RoomOptions { get; }
 
         public AmbiguityResolverPage()
         {
             InitializeComponent();
+            RoomOptions = new List<Room>() { RoomRepository.NoRoom };
+            RoomOptions.AddRange(RoomRepository.GetInstance().Rooms);
 
             var allCourses = CourseRepository.GetInstance().Courses;
 
@@ -37,31 +42,11 @@ namespace ClassroomAssignment.UI.Ambiguity
 
             CoursesDataGrid.ItemsSource = _ambiguousCourses;
 
-            //_ambiguousCourses.ForEach(RegisterNotificationListener);
         }
 
 
-        //private void RegisterNotificationListener(Course course)
-        //{
-        //    course.PropertyChanged += new PropertyChangedEventHandler(OnCoursesStateChanged);
-        //}
-
-        //public void OnCoursesStateChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    if (!AmbiguousCoursesExists())
-        //    {
-        //        ContinueButton.IsEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        ContinueButton.IsEnabled = false;
-        //    }
-        //}
-
-        //private bool AmbiguousCoursesExists()
-        //{
-        //    return _ambiguousCourses.FindAll(m => m.HasAmbiguousAssignment).Count > 0;
-        //}
+  
+     
 
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
@@ -72,6 +57,21 @@ namespace ClassroomAssignment.UI.Ambiguity
             }
 
             NavigationService.Navigate(new Uri(@"UI/Main/MainPage.xaml", UriKind.Relative));
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var course = (sender as ComboBox).DataContext as Course;
+            var selectedRoom = (sender as ComboBox).SelectedItem as Room;
+            
+            if (selectedRoom == RoomRepository.NoRoom)
+            {
+                course.RoomAssignment = null;
+            }
+            else
+            {
+                course.RoomAssignment = selectedRoom;
+            }
         }
     }
 

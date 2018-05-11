@@ -179,6 +179,7 @@ namespace ClassroomAssignment.Model
                 {
                     course.RoomAssignment = _roomAssignment;
                 }
+
             }
         }
 

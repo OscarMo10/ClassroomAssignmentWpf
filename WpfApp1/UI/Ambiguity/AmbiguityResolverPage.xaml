@@ -39,7 +39,7 @@
                     <DataGridTemplateColumn Header="Room Assignment">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding RoomOptions, ElementName=_this, Mode=OneTime}" SelectedItem="{Binding RoomAssignment, Mode=TwoWay}">
+                                <ComboBox ItemsSource="{Binding RoomOptions, ElementName=_this, Mode=OneWay}" SelectedItem="{Binding RoomAssignment, Mode=OneTime}" SelectionChanged="ComboBox_SelectionChanged">
                                     <ComboBox.Style>
                                         <Style TargetType="{x:Type ComboBox}">
                                             <Style.Triggers>

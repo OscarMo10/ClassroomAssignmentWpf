@@ -178,8 +178,8 @@ namespace ClassroomAssignment.UI.Main
             if (CoursesDataGrid.SelectedItems.Count > 1) CoursesMenuItem.IsEnabled = false;
             else CoursesMenuItem.IsEnabled = true;
 
-
-            if (!course.NeedsRoom && course.QueryNeedsRoom()) AssignmentNeeded.Visibility = Visibility.Visible;
+            int i;
+            if (!course.NeedsRoom && course.QueryMeetingDays().Count != 0 && course.QueryStartTime() != null && course.QueryEndTime() != null && int.TryParse(course.RoomCapRequest, out i)) AssignmentNeeded.Visibility = Visibility.Visible;
             else AssignmentNeeded.Visibility = Visibility.Collapsed;
         }
 

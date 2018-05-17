@@ -38,6 +38,8 @@ namespace ClassroomAssignment.UI.Main
     {
         public MainWindowViewModel ViewModel { get; set; }
 
+        private Dictionary<Course, Course> CrossListedToMain = new Dictionary<Course, Course>();
+
         public MainPage()
         {
             InitializeComponent();
@@ -235,6 +237,7 @@ namespace ClassroomAssignment.UI.Main
 
                 course.NeedsRoom = false;
                 mainCourse.AddCrossListedCourse(course);
+                CrossListedToMain[course] = mainCourse;
             }
         }
 
@@ -251,7 +254,27 @@ namespace ClassroomAssignment.UI.Main
             foreach (Course course in CoursesDataGrid.SelectedItems)
             {
                 course.NeedsRoom = true;
+                if (CrossListedToMain.ContainsKey(course))
+                {
+                    CrossListedToMain[course].RemoveCrossListedCourse(course);
+                    CrossListedToMain.Remove(course);
+                }
             }
+        }
+
+        private void RemoveCrossListedCourseMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var contextMenu = (sender as System.Windows.Controls.MenuItem).Parent as System.Windows.Controls.ContextMenu;
+            var crossListedCourse = (contextMenu.PlacementTarget as System.Windows.Controls.ComboBox).SelectedItem as Course;
+            var mainCourse = CoursesDataGrid.SelectedItem as Course;
+
+            if (mainCourse == null) return;
+
+            mainCourse.RemoveCrossListedCourse(crossListedCourse);
+            crossListedCourse.NeedsRoom = crossListedCourse.QueryNeedsRoom();
+            CrossListedToMain[crossListedCourse].RemoveCrossListedCourse(crossListedCourse);
+            CrossListedToMain.Remove(crossListedCourse);
+
         }
     }
 }

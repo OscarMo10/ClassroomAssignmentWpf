@@ -189,7 +189,17 @@ namespace ClassroomAssignment.Model
         public TimeSpan? EndTime { get; set; }
         public CourseState State { get; set; }
 
-        public void AddCrossListedCourse(Course course) => _crossListedCourses.Add(course);
+        public void AddCrossListedCourse(Course course)
+        {
+            _crossListedCourses.Add(course);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CrossListedCourses)));
+        }
+
+        public void RemoveCrossListedCourse(Course course)
+        {
+            _crossListedCourses.Remove(course);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CrossListedCourses)));
+        }
 
         private ObservableCollection<Course> _crossListedCourses;
         public List<Course> CrossListedCourses

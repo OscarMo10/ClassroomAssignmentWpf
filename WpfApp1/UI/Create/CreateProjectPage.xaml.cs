@@ -54,7 +54,7 @@ namespace ClassroomAssignment.UI.Create
                 return;
             }
 
-            InitCrossListedCourses(courses);
+            //InitCrossListedCourses(courses);
 
             MemoryStream stream = new MemoryStream();
             IFormatter formatter = new BinaryFormatter();

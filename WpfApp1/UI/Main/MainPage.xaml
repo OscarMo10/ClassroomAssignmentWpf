@@ -131,6 +131,7 @@
                                                     <ComboBox.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem x:Name="GoToCourseMenuItem" Header="Go To Course" Click="GoToCourseMenuItem_Click"/>
+                                                            <MenuItem x:Name="RemoveCrossListedCourseMenuItem" Header="Remove Course" Click="RemoveCrossListedCourseMenuItem_Click"/>
                                                         </ContextMenu>
                                                     </ComboBox.ContextMenu>
                                                     <ComboBox.ItemContainerStyle>
